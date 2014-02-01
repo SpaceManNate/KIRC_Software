@@ -1,7 +1,7 @@
 **********FLIGHT COMPUTER SOFTWARE***********
 *TITLE: README.txt
 
-*DESCR: FUCKKKKKKK
+*DESCR: FUCKKKKKKK THISS BULLSHIT
 
 *AUTHORS: Nathaniel Cain	
 		  Wade Henderson
