@@ -17,12 +17,12 @@ $(GEN_CMDS__FLAG) \
 "./EK_TM4C123GXL.obj" \
 "../EK_TM4C123GXL.cmd" \
 -l"libc.a" \
--l"C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/ccs/Debug/driverlib.lib" \
--l"C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/usblib/ccs/Debug/usblib.lib" \
+-l"C:\ti\tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/ccs/Debug/driverlib.lib" \
+-l"C:\ti\tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/usblib/ccs/Debug/usblib.lib" \
 
 -include ../makefile.init
 
-RM := DEL /F
+RM := 
 RMDIR := RMDIR /S/Q
 
 # All of the sources participating in the build are defined here
@@ -123,7 +123,7 @@ all: KIRC_FltCmp_v0.1.out
 KIRC_FltCmp_v0.1.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv5/tools/compiler/arm_5.1.3/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=PART_TM4C123GH6PM --define=ccs --define=TIVAWARE --diag_warning=225 --display_error_number --diag_wrap=off --gen_func_subsections=on -z -m"KIRC_FltCmp_v0.1.map" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.3/lib" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.3/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="KIRC_FltCmp_v0.1_linkInfo.xml" --rom_model -o "KIRC_FltCmp_v0.1.out" $(ORDERED_OBJS)
+	"" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=PART_TM4C123GH6PM --define=ccs --define=TIVAWARE --diag_warning=225 --display_error_number --diag_wrap=off --gen_func_subsections=on -z -m"KIRC_FltCmp_v0.1.map" -i"/lib" -i"/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="KIRC_FltCmp_v0.1_linkInfo.xml" --rom_model -o "KIRC_FltCmp_v0.1.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
