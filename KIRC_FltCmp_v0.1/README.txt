@@ -1,4 +1,5 @@
 **********FLIGHT COMPUTER SOFTWARE**********
+*TITLE: <INSERT TITLE HERE>
 
 *AUTHORS: Nathaniel Cain	
 		  Wade Henderson
@@ -6,6 +7,8 @@
 *DATE: 1/31/2014
 
 *DESCR: <INSERT DESCRIPTION HERE>
+
+LOG:
 
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated
