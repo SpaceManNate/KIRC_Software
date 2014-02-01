@@ -5,7 +5,7 @@
 
 *DATE: 1/31/2014
 
-*DESCR: 
+*DESCR: <INSERT DESCRIPTION HERE>
 
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated
