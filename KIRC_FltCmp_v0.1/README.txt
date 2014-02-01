@@ -2,7 +2,8 @@
 *TITLE: README.txt
 
 *DESCR: FUCKKKKKKK THISS BULLSHIT
-
+		SUCK ASSSSSSSS!!!!!
+		
 *AUTHORS: Nathaniel Cain	
 		  Wade Henderson
 
