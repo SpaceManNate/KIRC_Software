@@ -1,4 +1,4 @@
-/*test4
+/*test6
  * Copyright (c) 2013, Texas Instruments Incorporated
  * All rights reserved.
  *
