@@ -8,12 +8,12 @@ CG_TOOL_ROOT := C:/ti/ccsv5/tools/compiler/arm_5.1.1
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
-"./uartconsole.obj" \
 "./sensors.obj" \
 "./quaternion.obj" \
 "./drivers.obj" \
 "./USBCDCD_LoggerIdle.obj" \
 "./UARTUtils.obj" \
+"./Main.obj" \
 "./EK_TM4C123GXL.obj" \
 "../EK_TM4C123GXL.cmd" \
 -l"libc.a" \
@@ -131,8 +131,8 @@ KIRC_FltCmp_v0.1.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 clean:
 	-$(RM) $(TMS470_EXECUTABLE_OUTPUTS__QUOTED)$(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(GEN_OPTS__QUOTED)$(GEN_CMDS__QUOTED) "KIRC_FltCmp_v0.1.out"
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
-	-$(RM) "EK_TM4C123GXL.pp" "UARTUtils.pp" "USBCDCD_LoggerIdle.pp" "drivers.pp" "quaternion.pp" "sensors.pp" "uartconsole.pp" 
-	-$(RM) "EK_TM4C123GXL.obj" "UARTUtils.obj" "USBCDCD_LoggerIdle.obj" "drivers.obj" "quaternion.obj" "sensors.obj" "uartconsole.obj" 
+	-$(RM) "EK_TM4C123GXL.pp" "Main.pp" "UARTUtils.pp" "USBCDCD_LoggerIdle.pp" "drivers.pp" "quaternion.pp" "sensors.pp" 
+	-$(RM) "EK_TM4C123GXL.obj" "Main.obj" "UARTUtils.obj" "USBCDCD_LoggerIdle.obj" "drivers.obj" "quaternion.obj" "sensors.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

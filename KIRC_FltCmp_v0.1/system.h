@@ -1,7 +1,9 @@
 /********************************************************************
 * HEAD: system.h file
-* DESC: Contains standard C header files and peripheral driver
-* 		header files from Texas Instruments
+* DESC: Meant for KIRC_FltCmp_v0.1 Software
+* 		Contains standard C header files, peripheral driver
+* 		header files from Texas Instruments, header files
+* 		for SYS/BIOS and XDC tools, as well as global def'ns
 * 		Also contains header files specific to this project
 * AUTH: Nathaniel Cain
 ********************************************************************/
@@ -14,6 +16,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
+#include <file.h>
 
 //TivaWare (tm) Driver Headers
 #include "inc/hw_i2c.h"
@@ -24,6 +28,26 @@
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
+
+// XDCtools Header files
+#include <xdc/std.h>
+#include <xdc/cfg/global.h>
+#include <xdc/runtime/Error.h>
+#include <xdc/runtime/System.h>
+
+// BIOS Header files
+#include <ti/sysbios/BIOS.h>
+#include <ti/sysbios/utils/Load.h>
+
+// TI-RTOS Header files
+#include <ti/drivers/GPIO.h>
+#include <ti/drivers/UART.h>
+#include <ti/drivers/I2C.h>
+
+// Example/Board Header files
+#include "Board.h"
+#include "UARTUtils.h"
+#include "USBCDCD_LoggerIdle.h"
 
 //Custom headers produced for KIRC
 #include "drivers.h"
