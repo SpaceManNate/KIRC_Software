@@ -9,8 +9,7 @@
 *DESCR: <INSERT DESCRIPTION HERE>
 
 LOG:
-
-
+*<DATE>: COMMENTS
 
 
 /*
