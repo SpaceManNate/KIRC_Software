@@ -3,6 +3,8 @@
 *AUTHORS: Nathaniel Cain	
 		  Wade Henderson
 
+*DATE: 1/31/2014
+
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated
  * All rights reserved.
