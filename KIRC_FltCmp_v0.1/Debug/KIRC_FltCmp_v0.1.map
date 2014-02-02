@@ -1,0 +1,3036 @@
+******************************************************************************
+                  TI ARM Linker PC v5.1.3                      
+******************************************************************************
+>> Linked Sat Feb 01 21:55:03 2014
+
+OUTPUT FILE NAME:   <KIRC_FltCmp_v0.1.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 0000bafd
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  FLASH                 00000000   00040000  00011ef2  0002e10e  R  X
+  SRAM                  20000000   00008000  00003f81  0000407f  RW X
+
+
+SEGMENT ALLOCATION MAP
+
+run origin  load origin   length   init length attrs members
+----------  ----------- ---------- ----------- ----- -------
+00000000    00000000    00011ef8   00011ef8    r-x
+  00000000    00000000    00000360   00000360    r-- .resetVecs
+  00000360    00000360    0000e9c8   0000e9c8    r-x .text
+  0000ed28    0000ed28    00002d1a   00002d1a    r-- .const
+  00011a48    00011a48    000004b0   000004b0    r-- .cinit
+20000000    20000000    00003f84   00000000    rw-
+  20000000    20000000    00000360   00000000    rw- .vecs
+  20000360    20000360    00002c8d   00000000    rw- .bss
+  20002ff0    20002ff0    00000c94   00000000    rw- .data
+  20003c84    20003c84    00000300   00000000    rw- .stack
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.bootVecs 
+*          0    00000000    00000008     DSECT
+                  00000000    00000008     boot.aem4f : boot.oem4f (.bootVecs)
+
+.resetVecs 
+*          0    00000000    00000360     
+                  00000000    00000360     uartconsole_pem4f.oem4f (.resetVecs)
+
+xdc.meta   0    00000000    000000fc     COPY SECTION
+                  00000000    000000fc     uartconsole_pem4f.oem4f (xdc.meta)
+
+.text      0    00000360    0000e9c8     
+                  00000360    00000ec0     rtsv7M4_T_le_v4SPD16_eabi.lib : _printfi.obj (.text)
+                  00001220    00000804     quaternion.obj (.text:Update_State)
+                  00001a24    0000047c     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_hwiIntFxn)
+                  00001ea0    0000042c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excDumpRegs__I)
+                  000022cc    00000368     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_write)
+                  00002634    00000344     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_doPrint__I)
+                  00002978    00000334     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_open)
+                  00002cac    00000310     rtsv7M4_T_le_v4SPD16_eabi.lib : lowlev.obj (.text)
+                  00002fbc    000002d8     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Semaphore_pend__E)
+                  00003294    000002d4     rtsv7M4_T_le_v4SPD16_eabi.lib : trgdrv.obj (.text)
+                  00003568    00000248     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_heaps_HeapMem_free__E)
+                  000037b0    00000234                   : BIOS.obj (.text:ti_sysbios_heaps_HeapMem_alloc__E)
+                  000039e4    00000230                   : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_start__E)
+                  00003c14    00000200                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excHandlerMax__I)
+                  00003e14    000001f4     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_read)
+                  00004008    000001f4     rtsv7M4_T_le_v4SPD16_eabi.lib : ull_div_t2.obj (.text)
+                  000041fc    000001d4     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_sleep__E)
+                  000043d0    000001c4     ti.uia.sysbios.aem4f : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_write1__E)
+                  00004594    000001c0     rtsv7M4_T_le_v4SPD16_eabi.lib : fopen.obj (.text)
+                  00004754    000001b8     Main.obj (.text:consoleFxn)
+                  0000490c    000001b6     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_add_t2.obj (.text)
+                  00004ac2    00000002     usblib.lib : usbdma.obj (.text:iDMAUSBArbSizeSet)
+                  00004ac4    000001b0     ti.uia.sysbios.aem4f : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_write0__E)
+                  00004c74    0000018c                          : LoggerIdle.oem4f (.text:writeStart)
+                  00004e00    00000170     usblib.lib : usbdma.obj (.text:USBLibDMAInit)
+                  00004f70    00000168     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_readPolling)
+                  000050d8    00000168     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excBusFault__I)
+                  00005240    00000160     uart_tivaware.aem4f : UARTTiva.oem4f (.text:readData)
+                  000053a0    0000015c                         : UARTTiva.oem4f (.text:UARTTiva_writePolling)
+                  000054fc    0000015c     usblib.lib : usbdenum.obj (.text:USBDEP0StateTxConfig)
+                  00005658    00000154     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excUsageFault__I)
+                  000057ac    00000150     usblib.lib : usbdenum.obj (.text:USBDeviceIntHandlerInternal)
+                  000058fc    00000148                : usbdenum.obj (.text:USBDCDInit)
+                  00005a44    00000148     rtsv7M4_T_le_v4SPD16_eabi.lib : sqrt.obj (.text)
+                  00005b8c    00000144     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Semaphore_post__E)
+                  00005cd0    00000140     usblib.lib : usbdconfig.obj (.text:USBDeviceConfig)
+                  00005e10    00000140     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excMemFault__I)
+                  00005f50    0000013c     sensors.obj (.text:Filter_Data)
+                  0000608c    0000013c     sensors.obj (.text:Read_Gyro)
+                  000061c8    0000013c     ti.targets.arm.rtsarm.aem4f : Error.oem4f (.text:xdc_runtime_Error_raiseX__F)
+                  00006304    00000138     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_heaps_HeapMem_Instance_init__F)
+                  0000643c    00000136     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_div_t2.obj (.text)
+                  00006572    00000002     usblib.lib : usbdma.obj (.text:iDMAUSBUnitSizeSet)
+                  00006574    00000134     rtsv7M4_T_le_v4SPD16_eabi.lib : fputs.obj (.text)
+                  000066a8    00000134     sysbios.aem4f : m3_Hwi_asm.obj (.text:ti_sysbios_family_arm_m3_Hwi_dispatch__I)
+                  000067dc    00000130     driverlib.lib : gpio.obj (.text:GPIOPadConfigSet)
+                  0000690c    0000012c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_TimestampProvider_get64__E)
+                  00006a38    0000012c                   : BIOS.obj (.text:ti_sysbios_knl_Clock_workFunc__E)
+                  00006b64    00000124     sensors.obj (.text:Calib_Gyro)
+                  00006c88    00000120     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_dispatchC__I)
+                  00006da8    00000120                   : BIOS.obj (.text:ti_sysbios_utils_Load_logLoads__I)
+                  00006ec8    0000011c     i2c_tivaware.aem4f : I2CTiva.oem4f (.text:I2CTiva_open)
+                  00006fe4    00000118     uartconsole_pem4f.oem4f (.text:xdc_runtime_System_printfExtend__I)
+                  000070fc    00000110     rtsv7M4_T_le_v4SPD16_eabi.lib : xdscale.obj (.text)
+                  0000720c    00000110     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_utils_Load_updateThreadContexts__E)
+                  0000731c    0000010c     Boot.aem4f : Boot_sysctl.oem4f (.text:ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlClockSetI__I)
+                  00007428    0000010c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_exit__E)
+                  00007534    00000108     UARTUtils.obj (.text:openHandle)
+                  0000763c    00000104     ti.targets.arm.rtsarm.aem4f : Core-mem.oem4f (.text:xdc_runtime_Core_createObject__I)
+                  00007740    000000fc     Main.obj (.text:main)
+                  0000783c    000000fc     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_mul_t2.obj (.text)
+                  00007938    000000fc     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_schedule__I)
+                  00007a34    000000f8                   : BIOS.obj (.text:ti_sysbios_knl_Task_startCore__E)
+                  00007b2c    000000f8     ti.targets.arm.rtsarm.aem4f : Startup.oem4f (.text:xdc_runtime_Startup_startMods__I)
+                  00007c24    000000f4     gpio_tivaware.aem4f : GPIO.oem4f (.text:GPIO_toggle)
+                  00007d18    000000f4     rtsv7M4_T_le_v4SPD16_eabi.lib : dtor_list.obj (.text)
+                  00007e0c    000000f4     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_postInit__I)
+                  00007f00    000000ea     usblib.lib : usbdma.obj (.text:iDMAUSBTransfer)
+                  00007fea    00000002     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_BIOS_nullFunc__I)
+                  00007fec    000000e8     gpio_tivaware.aem4f : GPIO.oem4f (.text:GPIO_write)
+                  000080d4    000000e8     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_initNVIC__E)
+                  000081bc    000000e4     sensors.obj (.text:Calib_Accel)
+                  000082a0    000000e4     usblib.lib : usbdenum.obj (.text:USBDGetDescriptor)
+                  00008384    000000dc     rtsv7M4_T_le_v4SPD16_eabi.lib : setvbuf.obj (.text)
+                  00008460    000000d8     usblib.lib : usbdenum.obj (.text:USBDeviceEnumHandler)
+                  00008538    000000d4                : usbdcdc.obj (.text:HandleRequests)
+                  0000860c    000000d4     i2c_tivaware.aem4f : I2CTiva.oem4f (.text:I2CTiva_hwiFxn)
+                  000086e0    000000c8     driverlib.lib : sysctl.obj (.text:SysCtlClockGet)
+                  000087a8    000000c4     rtsv7M4_T_le_v4SPD16_eabi.lib : xdnorm.obj (.text)
+                  0000886c    000000c0     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_writeCancel)
+                  0000892c    000000c0     rtsv7M4_T_le_v4SPD16_eabi.lib : fflush.obj (.text)
+                  000089ec    000000c0     usblib.lib : usbdma.obj (.text:uDMAUSBChannelAllocate)
+                  00008aac    000000bc     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_readCancel)
+                  00008b68    000000bc     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_unblockI__E)
+                  00008c24    000000ba     usblib.lib : usbdma.obj (.text:uDMAUSBTransfer)
+                  00008cde    00000002     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_doSwiRestore__I)
+                  00008ce0    000000b8                   : BIOS.obj (.text:ti_sysbios_family_arm_lm4_TimestampProvider_get32__E)
+                  00008d98    000000b4                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excHardFault__I)
+                  00008e4c    000000b4                   : BIOS.obj (.text:ti_sysbios_gates_GateMutex_enter__E)
+                  00008f00    000000b2     usblib.lib : usbbuffer.obj (.text:HandleRxAvailable)
+                  00008fb2    00000002     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_gates_GateHwi_Instance_init__F)
+                  00008fb4    000000b0                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excDebugMon__I)
+                  00009064    000000b0                   : BIOS.obj (.text:ti_sysbios_utils_Load_idleFxn__E)
+                  00009114    000000b0                   : BIOS.obj (.text:ti_sysbios_utils_Load_updateLoads__E)
+                  000091c4    000000ac     rtsv7M4_T_le_v4SPD16_eabi.lib : _io_perm.obj (.text)
+                  00009270    000000ac     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_enableTiva__I)
+                  0000931c    000000a8     usblib.lib : usbdcdc.obj (.text:HandleDevice)
+                  000093c4    000000a8     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Semaphore_Instance_init__F)
+                  0000946c    000000a8                   : BIOS.obj (.text:ti_sysbios_knl_Task_blockI__E)
+                  00009514    000000a4                   : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_enableTimers__I)
+                  000095b8    000000a4                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_Module_startup__F)
+                  0000965c    000000a0     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_close)
+                  000096fc    000000a0     USBCDCD_LoggerIdle.obj (.text:USBCDCD_init)
+                  0000979c    000000a0     usblib.lib : usbdcdc.obj (.text:USBDCDCCompositeInit)
+                  0000983c    000000a0     auto_init.aem4f : auto_init.oem4f (.text)
+                  000098dc    0000009c     USBCDCD_LoggerIdle.obj (.text:cbSerialHandler)
+                  00009978    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : fputc.obj (.text)
+                  00009a14    0000009c                                   : memcpy_t2.obj (.text)
+                  00009ab0    0000009a     usblib.lib : usbbuffer.obj (.text:ScheduleNextTransmission)
+                  00009b4a    00000002     ti.uia.sysbios.aem4f : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_Instance_init__F)
+                  00009b4c    0000009a     ti.targets.arm.rtsarm.aem4f : Text.oem4f (.text:xdc_runtime_Text_putSite__F)
+                  00009be6    00000002     usblib.lib : usbdma.obj (.text:uDMAUSBChannelIntDisable)
+                  00009be8    00000098                : usbdenum.obj (.text:USBDSetInterface)
+                  00009c80    00000098     rtsv7M4_T_le_v4SPD16_eabi.lib : fclose.obj (.text)
+                  00009d18    00000096     usblib.lib : usbdcdc.obj (.text:CDCTickHandler)
+                  00009dae    00000002                : usbdma.obj (.text:uDMAUSBChannelIntEnable)
+                  00009db0    00000094     Boot.aem4f : Boot.oem4f (.text:ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlClockSet__E)
+                  00009e44    00000094     ti.targets.arm.rtsarm.aem4f : Text.oem4f (.text:xdc_runtime_Text_putMod__F)
+                  00009ed8    00000092     usblib.lib : usbdcdc.obj (.text:SendSerialState)
+                  00009f6a    00000002     uartconsole_pem4f.oem4f (.text:xdc_runtime_Startup_reset__I)
+                  00009f6c    00000090     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_Instance_init__F)
+                  00009ffc    0000008c     UARTUtils.obj (.text:UARTUtils_systemInit)
+                  0000a088    0000008c     usblib.lib : usbdenum.obj (.text:USBDSetConfiguration)
+                  0000a114    0000008c                : usbdconfig.obj (.text:USBDeviceConfigAlternate)
+                  0000a1a0    0000008c     sysbios.aem4f : m3_TaskSupport_asm.obj (.text:ti_sysbios_family_arm_m3_TaskSupport_buildTaskStack)
+                  0000a22c    0000008a     i2c_tivaware.aem4f : I2CTiva.oem4f (.text:I2CTiva_transfer)
+                  0000a2b6    00000002     ti.targets.arm.rtsarm.aem4f : SysCallback.oem4f (.text:xdc_runtime_SysCallback_defaultExit)
+                  0000a2b8    00000088     EK_TM4C123GXL.obj (.text:EK_TM4C123GXL_initGPIO)
+                  0000a340    00000086     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_cmp_t2.obj (.text:__aeabi_cdcmple)
+                  0000a3c6    00000086                                   : fd_cmp_t2.obj (.text:__aeabi_cdrcmple)
+                  0000a44c    00000084     sensors.obj (.text:GetData_Accel)
+                  0000a4d0    00000084     sensors.obj (.text:GetData_Gyro)
+                  0000a554    00000084     sensors.obj (.text:GetData_Magn)
+                  0000a5d8    00000084     sensors.obj (.text:Read_Magn)
+                  0000a65c    00000084     usblib.lib : usbdma.obj (.text:iDMAUSBChannelAllocate)
+                  0000a6e0    00000084     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_Module_startup__F)
+                  0000a764    00000080     sensors.obj (.text:Read_Accel)
+                  0000a7e4    00000080     driverlib.lib : udma.obj (.text:uDMAChannelTransferSet)
+                  0000a864    0000007c     EK_TM4C123GXL.obj (.text:EK_TM4C123GXL_initI2C)
+                  0000a8e0    0000007c     usblib.lib : usbdenum.obj (.text:USBDClearFeature)
+                  0000a95c    0000007c     ti.uia.sysbios.aem4f : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_write8__E)
+                  0000a9d8    0000007a     driverlib.lib : usb.obj (.text:USBDevEndpointConfigSet)
+                  0000aa52    00000078     rtsv7M4_T_le_v4SPD16_eabi.lib : memset_t2.obj (.text)
+                  0000aaca    00000002     ti.targets.arm.rtsarm.aem4f : SysCallback.oem4f (.text:xdc_runtime_SysCallback_defaultFlush)
+                  0000aacc    00000078     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_utils_Load_updateCurrentThreadTime__E)
+                  0000ab44    00000074     usblib.lib : usbdenum.obj (.text:USBDGetStatus)
+                  0000abb8    00000074     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_isrStub__E)
+                  0000ac2c    00000072     usblib.lib : usbdcdc.obj (.text:ProcessDataFromHost)
+                  0000ac9e    00000072                : usbdma.obj (.text:uDMAUSBArbSizeSet)
+                  0000ad10    00000070                : usbdenum.obj (.text:USBDEP0StateTx)
+                  0000ad80    00000070     rtsv7M4_T_le_v4SPD16_eabi.lib : printf.obj (.text)
+                  0000adf0    00000070     uartconsole_pem4f.oem4f (.text:ti_sysbios_family_arm_m3_Hwi_Object__create__S)
+                  0000ae60    00000070     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_reconfig__E)
+                  0000aed0    00000070     uartconsole_pem4f.oem4f (.text:ti_sysbios_hal_Hwi_Object__create__S)
+                  0000af40    00000070     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_utils_Load_taskDeleteHook__E)
+                  0000afb0    00000070     usblib.lib : usbdma.obj (.text:uDMAUSBUnitSizeSet)
+                  0000b020    00000070     ti.targets.arm.rtsarm.aem4f : Memory.oem4f (.text:xdc_runtime_Memory_alloc__F)
+                  0000b090    0000006c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_utils_Load_taskCreateHook__E)
+                  0000b0fc    0000006c     ti.targets.arm.rtsarm.aem4f : Error.oem4f (.text:xdc_runtime_Error_print__F)
+                  0000b168    00000068     driverlib.lib : interrupt.obj (.text:IntDisable)
+                  0000b1d0    00000068                   : interrupt.obj (.text:IntEnable)
+                  0000b238    00000068     usblib.lib : usbdenum.obj (.text:USBDSetFeature)
+                  0000b2a0    00000068     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_BIOS_rtsUnlock__I)
+                  0000b308    00000066     ti.targets.arm.rtsarm.aem4f : Core-mem.oem4f (.text:xdc_runtime_Core_deleteObject__I)
+                  0000b36e    00000002     --HOLE-- [fill = 0]
+                  0000b370    00000064     driverlib.lib : interrupt.obj (.text:IntIsEnabled)
+                  0000b3d4    00000064     rtsv7M4_T_le_v4SPD16_eabi.lib : fseek.obj (.text)
+                  0000b438    00000064                                   : xdunscal.obj (.text)
+                  0000b49c    00000064     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Clock_logTick__E)
+                  0000b500    00000064                   : BIOS.obj (.text:ti_sysbios_utils_Load_logCPULoad__I)
+                  0000b564    00000064     ti.uia.sysbios.aem4f : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_write4__E)
+                  0000b5c8    00000064     usblib.lib : usbdma.obj (.text:uDMAUSBChannelEnable)
+                  0000b62c    00000062     i2c_tivaware.aem4f : I2CTiva.oem4f (.text:I2CTiva_primeTransfer)
+                  0000b68e    00000002     --HOLE-- [fill = 0]
+                  0000b690    00000060     drivers.obj (.text:I2C0_RxData)
+                  0000b6f0    00000060     usblib.lib : usbbuffer.obj (.text:USBBufferEventCallback)
+                  0000b750    00000060                : usbdenum.obj (.text:USBDReadAndDispatchRequest)
+                  0000b7b0    00000060     rtsv7M4_T_le_v4SPD16_eabi.lib : trgmsg.obj (.text)
+                  0000b810    00000060     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_utils_Load_addTask__E)
+                  0000b870    0000005e     usblib.lib : usbdcdc.obj (.text:ProcessDataToHost)
+                  0000b8ce    0000005e     driverlib.lib : usb.obj (.text:USBDevEndpointStatusClear)
+                  0000b92c    0000005e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_rle.obj (.text)
+                  0000b98a    00000002     --HOLE-- [fill = 0]
+                  0000b98c    0000005c     usblib.lib : usbdcdc.obj (.text:USBDCDCInit)
+                  0000b9e8    0000005c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_Module_startup__F)
+                  0000ba44    0000005c     ti.uia.sysbios.aem4f : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_idleWrite__I)
+                  0000baa0    0000005a     rtsv7M4_T_le_v4SPD16_eabi.lib : ltoa.obj (.text)
+                  0000bafa    00000002     --HOLE-- [fill = 0]
+                  0000bafc    00000058     boot.aem4f : boot.oem4f (.text)
+                  0000bb54    00000058     drivers.obj (.text:I2C0_TxData)
+                  0000bbac    00000058     usblib.lib : usbdcdc.obj (.text:USBDCDCPacketWrite)
+                  0000bc04    00000058     ti.uia.sysbios.aem4f : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_write2__E)
+                  0000bc5c    00000056     usblib.lib : usbdma.obj (.text:uDMAUSBChannelRelease)
+                  0000bcb2    00000002     --HOLE-- [fill = 0]
+                  0000bcb4    00000054     drivers.obj (.text:I2C0_MasterInit)
+                  0000bd08    00000052     usblib.lib : usbulpi.obj (.text:ULPIConfigSet)
+                  0000bd5a    00000002     --HOLE-- [fill = 0]
+                  0000bd5c    00000050     driverlib.lib : sysctl.obj (.text:SysCtlPeripheralReset)
+                  0000bdac    00000050     usblib.lib : usbdcdesc.obj (.text:USBDCDConfigDescGet)
+                  0000bdfc    00000050                : usbdenum.obj (.text:USBDeviceResumeTickHandler)
+                  0000be4c    00000050     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_utils_Load_taskSwitchHook__E)
+                  0000be9c    00000050     ti.targets.arm.rtsarm.aem4f : Startup.oem4f (.text:xdc_runtime_Startup_exec__F)
+                  0000beec    00000050                                 : System.oem4f (.text:xdc_runtime_System_formatNum__I)
+                  0000bf3c    00000050                                 : Text.oem4f (.text:xdc_runtime_Text_visitRope2__I)
+                  0000bf8c    0000004e     driverlib.lib : usb.obj (.text:USBDevEndpointStallClear)
+                  0000bfda    0000004c     usblib.lib : usbdcdesc.obj (.text:ConfigAlternateInterfaceGet)
+                  0000c026    0000004c                : usbdconfig.obj (.text:GetEPDescriptorType)
+                  0000c072    0000004c                : usbdcdc.obj (.text:HandleEndpoints)
+                  0000c0be    00000002     --HOLE-- [fill = 0]
+                  0000c0c0    0000004c     uart_tivaware.aem4f : UART.oem4f (.text:UART_Params_init)
+                  0000c10c    0000004c     driverlib.lib : usb.obj (.text:USBEndpointDMAConfigSet)
+                  0000c158    0000004c     rtsv7M4_T_le_v4SPD16_eabi.lib : atoi.obj (.text)
+                  0000c1a4    0000004c                                   : rand.obj (.text)
+                  0000c1f0    0000004a     usblib.lib : usbdma.obj (.text:iDMAUSBChannelEnable)
+                  0000c23a    0000004a     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_tos_t2.obj (.text)
+                  0000c284    0000004a     usblib.lib : usbdma.obj (.text:uDMAUSBChannelDisable)
+                  0000c2ce    00000002     --HOLE-- [fill = 0]
+                  0000c2d0    00000048     EK_TM4C123GXL.obj (.text:EK_TM4C123GXL_initUSB)
+                  0000c318    00000048     driverlib.lib : gpio.obj (.text:GPIOPinConfigure)
+                  0000c360    00000048     usblib.lib : usbdcdc.obj (.text:HandleEP0Data)
+                  0000c3a8    00000048     driverlib.lib : i2c.obj (.text:I2CMasterInitExpClk)
+                  0000c3f0    00000048     uart_tivaware.aem4f : UART.oem4f (.text:UART_open)
+                  0000c438    00000048     usblib.lib : usbdenum.obj (.text:USBDStringIndexFromRequest)
+                  0000c480    00000048                : usbdenum.obj (.text:USBDeviceEnumResetHandler)
+                  0000c4c8    00000048     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_toi_t2.obj (.text)
+                  0000c510    00000048     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_BIOS_errorRaiseHook__I)
+                  0000c558    00000048                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excReserved__I)
+                  0000c5a0    00000048                   : BIOS.obj (.text:ti_sysbios_heaps_HeapMem_getStats__E)
+                  0000c5e8    00000048     driverlib.lib : udma.obj (.text:uDMAChannelAttributeDisable)
+                  0000c630    00000048     ti.targets.arm.rtsarm.aem4f : Assert.oem4f (.text:xdc_runtime_Assert_raise__I)
+                  0000c678    00000048                                 : Core-params.oem4f (.text:xdc_runtime_Core_assignParams__I)
+                  0000c6c0    00000044     USBCDCD_LoggerIdle.obj (.text:USBCDCD_LoggerIdle_sendData)
+                  0000c704    00000044     usblib.lib : usbdenum.obj (.text:USBDCDDeviceInfoInit)
+                  0000c748    00000044                : usbdenum.obj (.text:USBDGetInterface)
+                  0000c78c    00000044     driverlib.lib : usb.obj (.text:USBEndpointDataGet)
+                  0000c7d0    00000044     rtsv7M4_T_le_v4SPD16_eabi.lib : cpy_tbl.obj (.text)
+                  0000c814    00000044                                   : exit.obj (.text)
+                  0000c858    00000044                                   : fd_tou_t2.obj (.text)
+                  0000c89c    00000044                                   : xdtest.obj (.text)
+                  0000c8e0    00000044     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_stop__E)
+                  0000c924    00000044                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_disableInterrupt__E)
+                  0000c968    00000044                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_enableInterrupt__E)
+                  0000c9ac    00000044                   : BIOS.obj (.text:ti_sysbios_knl_Task_allBlockedFunction__I)
+                  0000c9f0    00000042     driverlib.lib : uart.obj (.text:UARTConfigSetExpClk)
+                  0000ca32    00000042     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Semaphore_pendTimeout__I)
+                  0000ca74    00000040     sensors.obj (.text:Clear_Array)
+                  0000cab4    00000040     EK_TM4C123GXL.obj (.text:EK_TM4C123GXL_initGeneral)
+                  0000caf4    00000040     rtsv7M4_T_le_v4SPD16_eabi.lib : signal.obj (.text)
+                  0000cb34    00000040     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_startup__E)
+                  0000cb74    00000040     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Semaphore_Object__create__S)
+                  0000cbb4    00000040     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_atexit__F)
+                  0000cbf4    0000003c     uart_tivaware.aem4f : UART.oem4f (.text:UART_close)
+                  0000cc30    0000003c     usblib.lib : usbdma.obj (.text:iDMAUSBChannelRelease)
+                  0000cc6c    0000003c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excSvCall__I)
+                  0000cca8    0000003c                   : BIOS.obj (.text:ti_sysbios_heaps_HeapMem_init__I)
+                  0000cce4    0000003c     ti.targets.arm.rtsarm.aem4f : Text.oem4f (.text:xdc_runtime_Text_xprintf__I)
+                  0000cd20    0000003a     usblib.lib : usbdcdesc.obj (.text:USBDCDConfigGetInterfaceEndpoint)
+                  0000cd5a    0000003a     driverlib.lib : usb.obj (.text:USBFIFOConfigSet)
+                  0000cd94    00000038     i2c_tivaware.aem4f : I2CTiva.oem4f (.text:I2CTiva_completeTransfer)
+                  0000cdcc    00000038                        : I2C.oem4f (.text:I2C_init)
+                  0000ce04    00000038     usblib.lib : usbdcdc.obj (.text:SendBreak)
+                  0000ce3c    00000038     uart_tivaware.aem4f : UART.oem4f (.text:UART_init)
+                  0000ce74    00000038     driverlib.lib : usb.obj (.text:USBIntStatusControl)
+                  0000ceac    00000038     usblib.lib : usbringbuf.obj (.text:USBRingBufAdvanceWrite)
+                  0000cee4    00000038     rtsv7M4_T_le_v4SPD16_eabi.lib : fs_tod_t2.obj (.text)
+                  0000cf1c    00000038     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excNoIsr__I)
+                  0000cf54    00000038                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_getStackInfo__E)
+                  0000cf8c    00000038                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_TaskSupport_start__E)
+                  0000cfc4    00000038     uartconsole_pem4f.oem4f (.text:ti_sysbios_gates_GateHwi_Object__create__S)
+                  0000cffc    00000038     uartconsole_pem4f.oem4f (.text:ti_sysbios_gates_GateMutex_Object__create__S)
+                  0000d034    00000038     uartconsole_pem4f.oem4f (.text:ti_sysbios_heaps_HeapMem_Object__create__S)
+                  0000d06c    00000038     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Queue_Object__create__S)
+                  0000d0a4    00000038     uartconsole_pem4f.oem4f (.text:ti_uia_sysbios_LoggerIdle_Object__create__S)
+                  0000d0dc    00000034     usblib.lib : usbtick.obj (.text:InternalUSBStartOfFrameTick)
+                  0000d110    00000034     driverlib.lib : sysctl.obj (.text:SysCtlPeripheralEnable)
+                  0000d144    00000034     UARTUtils.obj (.text:UARTUtils_deviceread)
+                  0000d178    00000034     UARTUtils.obj (.text:UARTUtils_devicewrite)
+                  0000d1ac    00000034     uart_tivaware.aem4f : UART.oem4f (.text:UART_read)
+                  0000d1e0    00000034                         : UART.oem4f (.text:UART_write)
+                  0000d214    00000034                         : UART.oem4f (.text:UART_writePolling)
+                  0000d248    00000034     UARTUtils.obj (.text:closeHandle)
+                  0000d27c    00000034     usblib.lib : usbdma.obj (.text:iDMAUSBChannelStatus)
+                  0000d2b0    00000034     rtsv7M4_T_le_v4SPD16_eabi.lib : feraiseexcept.obj (.text)
+                  0000d2e4    00000034     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excNmi__I)
+                  0000d318    00000034                   : BIOS.obj (.text:ti_sysbios_hal_Hwi_Instance_init__F)
+                  0000d34c    00000032     usblib.lib : usbdcdc.obj (.text:HandleConfigChange)
+                  0000d37e    00000032                : usbdcdesc.obj (.text:NextConfigDescGet)
+                  0000d3b0    00000032                : usbdcdc.obj (.text:ProcessNotificationToHost)
+                  0000d3e2    00000032     driverlib.lib : usb.obj (.text:USBDevEndpointStall)
+                  0000d414    00000032     usblib.lib : usbdma.obj (.text:iDMAUSBChannelDisable)
+                  0000d446    00000030                : usbdma.obj (.text:DMAUSBIntHandler)
+                  0000d476    00000030     i2c_tivaware.aem4f : I2CTiva.oem4f (.text:I2CTiva_close)
+                  0000d4a6    00000002     --HOLE-- [fill = 0]
+                  0000d4a8    00000030     usblib.lib : usbtick.obj (.text:InternalUSBTickInit)
+                  0000d4d8    00000030                : usbdenum.obj (.text:USBDGetConfiguration)
+                  0000d508    00000030     driverlib.lib : usb.obj (.text:USBEndpointDataPut)
+                  0000d538    00000030     usblib.lib : usbringbuf.obj (.text:UpdateIndexAtomic)
+                  0000d568    00000030     rtsv7M4_T_le_v4SPD16_eabi.lib : strncpy.obj (.text)
+                  0000d598    00000030                                   : xferaise.obj (.text)
+                  0000d5c8    00000030     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Idle_run__E)
+                  0000d5f8    00000030     ti.targets.arm.rtsarm.aem4f : Core-label.oem4f (.text:xdc_runtime_Core_assignLabel__I)
+                  0000d628    0000002f                                 : Text.oem4f (.text:xdc_runtime_Text_printVisFxn__I)
+                  0000d657    00000001     --HOLE-- [fill = 0]
+                  0000d658    0000002e     UARTUtils.obj (.text:UARTUtils_deviceopen)
+                  0000d686    0000002e     driverlib.lib : usb.obj (.text:USBEndpointDataSend)
+                  0000d6b4    0000002e     uartconsole_pem4f.oem4f (.text:malloc)
+                  0000d6e2    0000002e     rtsv7M4_T_le_v4SPD16_eabi.lib : i_tofd_t2.obj (.text)
+                  0000d710    0000002e                                   : raise.obj (.text)
+                  0000d73e    0000002e     USBCDCD_LoggerIdle.obj (.text:ti_sysbios_hal_Hwi_create)
+                  0000d76c    0000002e     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_sleepTimeout__I)
+                  0000d79a    0000002c     sensors.obj (.text:Accel_Init)
+                  0000d7c6    00000002     --HOLE-- [fill = 0]
+                  0000d7c8    0000002c     EK_TM4C123GXL.obj (.text:EK_TM4C123GXL_initUART)
+                  0000d7f4    0000002c     sensors.obj (.text:Magn_Init)
+                  0000d820    0000002c     usblib.lib : usbbuffer.obj (.text:USBBufferWrite)
+                  0000d84c    0000002c                : usbdesc.obj (.text:USBDescGet)
+                  0000d878    0000002c     uartconsole_pem4f.oem4f (.text:ti_sysbios_BIOS_exitFunc__I)
+                  0000d8a4    0000002c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_hal_Hwi_initStack:ti_sysbios_hal_Hwi_initStack)
+                  0000d8d0    0000002c     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Clock_doTick__I)
+                  0000d8fc    0000002c     usblib.lib : usbdma.obj (.text:uDMAUSBIntStatus)
+                  0000d928    0000002c     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_rtsExit__I)
+                  0000d954    0000002c                                 : Text.oem4f (.text:xdc_runtime_Text_cordText__F)
+                  0000d980    0000002a     driverlib.lib : gpio.obj (.text:GPIODirModeSet)
+                  0000d9aa    0000002a     usblib.lib : usbdcdesc.obj (.text:USBDCDConfigDescGetNum)
+                  0000d9d4    0000002a     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_putchar__I)
+                  0000d9fe    00000028     usblib.lib : usbbuffer.obj (.text:HandleRequestBuffer)
+                  0000da26    00000002     --HOLE-- [fill = 0]
+                  0000da28    00000028                : usbtick.obj (.text:InternalUSBRegisterTickHandler)
+                  0000da50    00000028                : usbdenum.obj (.text:USBDSetAddress)
+                  0000da78    00000028                : usbdesc.obj (.text:USBDescGetNum)
+                  0000daa0    00000028     driverlib.lib : usb.obj (.text:USBIntEnableControl)
+                  0000dac8    00000028     sysbios.aem4f : m3_Hwi_asm_switch.obj (.text:ti_sysbios_family_arm_m3_Hwi_initStacks__E)
+                  0000daf0    00000028                   : BIOS.obj (.text:ti_sysbios_gates_GateMutex_Instance_init__F)
+                  0000db18    00000028                   : BIOS.obj (.text:ti_sysbios_knl_Task_restore__E)
+                  0000db40    00000028     ti.uia.runtime.aem4f : LogSync.oem4f (.text:ti_uia_runtime_LogSync_Module_startup__F)
+                  0000db68    00000028     driverlib.lib : udma.obj (.text:uDMAChannelModeGet)
+                  0000db90    00000026     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_avprintf__F)
+                  0000dbb6    00000002     --HOLE-- [fill = 0]
+                  0000dbb8    00000024     gpio_tivaware.aem4f : GPIO.oem4f (.text:GPIO_init)
+                  0000dbdc    00000024     usblib.lib : usbdcdc.obj (.text:SendLineStateChange)
+                  0000dc00    00000024     UARTUtils.obj (.text:UARTUtils_systemAbort)
+                  0000dc24    00000024     driverlib.lib : usb.obj (.text:USBDevEndpointDataAck)
+                  0000dc48    00000024                   : usb.obj (.text:USBEndpointDMADisable)
+                  0000dc6c    00000024                   : usb.obj (.text:USBEndpointDMAEnable)
+                  0000dc90    00000024     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_BIOS_registerRTSLock__I)
+                  0000dcb4    00000024                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_Instance_finalize__F)
+                  0000dcd8    00000024     uartconsole_pem4f.oem4f (.text:ti_sysbios_gates_GateMutex_Object__delete__S)
+                  0000dcfc    00000024     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Clock_Module_startup__F)
+                  0000dd20    00000024     driverlib.lib : udma.obj (.text:uDMAChannelControlSet)
+                  0000dd44    00000024     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_vprintf__F)
+                  0000dd68    00000022     usblib.lib : usbdcdc.obj (.text:HandleDisconnect)
+                  0000dd8a    00000022                : usbdcdc.obj (.text:SendLineCodingChange)
+                  0000ddac    00000022                : usbdma.obj (.text:uDMAUSBChannelStatus)
+                  0000ddce    00000020                : usbdconfig.obj (.text:GetEndpointFIFOSize)
+                  0000ddee    00000020                : usbbuffer.obj (.text:HandleDataRemaining)
+                  0000de0e    00000002     --HOLE-- [fill = 0]
+                  0000de10    00000020     UARTUtils.obj (.text:UARTUtils_systemPutch)
+                  0000de30    00000020     usblib.lib : usbringbuf.obj (.text:USBRingBufAdvanceRead)
+                  0000de50    00000020                : usbmode.obj (.text:USBStackModeSet)
+                  0000de70    00000020     uartconsole_pem4f.oem4f (.text:ti_sysbios_BIOS_startFunc__I)
+                  0000de90    00000020     uartconsole_pem4f.oem4f (.text:ti_sysbios_family_arm_m3_Hwi_Object__delete__S)
+                  0000deb0    00000020     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_doTaskRestore__I)
+                  0000ded0    00000020     uartconsole_pem4f.oem4f (.text:ti_sysbios_gates_GateHwi_Object__delete__S)
+                  0000def0    00000020     uartconsole_pem4f.oem4f (.text:ti_sysbios_heaps_HeapMem_Object__delete__S)
+                  0000df10    00000020     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Semaphore_Object__destruct__S)
+                  0000df30    00000020     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_enter__I)
+                  0000df50    00000020     uartconsole_pem4f.oem4f (.text:ti_uia_sysbios_LoggerIdle_Object__delete__S)
+                  0000df70    00000020     ti.targets.arm.rtsarm.aem4f : Registry.oem4f (.text:xdc_runtime_Registry_findById__F)
+                  0000df90    0000001e     usblib.lib : usbdcdc.obj (.text:CheckAndSendBreak)
+                  0000dfae    0000001e     driverlib.lib : usb.obj (.text:USBULPIRegRead)
+                  0000dfcc    0000001e                   : usb.obj (.text:USBULPIRegWrite)
+                  0000dfea    00000002     --HOLE-- [fill = 0]
+                  0000dfec    0000001c                   : uart.obj (.text:UARTDisable)
+                  0000e008    0000001c     usblib.lib : usbdcdesc.obj (.text:USBDCDConfigGetInterface)
+                  0000e024    0000001c                : usbdenum.obj (.text:USBDCDStallEP0)
+                  0000e040    0000001c     driverlib.lib : usb.obj (.text:USBEndpointDataAvail)
+                  0000e05c    0000001c     usblib.lib : usbringbuf.obj (.text:USBRingBufContigFree)
+                  0000e078    0000001c     rtsv7M4_T_le_v4SPD16_eabi.lib : memccpy.obj (.text)
+                  0000e094    0000001c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_BIOS_rtsLock__I)
+                  0000e0b0    0000001c     uartconsole_pem4f.oem4f (.text:ti_sysbios_family_arm_m3_Hwi_Object__destruct__S)
+                  0000e0cc    0000001c     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Queue_Object__destruct__S)
+                  0000e0e8    0000001c     ti.uia.sysbios.aem4f : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_disable__F)
+                  0000e104    0000001c                          : LoggerIdle.oem4f (.text:ti_uia_sysbios_LoggerIdle_enable__F)
+                  0000e120    0000001c     ti.targets.arm.rtsarm.aem4f : Error.oem4f (.text:xdc_runtime_Error_check__F)
+                  0000e13c    0000001c                                 : Memory.oem4f (.text:xdc_runtime_Memory_valloc__F)
+                  0000e158    0000001a     usblib.lib : usbdcdc.obj (.text:DeviceConsumedAllData)
+                  0000e172    0000001a     driverlib.lib : usb.obj (.text:USBEndpointDMAChannel)
+                  0000e18c    0000001a     usblib.lib : usbringbuf.obj (.text:USBRingBufWrite)
+                  0000e1a6    0000001a     uartconsole_pem4f.oem4f (.text:xdc_runtime_System_aprintf__E)
+                  0000e1c0    0000001a     uartconsole_pem4f.oem4f (.text:xdc_runtime_System_printf__E)
+                  0000e1da    00000018     driverlib.lib : gpio.obj (.text:GPIOPinTypeGPIOOutput)
+                  0000e1f2    00000018     sensors.obj (.text:Gyro_Init)
+                  0000e20a    00000002     --HOLE-- [fill = 0]
+                  0000e20c    00000018     i2c_tivaware.aem4f : I2C.oem4f (.text:I2C_open)
+                  0000e224    00000018     usblib.lib : usbdcdc.obj (.text:SetDeferredOpFlag)
+                  0000e23c    00000018     UARTUtils.obj (.text:UARTUtils_deviceclose)
+                  0000e254    00000018     usblib.lib : usbdhandler.obj (.text:USB0DeviceIntHandler)
+                  0000e26c    00000018                : usbdcdesc.obj (.text:USBDCDConfigDescGetSize)
+                  0000e284    00000018                : usbdenum.obj (.text:USBDSetDescriptor)
+                  0000e29c    00000018                : usbdenum.obj (.text:USBDSyncFrame)
+                  0000e2b4    00000018     uartconsole_pem4f.oem4f (.text:free)
+                  0000e2cc    00000018     rtsv7M4_T_le_v4SPD16_eabi.lib : args_main.obj (.text)
+                  0000e2e4    00000018                                   : ll_mul_t2.obj (.text)
+                  0000e2fc    00000018                                   : strcmp.obj (.text)
+                  0000e314    00000018     uartconsole_pem4f.oem4f (.text:ti_sysbios_family_arm_lm4_Timer_Module__startupDone__F)
+                  0000e32c    00000018     uartconsole_pem4f.oem4f (.text:ti_sysbios_family_arm_m3_Hwi_Handle__label__S)
+                  0000e344    00000018     uartconsole_pem4f.oem4f (.text:ti_sysbios_family_arm_m3_Hwi_Module__startupDone__F)
+                  0000e35c    00000018     sysbios.aem4f : m3_TaskSupport_asm.obj (.text:ti_sysbios_family_arm_m3_TaskSupport_swap__E)
+                  0000e374    00000018     uartconsole_pem4f.oem4f (.text:ti_sysbios_gates_GateHwi_Handle__label__S)
+                  0000e38c    00000018     uartconsole_pem4f.oem4f (.text:ti_sysbios_gates_GateMutex_Handle__label__S)
+                  0000e3a4    00000018     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_gates_GateMutex_leave__E)
+                  0000e3bc    00000018     uartconsole_pem4f.oem4f (.text:ti_sysbios_hal_Timer_Module__startupDone__F)
+                  0000e3d4    00000018     uartconsole_pem4f.oem4f (.text:ti_sysbios_heaps_HeapMem_Handle__label__S)
+                  0000e3ec    00000018     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Task_Handle__label__S)
+                  0000e404    00000018     uartconsole_pem4f.oem4f (.text:ti_uia_sysbios_LoggerIdle_Handle__label__S)
+                  0000e41c    00000018     driverlib.lib : udma.obj (.text:uDMAChannelDisable)
+                  0000e434    00000018                   : udma.obj (.text:uDMAChannelEnable)
+                  0000e44c    00000018     ti.targets.arm.rtsarm.aem4f : Text.oem4f (.text:xdc_runtime_Text_ropeText__F)
+                  0000e464    00000016     usblib.lib : usbdcdc.obj (.text:CheckAndSendLineCodingChange)
+                  0000e47a    00000016                : usbdcdc.obj (.text:CheckAndSendLineStateChange)
+                  0000e490    00000016     driverlib.lib : i2c.obj (.text:I2CMasterErr)
+                  0000e4a6    00000016     usblib.lib : usbbuffer.obj (.text:USBBufferInit)
+                  0000e4bc    00000016                : usbringbuf.obj (.text:USBRingBufFlush)
+                  0000e4d2    00000016                : usbringbuf.obj (.text:USBRingBufUsed)
+                  0000e4e8    00000016     rtsv7M4_T_le_v4SPD16_eabi.lib : memchr.obj (.text)
+                  0000e4fe    00000016                                   : strchr.obj (.text)
+                  0000e514    00000014     driverlib.lib : sysctl.obj (.text:SysCtlUSBPLLEnable)
+                  0000e528    00000014                   : uart.obj (.text:UARTEnable)
+                  0000e53c    00000014     UARTUtils.obj (.text:UARTUtils_systemReady)
+                  0000e550    00000014     usblib.lib : usbdenum.obj (.text:USBDCDRequestDataEP0)
+                  0000e564    00000014                : usbdenum.obj (.text:USBDCDSendDataEP0)
+                  0000e578    00000014     driverlib.lib : usb.obj (.text:USBDMAChannelConfigSet)
+                  0000e58c    00000014                   : usb.obj (.text:USBHostResume)
+                  0000e5a0    00000014                   : usb.obj (.text:USBIntEnableEndpoint)
+                  0000e5b4    00000014                   : usb.obj (.text:_USBIndexWrite)
+                  0000e5c8    00000014     rtsv7M4_T_le_v4SPD16_eabi.lib : _lock.obj (.text)
+                  0000e5dc    00000014                                   : strlen.obj (.text)
+                  0000e5f0    00000014     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_switchFromBootStack__E)
+                  0000e604    00000014     uartconsole_pem4f.oem4f (.text:ti_sysbios_heaps_HeapMem_Object__get__S)
+                  0000e618    00000014     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_abort__F)
+                  0000e62c    00000012     driverlib.lib : gpio.obj (.text:GPIOPinTypeGPIOInput)
+                  0000e63e    00000012                   : gpio.obj (.text:GPIOPinTypeI2C)
+                  0000e650    00000012                   : gpio.obj (.text:GPIOPinTypeI2CSCL)
+                  0000e662    00000012                   : gpio.obj (.text:GPIOPinTypeUART)
+                  0000e674    00000012                   : gpio.obj (.text:GPIOPinTypeUSBAnalog)
+                  0000e686    00000012     usblib.lib : usbdcdc.obj (.text:HandleResume)
+                  0000e698    00000012                : usbdcdc.obj (.text:HandleSuspend)
+                  0000e6aa    00000012                : usbbuffer.obj (.text:HandleTxComplete)
+                  0000e6bc    00000012     UARTUtils.obj (.text:UARTUtils_devicelseek)
+                  0000e6ce    00000012     driverlib.lib : usb.obj (.text:USBDMAChannelDisable)
+                  0000e6e0    00000012                   : usb.obj (.text:USBDMAChannelEnable)
+                  0000e6f2    00000012                   : usb.obj (.text:USBDMAChannelIntDisable)
+                  0000e704    00000012                   : usb.obj (.text:USBDMAChannelIntEnable)
+                  0000e716    00000012     usblib.lib : usbringbuf.obj (.text:USBRingBufFree)
+                  0000e728    00000012     USBCDCD_LoggerIdle.obj (.text:cbRxHandler)
+                  0000e73a    00000012     USBCDCD_LoggerIdle.obj (.text:cbTxHandler)
+                  0000e74c    00000012     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_zero_init.obj (.text:decompress:ZI)
+                  0000e75e    00000012                                   : xdclass.obj (.text)
+                  0000e770    00000012     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_hal_Hwi_Module_startup__F)
+                  0000e782    00000012                   : BIOS.obj (.text:ti_sysbios_hal_Timer_Module_startup__F)
+                  0000e794    00000012     uartconsole_pem4f.oem4f (.text:xdc_runtime_Startup_exec__I)
+                  0000e7a6    00000010     driverlib.lib : interrupt.obj (.text:IntMasterDisable)
+                  0000e7b6    00000010                   : interrupt.obj (.text:IntMasterEnable)
+                  0000e7c6    00000010     UARTUtils.obj (.text:UARTUtils_devicerename)
+                  0000e7d6    00000010     driverlib.lib : usb.obj (.text:USBEndpointStatus)
+                  0000e7e6    00000010     usblib.lib : usbringbuf.obj (.text:USBRingBufContigUsed)
+                  0000e7f6    00000010                : usbringbuf.obj (.text:USBRingBufWriteOne)
+                  0000e806    00000010     rtsv7M4_T_le_v4SPD16_eabi.lib : strcpy.obj (.text)
+                  0000e816    00000002     --HOLE-- [fill = 0]
+                  0000e818    00000010     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_BIOS_getCpuFreq__E)
+                  0000e828    00000010                   : BIOS.obj (.text:ti_sysbios_BIOS_setThreadType__E)
+                  0000e838    00000010                   : BIOS.obj (.text:ti_sysbios_BIOS_start__E)
+                  0000e848    00000010                   : BIOS.obj (.text:ti_sysbios_family_arm_lm4_TimestampProvider_rolloverFunc__E)
+                  0000e858    00000010                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_excHandler__I)
+                  0000e868    00000010                   : m3_TaskSupport_asm.obj (.text:ti_sysbios_family_arm_m3_TaskSupport_glue)
+                  0000e878    00000010                   : BIOS.obj (.text:ti_sysbios_gates_GateMutex_Instance_finalize__F)
+                  0000e888    00000010     uartconsole_pem4f.oem4f (.text:ti_sysbios_hal_Hwi_HwiProxy_Object__create__S)
+                  0000e898    00000010     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Semaphore_Instance_finalize__F)
+                  0000e8a8    00000010     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Task_Object__get__S)
+                  0000e8b8    00000010     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_disable__E)
+                  0000e8c8    00000010     ti.targets.arm.rtsarm.aem4f : Gate.oem4f (.text:xdc_runtime_Gate_leaveSystem__F)
+                  0000e8d8    00000010                                 : Memory.oem4f (.text:xdc_runtime_Memory_free__F)
+                  0000e8e8    00000010                                 : SysCallback.oem4f (.text:xdc_runtime_SysCallback_abort__F)
+                  0000e8f8    00000010                                 : SysCallback.oem4f (.text:xdc_runtime_SysCallback_exit__F)
+                  0000e908    00000010                                 : SysCallback.oem4f (.text:xdc_runtime_SysCallback_flush__F)
+                  0000e918    00000010                                 : SysCallback.oem4f (.text:xdc_runtime_SysCallback_putch__F)
+                  0000e928    00000010                                 : SysCallback.oem4f (.text:xdc_runtime_SysCallback_ready__F)
+                  0000e938    00000010                                 : System.oem4f (.text:xdc_runtime_System_vsnprintf__F)
+                  0000e948    0000000e     usblib.lib : usbdma.obj (.text:DMAUSBIntStatusClear)
+                  0000e956    0000000e     driverlib.lib : uart.obj (.text:UARTCharGetNonBlocking)
+                  0000e964    0000000e                   : uart.obj (.text:UARTCharPutNonBlocking)
+                  0000e972    0000000e     UARTUtils.obj (.text:UARTUtils_deviceunlink)
+                  0000e980    0000000e     usblib.lib : usbdcdc.obj (.text:USBDCDCTxPacketAvailable)
+                  0000e98e    0000000e     driverlib.lib : usb.obj (.text:USBDMAChannelStatus)
+                  0000e99c    0000000e                   : usb.obj (.text:USBDevLPMDisable)
+                  0000e9aa    0000000e                   : usb.obj (.text:USBDevLPMEnable)
+                  0000e9b8    0000000e                   : usb.obj (.text:USBULPIDisable)
+                  0000e9c6    0000000e                   : usb.obj (.text:USBULPIEnable)
+                  0000e9d4    0000000e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_none.obj (.text:decompress:none)
+                  0000e9e2    0000000e     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Queue_empty__E)
+                  0000e9f0    0000000c     uartconsole_pem4f.oem4f (.text:.bootCodeSection:ti_catalog_arm_cortexm4_tiva_ce_Boot_init__I)
+                  0000e9fc    0000000c     driverlib.lib : cpu.obj (.text:CPUcpsid)
+                  0000ea08    0000000c                   : cpu.obj (.text:CPUcpsie)
+                  0000ea14    0000000c                   : usb.obj (.text:USBEndpointPacketCountSet)
+                  0000ea20    0000000c                   : usb.obj (.text:USBLPMIntEnable)
+                  0000ea2c    0000000c     usblib.lib : usbringbuf.obj (.text:USBRingBufInit)
+                  0000ea38    0000000c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_masterDisable__I)
+                  0000ea44    0000000c                   : BIOS.obj (.text:ti_sysbios_family_arm_lm4_TimestampProvider_startTimer__E)
+                  0000ea50    0000000c     uartconsole_pem4f.oem4f (.text:ti_sysbios_family_arm_m3_Hwi_Params__init__S)
+                  0000ea5c    0000000c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_disableFxn__E)
+                  0000ea68    0000000c                   : BIOS.obj (.text:ti_sysbios_gates_GateHwi_enter__E)
+                  0000ea74    0000000c     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Queue_Object__get__S)
+                  0000ea80    0000000c     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Semaphore_Params__init__S)
+                  0000ea8c    0000000c     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_utils_Load_taskRegHook__E)
+                  0000ea98    0000000c     ti.targets.arm.rtsarm.aem4f : Error.oem4f (.text:xdc_runtime_Error_init__F)
+                  0000eaa4    0000000c                                 : Gate.oem4f (.text:xdc_runtime_Gate_enterSystem__F)
+                  0000eab0    0000000c                                 : Memory.oem4f (.text:xdc_runtime_Memory_calloc__F)
+                  0000eabc    0000000c                                 : Memory.oem4f (.text:xdc_runtime_Memory_getMaxDefaultTypeAlign__F)
+                  0000eac8    0000000c                                 : System.oem4f (.text:xdc_runtime_System_exit__F)
+                  0000ead4    0000000c                                 : System.oem4f (.text:xdc_runtime_System_lastFxn__I)
+                  0000eae0    0000000a     driverlib.lib : i2c.obj (.text:I2CMasterDisable)
+                  0000eaea    0000000a                   : i2c.obj (.text:I2CMasterEnable)
+                  0000eaf4    0000000a     i2c_tivaware.aem4f : I2CTiva.oem4f (.text:I2CTiva_init)
+                  0000eafe    0000000a                        : I2C.oem4f (.text:I2C_Params_init)
+                  0000eb08    0000000a     driverlib.lib : uart.obj (.text:UARTCharGet)
+                  0000eb12    0000000a                   : uart.obj (.text:UARTCharPut)
+                  0000eb1c    0000000a                   : uart.obj (.text:UARTIntDisable)
+                  0000eb26    0000000a                   : uart.obj (.text:UARTIntStatus)
+                  0000eb30    0000000a     USBCDCD_LoggerIdle.obj (.text:USBCDCD_LoggerIdle_hwiHandler)
+                  0000eb3a    0000000a     driverlib.lib : usb.obj (.text:USBClockEnable)
+                  0000eb44    0000000a                   : usb.obj (.text:USBControllerVersion)
+                  0000eb4e    0000000a                   : usb.obj (.text:USBDMAChannelAddressSet)
+                  0000eb58    0000000a                   : usb.obj (.text:USBDMAChannelCountSet)
+                  0000eb62    0000000a                   : usb.obj (.text:USBDevConnect)
+                  0000eb6c    0000000a                   : usb.obj (.text:USBDevDisconnect)
+                  0000eb76    0000000a                   : usb.obj (.text:USBIntStatusEndpoint)
+                  0000eb80    0000000a     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_hal_Hwi_Instance_finalize__F)
+                  0000eb8a    0000000a     uartconsole_pem4f.oem4f (.text:xdc_runtime_IHeap_alloc)
+                  0000eb94    0000000a     uartconsole_pem4f.oem4f (.text:xdc_runtime_IHeap_free)
+                  0000eb9e    0000000a     uartconsole_pem4f.oem4f (.text:xdc_runtime_Text_visitRope__I)
+                  0000eba8    00000008     driverlib.lib : i2c.obj (.text:I2CMasterBusy)
+                  0000ebb0    00000008                   : i2c.obj (.text:I2CMasterIntClear)
+                  0000ebb8    00000008                   : i2c.obj (.text:I2CMasterSlaveAddrSet)
+                  0000ebc0    00000008     i2c_tivaware.aem4f : I2CTiva.oem4f (.text:I2CTiva_blockingCallback)
+                  0000ebc8    00000008     driverlib.lib : uart.obj (.text:UARTIntEnable)
+                  0000ebd0    00000008     uart_tivaware.aem4f : UARTTiva.oem4f (.text:UARTTiva_init)
+                  0000ebd8    00000008     driverlib.lib : usb.obj (.text:USBDevMode)
+                  0000ebe0    00000008                   : usb.obj (.text:USBFIFOAddrGet)
+                  0000ebe8    00000008                   : usb.obj (.text:USBOTGMode)
+                  0000ebf0    00000008     usblib.lib : usbdma.obj (.text:iDMAUSBChannelIntDisable)
+                  0000ebf8    00000008                : usbdma.obj (.text:iDMAUSBChannelIntEnable)
+                  0000ec00    00000008     uart_tivaware.aem4f : UARTTiva.oem4f (.text:readSemCallback)
+                  0000ec08    00000008     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_startup__E)
+                  0000ec10    00000008                   : BIOS.obj (.text:ti_sysbios_knl_Idle_loop__E)
+                  0000ec18    00000008     uart_tivaware.aem4f : UARTTiva.oem4f (.text:writeSemCallback)
+                  0000ec20    00000006     driverlib.lib : gpio.obj (.text:GPIOPinRead)
+                  0000ec26    00000006                   : gpio.obj (.text:GPIOPinWrite)
+                  0000ec2c    00000006                   : i2c.obj (.text:I2CMasterIntDisable)
+                  0000ec32    00000006                   : i2c.obj (.text:I2CMasterIntEnable)
+                  0000ec38    00000006                   : sysctl.obj (.text:SysCtlDelay)
+                  0000ec3e    00000006                   : uart.obj (.text:UARTFIFOLevelSet)
+                  0000ec44    00000006     usblib.lib : usbbuffer.obj (.text:USBBufferFlush)
+                  0000ec4a    00000006                : usbbuffer.obj (.text:USBBufferSpaceAvailable)
+                  0000ec50    00000006     driverlib.lib : usb.obj (.text:USBDMAChannelIntStatus)
+                  0000ec56    00000006                   : usb.obj (.text:USBDevLPMConfig)
+                  0000ec5c    00000006                   : usb.obj (.text:USBLPMIntStatus)
+                  0000ec62    00000006     ti.targets.arm.rtsarm.aem4f : xdc_noinit.oem4f (.text:__xdc__init)
+                  0000ec68    00000006     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
+                  0000ec6e    00000006     usblib.lib : usbdma.obj (.text:iDMAUSBIntStatus)
+                  0000ec74    00000006     Boot.aem4f : Boot_sysctl.oem4f (.text:ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlDelayI__I)
+                  0000ec7a    00000006     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_TimestampProvider_Module_startup__F)
+                  0000ec80    00000006                   : BIOS.obj (.text:ti_sysbios_family_arm_m3_Hwi_restoreFxn__E)
+                  0000ec86    00000006                   : BIOS.obj (.text:ti_sysbios_gates_GateHwi_leave__E)
+                  0000ec8c    00000006                   : BIOS.obj (.text:ti_sysbios_heaps_HeapMem_isBlocking__E)
+                  0000ec92    00000006                   : BIOS.obj (.text:ti_sysbios_knl_Queue_Instance_init__F)
+                  0000ec98    00000006                   : BIOS.obj (.text:ti_sysbios_knl_Swi_Module_startup__F)
+                  0000ec9e    00000006     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_Module_startup__F)
+                  0000eca4    00000004     usblib.lib : usbdma.obj (.text:DMAUSBStatus)
+                  0000eca8    00000004     driverlib.lib : i2c.obj (.text:I2CMasterControl)
+                  0000ecac    00000004                   : i2c.obj (.text:I2CMasterDataGet)
+                  0000ecb0    00000004                   : i2c.obj (.text:I2CMasterDataPut)
+                  0000ecb4    00000004                   : uart.obj (.text:UARTIntClear)
+                  0000ecb8    00000004                   : usb.obj (.text:USBDevAddrSet)
+                  0000ecbc    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_BIOS_RtsGateProxy_enter__E)
+                  0000ecc0    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_BIOS_RtsGateProxy_leave__E)
+                  0000ecc4    00000004     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_getPeriod__E)
+                  0000ecc8    00000004                   : BIOS.obj (.text:ti_sysbios_family_arm_lm4_Timer_masterEnable__I)
+                  0000eccc    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_family_arm_m3_TaskSupport_Module__startupDone__S)
+                  0000ecd0    00000004     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_gates_GateHwi_query__F)
+                  0000ecd4    00000004                   : BIOS.obj (.text:ti_sysbios_gates_GateMutex_query__F)
+                  0000ecd8    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S)
+                  0000ecdc    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_hal_Hwi_HwiProxy_Object__delete__S)
+                  0000ece0    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_hal_Timer_TimerProxy_Module__startupDone__S)
+                  0000ece4    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_hal_Timer_TimerProxy_getPeriod__E)
+                  0000ece8    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_heaps_HeapMem_Module_GateProxy_enter__E)
+                  0000ecec    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_heaps_HeapMem_Module_GateProxy_leave__E)
+                  0000ecf0    00000004     uartconsole_pem4f.oem4f (.text:ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S)
+                  0000ecf4    00000004     sysbios.aem4f : BIOS.obj (.text:ti_sysbios_knl_Task_startup__E)
+                  0000ecf8    00000004     uartconsole_pem4f.oem4f (.text:ti_uia_runtime_LogSync_CpuTimestampProxy_Module__startupDone__S)
+                  0000ecfc    00000004     uartconsole_pem4f.oem4f (.text:ti_uia_runtime_LogSync_GlobalTimestampProxy_Module__startupDone__S)
+                  0000ed00    00000004     ti.targets.arm.rtsarm.aem4f : Error.oem4f (.text:xdc_runtime_Error_getSite__F)
+                  0000ed04    00000004     uartconsole_pem4f.oem4f (.text:xdc_runtime_Memory_HeapProxy_alloc__E)
+                  0000ed08    00000004     uartconsole_pem4f.oem4f (.text:xdc_runtime_Memory_HeapProxy_free__E)
+                  0000ed0c    00000004     uartconsole_pem4f.oem4f (.text:xdc_runtime_System_Module_GateProxy_enter__E)
+                  0000ed10    00000004     uartconsole_pem4f.oem4f (.text:xdc_runtime_System_Module_GateProxy_leave__E)
+                  0000ed14    00000004     ti.targets.arm.rtsarm.aem4f : System.oem4f (.text:xdc_runtime_System_aprintf_va__F)
+                  0000ed18    00000004                                 : System.oem4f (.text:xdc_runtime_System_printf_va__F)
+                  0000ed1c    00000004     uartconsole_pem4f.oem4f (.text:xdc_runtime_System_vsnprintf__E)
+                  0000ed20    00000004     uartconsole_pem4f.oem4f (.text:xdc_runtime_TimestampNull_Module__startupDone__S)
+                  0000ed24    00000004     uartconsole_pem4f.oem4f (.text:xdc_runtime_Timestamp_Module__startupDone__S)
+
+.const     0    0000ed28    00002d1a     
+                  0000ed28    000020c4     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_charTab__A)
+                  00010dec    00000102     rtsv7M4_T_le_v4SPD16_eabi.lib : ctype.obj (.const:.string:_ctypes_)
+                  00010eee    000000d8     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_priorities__A)
+                  00010fc6    00000002     uartconsole_pem4f.oem4f (.const:ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__id__C)
+                  00010fc8    00000090     driverlib.lib : gpio.obj (.const:g_pui32GPIOBaseAddrs)
+                  00011058    00000070                   : interrupt.obj (.const)
+                  000110c8    0000006c                   : sysctl.obj (.const:g_pui32Xtals)
+                  00011134    00000048     uartconsole_pem4f.oem4f (.const:.string)
+                  0001117c    00000048     EK_TM4C123GXL.obj (.const)
+                  000111c4    0000003c     EK_TM4C123GXL.obj (.const:gpioHWAttrs)
+                  00011200    00000038     usblib.lib : usbdcdc.obj (.const)
+                  00011238    00000036     USBCDCD_LoggerIdle.obj (.const:.string:configString)
+                  0001126e    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_BIOS_Module__id__C)
+                  00011270    00000034     usblib.lib : usbdenum.obj (.const:g_psUSBDStdRequests)
+                  000112a4    00000034     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_Module__FXNS__C)
+                  000112d8    00000030     usblib.lib : usbdcdc.obj (.const:g_sCDCHandlers)
+                  00011308    00000030     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Object__PARAMS__C)
+                  00011338    0000002c     USBCDCD_LoggerIdle.obj (.const:.string:controlInterfaceString)
+                  00011364    0000002c     uartconsole_pem4f.oem4f (.const:ti_sysbios_hal_Hwi_Object__PARAMS__C)
+                  00011390    00000028     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Module__FXNS__C)
+                  000113b8    00000028     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_sfxnTab__A)
+                  000113e0    00000024     USBCDCD_LoggerIdle.obj (.const:.string:manufacturerString)
+                  00011404    00000024     EK_TM4C123GXL.obj (.const:I2C_config)
+                  00011428    00000024     uart_tivaware.aem4f : UARTTiva.oem4f (.const:UARTTiva_fxnTable)
+                  0001144c    00000024     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateHwi_Module__FXNS__C)
+                  00011470    00000024     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_Module__FXNS__C)
+                  00011494    00000024     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Object__PARAMS__C)
+                  000114b8    00000024     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Object__PARAMS__C)
+                  000114dc    00000024     USBCDCD_LoggerIdle.obj (.const:txBuffer)
+                  00011500    00000023     usblib.lib : usbdcdc.obj (.const:.string:g_pui8CDCSerCommInterface)
+                  00011523    00000022     USBCDCD_LoggerIdle.obj (.const:.string:productString)
+                  00011545    00000001     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_policy__C)
+                  00011546    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_lm4_TimestampProvider_useClockTimer__C)
+                  00011548    00000020     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Object__DESC__C)
+                  00011568    00000020     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateHwi_Object__DESC__C)
+                  00011588    00000020     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_Object__DESC__C)
+                  000115a8    00000020     uartconsole_pem4f.oem4f (.const:ti_sysbios_hal_Hwi_Object__DESC__C)
+                  000115c8    00000020     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Object__DESC__C)
+                  000115e8    00000020     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Queue_Object__DESC__C)
+                  00011608    00000020     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Object__DESC__C)
+                  00011628    00000020     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_Object__DESC__C)
+                  00011648    00000018     USBCDCD_LoggerIdle.obj (.const)
+                  00011660    00000018     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateHwi_Object__PARAMS__C)
+                  00011678    00000018     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_Object__PARAMS__C)
+                  00011690    00000018     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Queue_Object__PARAMS__C)
+                  000116a8    00000018     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_hooks__A)
+                  000116c0    00000018     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_Object__PARAMS__C)
+                  000116d8    00000017     usblib.lib : usbdcdc.obj (.const:.string)
+                  000116ef    00000016     USBCDCD_LoggerIdle.obj (.const:.string)
+                  00011705    00000001     --HOLE-- [fill = 0]
+                  00011706    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Module__id__C)
+                  00011708    00000014     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_firstFxns__A)
+                  0001171c    00000014     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_sfxnRts__A)
+                  00011730    00000011     ti.targets.arm.rtsarm.aem4f : System.oem4f (.const)
+                  00011741    00000001     --HOLE-- [fill = 0]
+                  00011742    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Module__loggerDefined__C)
+                  00011744    00000010     i2c_tivaware.aem4f : I2CTiva.oem4f (.const)
+                  00011754    00000010     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_nodeTab__A)
+                  00011764    00000008     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_excHookFuncs__A)
+                  0001176c    00000008     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Idle_coreList__A)
+                  00011774    00000008     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Idle_coreList__C)
+                  0001177c    00000008     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Idle_funcList__A)
+                  00011784    00000008     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Idle_funcList__C)
+                  0001178c    00000008     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_hooks__C)
+                  00011794    00000008     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_firstFxns__C)
+                  0001179c    00000008     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_lastFxns__A)
+                  000117a4    00000008     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_lastFxns__C)
+                  000117ac    00000004     uartconsole_pem4f.oem4f (.const:ti_catalog_arm_cortexm4_tiva_ce_Boot_A_mustUseEnhancedClockMode__C)
+                  000117b0    00000004     uartconsole_pem4f.oem4f (.const:ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsEnabled__C)
+                  000117b4    00000004     uartconsole_pem4f.oem4f (.const:ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsIncluded__C)
+                  000117b8    00000004     uartconsole_pem4f.oem4f (.const:ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsMask__C)
+                  000117bc    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_BIOS_Module__diagsEnabled__C)
+                  000117c0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_BIOS_Module__diagsIncluded__C)
+                  000117c4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_BIOS_Module__diagsMask__C)
+                  000117c8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_BIOS_installedErrorHook__C)
+                  000117cc    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_lm4_Timer_enableFunc__C)
+                  000117d0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_lm4_Timer_numTimerDevices__C)
+                  000117d4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_lm4_Timer_startupNeeded__C)
+                  000117d8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_NMI__C)
+                  000117dc    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_alreadyDefined__C)
+                  000117e0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_busFault__C)
+                  000117e4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_debugMon__C)
+                  000117e8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_hardFault__C)
+                  000117ec    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_memFault__C)
+                  000117f0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_noIsr__C)
+                  000117f4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_reserved__C)
+                  000117f8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_svCall__C)
+                  000117fc    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_E_usageFault__C)
+                  00011800    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_LD_end__C)
+                  00011804    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_LM_begin__C)
+                  00011808    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Module__diagsEnabled__C)
+                  0001180c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Module__diagsIncluded__C)
+                  00011810    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Module__diagsMask__C)
+                  00011814    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Module__loggerFxn1__C)
+                  00011818    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Module__loggerFxn8__C)
+                  0001181c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_Module__loggerObj__C)
+                  00011820    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_NUM_INTERRUPTS__C)
+                  00011824    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_ccr__C)
+                  00011828    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_dispatchTable__C)
+                  0001182c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_excHandlerFunc__C)
+                  00011830    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_excHookFuncs__C)
+                  00011834    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_priGroup__C)
+                  00011838    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_family_arm_m3_Hwi_priorities__C)
+                  0001183c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_A_badContext__C)
+                  00011840    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_Instance_State_sem__O)
+                  00011844    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_Module__diagsEnabled__C)
+                  00011848    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_Module__diagsIncluded__C)
+                  0001184c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_Module__diagsMask__C)
+                  00011850    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_A_align__C)
+                  00011854    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_A_heapSize__C)
+                  00011858    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_A_invalidFree__C)
+                  0001185c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_A_zeroBlock__C)
+                  00011860    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_E_memory__C)
+                  00011864    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Module__diagsEnabled__C)
+                  00011868    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Module__diagsIncluded__C)
+                  0001186c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Module__diagsMask__C)
+                  00011870    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Module__gateObj__C)
+                  00011874    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Object__count__C)
+                  00011878    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_reqAlign__C)
+                  0001187c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_LM_begin__C)
+                  00011880    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_LM_tick__C)
+                  00011884    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_LW_delayed__C)
+                  00011888    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module_State_clockQ__O)
+                  0001188c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module__diagsEnabled__C)
+                  00011890    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module__diagsIncluded__C)
+                  00011894    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module__diagsMask__C)
+                  00011898    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module__loggerFxn1__C)
+                  0001189c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module__loggerFxn2__C)
+                  000118a0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module__loggerObj__C)
+                  000118a4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_A_badContext__C)
+                  000118a8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_A_noEvents__C)
+                  000118ac    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_A_overflow__C)
+                  000118b0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_A_pendTaskDisabled__C)
+                  000118b4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Instance_State_pendQ__O)
+                  000118b8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_LM_pend__C)
+                  000118bc    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_LM_post__C)
+                  000118c0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Module__diagsEnabled__C)
+                  000118c4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Module__diagsIncluded__C)
+                  000118c8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Module__diagsMask__C)
+                  000118cc    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Module__loggerFxn2__C)
+                  000118d0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Module__loggerFxn4__C)
+                  000118d4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Module__loggerObj__C)
+                  000118d8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_A_badTimeout__C)
+                  000118dc    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_A_sleepTaskDisabled__C)
+                  000118e0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_LD_block__C)
+                  000118e4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_LD_exit__C)
+                  000118e8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_LD_ready__C)
+                  000118ec    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_LM_sleep__C)
+                  000118f0    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_LM_switch__C)
+                  000118f4    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module_State_inactiveQ__O)
+                  000118f8    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module__diagsEnabled__C)
+                  000118fc    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module__diagsIncluded__C)
+                  00011900    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module__diagsMask__C)
+                  00011904    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module__loggerFxn2__C)
+                  00011908    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module__loggerFxn4__C)
+                  0001190c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module__loggerObj__C)
+                  00011910    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Object__count__C)
+                  00011914    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Object__heap__C)
+                  00011918    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_allBlockedFunc__C)
+                  0001191c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_numConstructedTasks__C)
+                  00011920    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_LS_cpuLoad__C)
+                  00011924    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_LS_hwiLoad__C)
+                  00011928    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_LS_taskLoad__C)
+                  0001192c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module_State_taskList__O)
+                  00011930    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__diagsEnabled__C)
+                  00011934    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__diagsIncluded__C)
+                  00011938    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__diagsMask__C)
+                  0001193c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__loggerFxn1__C)
+                  00011940    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__loggerFxn2__C)
+                  00011944    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__loggerFxn4__C)
+                  00011948    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__loggerObj__C)
+                  0001194c    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_postUpdate__C)
+                  00011950    00000004     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_windowInMs__C)
+                  00011954    00000004     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_Module__diagsEnabled__C)
+                  00011958    00000004     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_Module__diagsIncluded__C)
+                  0001195c    00000004     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_Module__diagsMask__C)
+                  00011960    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Assert_E_assertFailed__C)
+                  00011964    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Core_A_initializedParams__C)
+                  00011968    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Core_Module__diagsEnabled__C)
+                  0001196c    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Core_Module__diagsIncluded__C)
+                  00011970    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Core_Module__diagsMask__C)
+                  00011974    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_E_memory__C)
+                  00011978    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_Module__diagsEnabled__C)
+                  0001197c    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_Module__diagsIncluded__C)
+                  00011980    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_Module__diagsMask__C)
+                  00011984    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_Module__loggerFxn8__C)
+                  00011988    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_Module__loggerObj__C)
+                  0001198c    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_raiseHook__C)
+                  00011990    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_IGateProvider_Interface__BASE__C)
+                  00011994    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_IHeap_Interface__BASE__C)
+                  00011998    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_ILogger_Interface__BASE__C)
+                  0001199c    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_IModule_Interface__BASE__C)
+                  000119a0    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Log_L_error__C)
+                  000119a4    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Log_L_warning__C)
+                  000119a8    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Main_Module__diagsEnabled__C)
+                  000119ac    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Main_Module__diagsIncluded__C)
+                  000119b0    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Main_Module__diagsMask__C)
+                  000119b4    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Main_Module__loggerFxn2__C)
+                  000119b8    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Main_Module__loggerFxn4__C)
+                  000119bc    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Main_Module__loggerObj__C)
+                  000119c0    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Memory_defaultHeapInstance__C)
+                  000119c4    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_execImpl__C)
+                  000119c8    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_maxPasses__C)
+                  000119cc    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_sfxnRts__C)
+                  000119d0    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Startup_sfxnTab__C)
+                  000119d4    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_SysCallback_abortFxn__C)
+                  000119d8    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_SysCallback_exitFxn__C)
+                  000119dc    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_SysCallback_flushFxn__C)
+                  000119e0    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_SysCallback_putchFxn__C)
+                  000119e4    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_SysCallback_readyFxn__C)
+                  000119e8    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_System_Module__gateObj__C)
+                  000119ec    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_System_extendFxn__C)
+                  000119f0    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_System_maxAtexitHandlers__C)
+                  000119f4    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_charTab__C)
+                  000119f8    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_nameEmpty__C)
+                  000119fc    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_nameStatic__C)
+                  00011a00    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_nameUnknown__C)
+                  00011a04    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_nodeTab__C)
+                  00011a08    00000004     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_visitRopeFxn__C)
+                  00011a0c    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_gates_GateMutex_Module__id__C)
+                  00011a0e    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_heaps_HeapMem_Module__id__C)
+                  00011a10    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module__id__C)
+                  00011a12    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Clock_Module__loggerDefined__C)
+                  00011a14    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Module__id__C)
+                  00011a16    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Semaphore_Module__loggerDefined__C)
+                  00011a18    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module__id__C)
+                  00011a1a    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_Module__loggerDefined__C)
+                  00011a1c    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_knl_Task_initStackFlag__C)
+                  00011a1e    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__id__C)
+                  00011a20    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_Module__loggerDefined__C)
+                  00011a22    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_autoAddTasks__C)
+                  00011a24    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_hwiEnabled__C)
+                  00011a26    00000002     uartconsole_pem4f.oem4f (.const:ti_sysbios_utils_Load_updateInIdle__C)
+                  00011a28    00000002     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_Module__id__C)
+                  00011a2a    00000002     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_isTimestampEnabled__C)
+                  00011a2c    00000002     uartconsole_pem4f.oem4f (.const:ti_uia_sysbios_LoggerIdle_writeWhenFull__C)
+                  00011a2e    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Core_Module__id__C)
+                  00011a30    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_Module__loggerDefined__C)
+                  00011a32    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Error_maxDepth__C)
+                  00011a34    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Main_Module__id__C)
+                  00011a36    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Main_Module__loggerDefined__C)
+                  00011a38    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Memory_Module__id__C)
+                  00011a3a    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_charCnt__C)
+                  00011a3c    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_isLoaded__C)
+                  00011a3e    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_registryModsLastId__C)
+                  00011a40    00000002     uartconsole_pem4f.oem4f (.const:xdc_runtime_Text_unnamedModsLastId__C)
+
+.cinit     0    00011a48    000004b0     
+                  00011a48    0000047b     (.cinit..data.load) [load image, compression = rle]
+                  00011ec3    00000001     --HOLE-- [fill = 0]
+                  00011ec4    0000000c     (__TI_handler_table)
+                  00011ed0    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  00011ed8    00000008     (.cinit..vecs.load) [load image, compression = zero_init]
+                  00011ee0    00000018     (__TI_cinit_table)
+
+.vecs      0    20000000    00000360     UNINITIALIZED
+                  20000000    00000360     uartconsole_pem4f.oem4f (.vecs)
+
+.bss       0    20000360    00002c8d     UNINITIALIZED
+                  20000360    00001000     uartconsole_pem4f.oem4f (.bss:ti_uia_sysbios_LoggerIdle_Module_State_0_idleBuffer__A)
+                  20001360    00000e00     uartconsole_pem4f.oem4f (.bss:taskStackSection)
+                  20002160    00000800     uartconsole_pem4f.oem4f (.bss:ti_sysbios_heaps_HeapMem_Instance_State_0_buf__A)
+                  20002960    00000120     rtsv7M4_T_le_v4SPD16_eabi.lib : trgmsg.obj (.bss:__CIOBUF_)
+                  20002a80    00000110     usblib.lib : usbdma.obj (.bss:g_psUSBDMAInst)
+                  20002b90    00000100     EK_TM4C123GXL.obj (.bss:i2cTivaObjects)
+                  20002c90    00000100     USBCDCD_LoggerIdle.obj (.bss:transmitBuffer)
+                  20002d90    000000a0     rtsv7M4_T_le_v4SPD16_eabi.lib : defs.obj (.bss:__TI_tmpnams)
+                  20002e30    00000088     EK_TM4C123GXL.obj (.bss:uartTivaObjects)
+                  20002eb8    00000050     usblib.lib : usbdenum.obj (.bss:g_psDCDInst)
+                  20002f08    00000040                : usbdenum.obj (.bss:g_pui8DataBufferIn)
+                  20002f48    00000040     uartconsole_pem4f.oem4f (.bss:ti_uia_sysbios_LoggerIdle_Module_State_0_tempBuffer__A)
+                  20002f88    00000018     (.common:g_pfnTickHandlers)
+                  20002fa0    00000018     (.common:g_pvTickInstance)
+                  20002fb8    00000018     (.common:transmitBufferWorkspace)
+                  20002fd0    00000008     (.common:parmbuf)
+                  20002fd8    00000004     (.common:g_pfnUSBModeCallback)
+                  20002fdc    00000004     (.common:g_ppsDevInfo)
+                  20002fe0    00000004     (.common:g_ui32ULPISupport)
+                  20002fe4    00000004     (.common:ti_sysbios_knl_Task_Instance_State_0_hookEnv__A)
+                  20002fe8    00000004     (.common:ti_sysbios_knl_Task_Instance_State_1_hookEnv__A)
+                  20002fec    00000001     (.common:state)
+
+.data      0    20002ff0    00000c94     UNINITIALIZED
+                  20002ff0    00000360     uartconsole_pem4f.oem4f (.data:ti_sysbios_family_arm_m3_Hwi_Module_State_0_dispatchTable__A)
+                  20003350    000001b8     uartconsole_pem4f.oem4f (.data)
+                  20003508    000000f0     rtsv7M4_T_le_v4SPD16_eabi.lib : defs.obj (.data:_ftable)
+                  200035f8    000000d0                                   : lowlev.obj (.data)
+                  200036c8    000000b0                                   : signal.obj (.data:sigtable)
+                  20003778    00000098     uartconsole_pem4f.oem4f (.data:ti_sysbios_knl_Task_Object__table__V)
+                  20003810    00000098     uartconsole_pem4f.oem4f (.data:ti_sysbios_utils_Load_Module__state__V)
+                  200038a8    00000080     rtsv7M4_T_le_v4SPD16_eabi.lib : xvalues.obj (.data)
+                  20003928    00000070     uartconsole_pem4f.oem4f (.data:ti_sysbios_family_arm_lm4_Timer_Object__table__V)
+                  20003998    00000060     USBCDCD_LoggerIdle.obj (.data:serialDevice)
+                  200039f8    0000005c     uartconsole_pem4f.oem4f (.data:ti_sysbios_family_arm_m3_Hwi_Module__state__V)
+                  20003a54    00000044     uartconsole_pem4f.oem4f (.data:ti_sysbios_knl_Task_Module__state__V)
+                  20003a98    00000040     usblib.lib : usbdcdc.obj (.data)
+                  20003ad8    00000038     uartconsole_pem4f.oem4f (.data:ti_sysbios_gates_GateMutex_Object__table__V)
+                  20003b10    00000038     uartconsole_pem4f.oem4f (.data:ti_sysbios_utils_Load_Module_State_0_taskEnv__A)
+                  20003b48    00000030     uartconsole_pem4f.oem4f (.data:ti_sysbios_family_arm_lm4_Timer_Module_State_0_device__A)
+                  20003b78    00000030     uartconsole_pem4f.oem4f (.data:ti_sysbios_family_arm_m3_Hwi_Object__table__V)
+                  20003ba8    00000028     uartconsole_pem4f.oem4f (.data:ti_sysbios_knl_Clock_Module__state__V)
+                  20003bd0    00000028     uartconsole_pem4f.oem4f (.data:ti_uia_sysbios_LoggerIdle_Module__state__V)
+                  20003bf8    00000018     UARTUtils.obj (.data)
+                  20003c10    00000010     rtsv7M4_T_le_v4SPD16_eabi.lib : defs.obj (.data)
+                  20003c20    0000000c     usblib.lib : usbtick.obj (.data)
+                  20003c2c    00000009                : usbmode.obj (.data)
+                  20003c35    00000003     --HOLE--
+                  20003c38    00000008     gpio_tivaware.aem4f : GPIO.oem4f (.data)
+                  20003c40    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : _lock.obj (.data)
+                  20003c48    00000008                                   : exit.obj (.data)
+                  20003c50    00000008                                   : feraiseexcept.obj (.data)
+                  20003c58    00000008     usblib.lib : usbdenum.obj (.data)
+                  20003c60    00000007     USBCDCD_LoggerIdle.obj (.data)
+                  20003c67    00000001     --HOLE--
+                  20003c68    00000004     i2c_tivaware.aem4f : I2C.oem4f (.data)
+                  20003c6c    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : dtor_list.obj (.data)
+                  20003c70    00000004                                   : errno.obj (.data)
+                  20003c74    00000004                                   : fopen.obj (.data)
+                  20003c78    00000004                                   : rand.obj (.data)
+                  20003c7c    00000004                                   : stkdepth_vars.obj (.data)
+                  20003c80    00000004     uart_tivaware.aem4f : UART.oem4f (.data)
+
+.stack     0    20003c84    00000300     UNINITIALIZED
+                  20003c84    00000300     --HOLE--
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 00011ee0 records: 3, size/record: 8, table size: 24
+	.data: load addr=00011a48, load size=0000047b bytes, run addr=20002ff0, run size=00000c94 bytes, compression=rle
+	.bss: load addr=00011ed0, load size=00000008 bytes, run addr=20000360, run size=00002c8d bytes, compression=zero_init
+	.vecs: load addr=00011ed8, load size=00000008 bytes, run addr=20000000, run size=00000360 bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 00011ec4 records: 3, size/record: 4, table size: 12
+	index: 0, handler: __TI_zero_init
+	index: 1, handler: __TI_decompress_rle24
+	index: 2, handler: __TI_decompress_none
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address    name
+--------   ----
+0000d79b   Accel_Init
+0000c815   C$$EXIT
+0000b7db   C$$IO$$
+0000e9fd   CPUcpsid
+0000ea09   CPUcpsie
+000081bd   Calib_Accel
+00006b65   Calib_Gyro
+0000ca75   Clear_Array
+0000a2b9   EK_TM4C123GXL_initGPIO
+0000cab5   EK_TM4C123GXL_initGeneral
+0000a865   EK_TM4C123GXL_initI2C
+0000d7c9   EK_TM4C123GXL_initUART
+0000c2d1   EK_TM4C123GXL_initUSB
+00005f51   Filter_Data
+0000d981   GPIODirModeSet
+000067dd   GPIOPadConfigSet
+0000c319   GPIOPinConfigure
+0000ec21   GPIOPinRead
+0000e62d   GPIOPinTypeGPIOInput
+0000e1db   GPIOPinTypeGPIOOutput
+0000e63f   GPIOPinTypeI2C
+0000e651   GPIOPinTypeI2CSCL
+0000e663   GPIOPinTypeUART
+0000e675   GPIOPinTypeUSBAnalog
+0000ec27   GPIOPinWrite
+0001117c   GPIO_config
+0000dbb9   GPIO_init
+00007c25   GPIO_toggle
+00007fed   GPIO_write
+0000a44d   GetData_Accel
+0000a4d1   GetData_Gyro
+0000a555   GetData_Magn
+0000e1f3   Gyro_Init
+00003521   HOSTclock
+000034e9   HOSTclose
+000034ab   HOSTgetenv
+0000344f   HOSTlseek
+000033fd   HOSTopen
+000033b1   HOSTread
+00003353   HOSTrename
+00003319   HOSTtime
+000032e1   HOSTunlink
+00003295   HOSTwrite
+0000bcb5   I2C0_MasterInit
+0000b691   I2C0_RxData
+0000bb55   I2C0_TxData
+0000eba9   I2CMasterBusy
+0000eca9   I2CMasterControl
+0000ecad   I2CMasterDataGet
+0000ecb1   I2CMasterDataPut
+0000eae1   I2CMasterDisable
+0000eaeb   I2CMasterEnable
+0000e491   I2CMasterErr
+0000c3a9   I2CMasterInitExpClk
+0000ebb1   I2CMasterIntClear
+0000ec2d   I2CMasterIntDisable
+0000ec33   I2CMasterIntEnable
+0000ebb9   I2CMasterSlaveAddrSet
+0000cd95   I2CTiva_completeTransfer
+00011744   I2CTiva_fxnTable
+0000eaff   I2C_Params_init
+00011404   I2C_config
+0000cdcd   I2C_init
+0000e20d   I2C_open
+0000b169   IntDisable
+0000b1d1   IntEnable
+0000b371   IntIsEnabled
+0000e7a7   IntMasterDisable
+0000e7b7   IntMasterEnable
+0000da29   InternalUSBRegisterTickHandler
+0000d0dd   InternalUSBStartOfFrameTick
+0000d4a9   InternalUSBTickInit
+0000d7f5   Magn_Init
+0000ac2d   ProcessDataFromHost
+0000b871   ProcessDataToHost
+0000d3b1   ProcessNotificationToHost
+0000a765   Read_Accel
+0000608d   Read_Gyro
+0000a5d9   Read_Magn
+UNDEFED    SHT$$INIT_ARRAY$$Base
+UNDEFED    SHT$$INIT_ARRAY$$Limit
+000086e1   SysCtlClockGet
+0000ec39   SysCtlDelay
+0000d111   SysCtlPeripheralEnable
+0000bd5d   SysCtlPeripheralReset
+0000e515   SysCtlUSBPLLEnable
+200037c4   TSK_idle
+0000eb09   UARTCharGet
+0000e957   UARTCharGetNonBlocking
+0000eb13   UARTCharPut
+0000e965   UARTCharPutNonBlocking
+0000c9f1   UARTConfigSetExpClk
+0000dfed   UARTDisable
+0000e529   UARTEnable
+0000ec3f   UARTFIFOLevelSet
+0000ecb5   UARTIntClear
+0000eb1d   UARTIntDisable
+0000ebc9   UARTIntEnable
+0000eb27   UARTIntStatus
+00011428   UARTTiva_fxnTable
+0000e23d   UARTUtils_deviceclose
+0000e6bd   UARTUtils_devicelseek
+0000d659   UARTUtils_deviceopen
+0000d145   UARTUtils_deviceread
+0000e7c7   UARTUtils_devicerename
+0000e973   UARTUtils_deviceunlink
+0000d179   UARTUtils_devicewrite
+0000dc01   UARTUtils_systemAbort
+00009ffd   UARTUtils_systemInit
+0000de11   UARTUtils_systemPutch
+0000e53d   UARTUtils_systemReady
+0000c0c1   UART_Params_init
+0000cbf5   UART_close
+000111ac   UART_config
+0000ce3d   UART_init
+0000c3f1   UART_open
+0000d1ad   UART_read
+0000d1e1   UART_write
+0000d215   UART_writePolling
+0000bd09   ULPIConfigSet
+0000e255   USB0DeviceIntHandler
+0000b6f1   USBBufferEventCallback
+0000ec45   USBBufferFlush
+0000e4a7   USBBufferInit
+0000ec4b   USBBufferSpaceAvailable
+0000d821   USBBufferWrite
+0000c6c1   USBCDCD_LoggerIdle_sendData
+000096fd   USBCDCD_init
+0000eb3b   USBClockEnable
+0000eb45   USBControllerVersion
+0000979d   USBDCDCCompositeInit
+0000b98d   USBDCDCInit
+0000bbad   USBDCDCPacketWrite
+0000e981   USBDCDCTxPacketAvailable
+0000bdad   USBDCDConfigDescGet
+0000d9ab   USBDCDConfigDescGetNum
+0000e26d   USBDCDConfigDescGetSize
+0000e009   USBDCDConfigGetInterface
+0000cd21   USBDCDConfigGetInterfaceEndpoint
+0000c705   USBDCDDeviceInfoInit
+000058fd   USBDCDInit
+0000e551   USBDCDRequestDataEP0
+0000e565   USBDCDSendDataEP0
+0000e025   USBDCDStallEP0
+0000eb4f   USBDMAChannelAddressSet
+0000e579   USBDMAChannelConfigSet
+0000eb59   USBDMAChannelCountSet
+0000e6cf   USBDMAChannelDisable
+0000e6e1   USBDMAChannelEnable
+0000e6f3   USBDMAChannelIntDisable
+0000e705   USBDMAChannelIntEnable
+0000ec51   USBDMAChannelIntStatus
+0000e98f   USBDMAChannelStatus
+0000d84d   USBDescGet
+0000da79   USBDescGetNum
+0000ecb9   USBDevAddrSet
+0000eb63   USBDevConnect
+0000eb6d   USBDevDisconnect
+0000a9d9   USBDevEndpointConfigSet
+0000dc25   USBDevEndpointDataAck
+0000d3e3   USBDevEndpointStall
+0000bf8d   USBDevEndpointStallClear
+0000b8cf   USBDevEndpointStatusClear
+0000ec57   USBDevLPMConfig
+0000e99d   USBDevLPMDisable
+0000e9ab   USBDevLPMEnable
+0000ebd9   USBDevMode
+00005cd1   USBDeviceConfig
+0000a115   USBDeviceConfigAlternate
+00008461   USBDeviceEnumHandler
+0000c481   USBDeviceEnumResetHandler
+000057ad   USBDeviceIntHandlerInternal
+0000bdfd   USBDeviceResumeTickHandler
+0000e173   USBEndpointDMAChannel
+0000c10d   USBEndpointDMAConfigSet
+0000dc49   USBEndpointDMADisable
+0000dc6d   USBEndpointDMAEnable
+0000e041   USBEndpointDataAvail
+0000c78d   USBEndpointDataGet
+0000d509   USBEndpointDataPut
+0000d687   USBEndpointDataSend
+0000ea15   USBEndpointPacketCountSet
+0000e7d7   USBEndpointStatus
+0000ebe1   USBFIFOAddrGet
+0000cd5b   USBFIFOConfigSet
+0000e58d   USBHostResume
+0000daa1   USBIntEnableControl
+0000e5a1   USBIntEnableEndpoint
+0000ce75   USBIntStatusControl
+0000eb77   USBIntStatusEndpoint
+0000ea21   USBLPMIntEnable
+0000ec5d   USBLPMIntStatus
+00004e01   USBLibDMAInit
+0000ebe9   USBOTGMode
+0000de31   USBRingBufAdvanceRead
+0000cead   USBRingBufAdvanceWrite
+0000e05d   USBRingBufContigFree
+0000e7e7   USBRingBufContigUsed
+0000e4bd   USBRingBufFlush
+0000e717   USBRingBufFree
+0000ea2d   USBRingBufInit
+0000e4d3   USBRingBufUsed
+0000e18d   USBRingBufWrite
+0000e7f7   USBRingBufWriteOne
+0000de51   USBStackModeSet
+0000e9b9   USBULPIDisable
+0000e9c7   USBULPIEnable
+0000dfaf   USBULPIRegRead
+0000dfcd   USBULPIRegWrite
+00001221   Update_State
+0000e75f   _Dclass
+200038a8   _Denorm
+000087a9   _Dnorm
+000070fd   _Dscale
+0000c89d   _Dtest
+0000b439   _Dunscale
+200038b8   _Eps
+20003c70   _Errno
+20003c50   _Fenv
+0000d599   _Feraise
+200038c8   _Hugeval
+200038d8   _Inf
+200038e8   _Nan
+20003908   _Rteps
+200038f8   _Snan
+20003c54   _Tls_setup__Fenv
+20003918   _Xbig
+20003920   _Zero
+00000000   __ASM__
+20002960   __CIOBUF_
+0000007a   __ISA__
+0000008d   __PLAT__
+20003f84   __STACK_END
+00000300   __STACK_SIZE
+20003d84   __STACK_TOP
+000000ae   __TARG__
+00011ee0   __TI_CINIT_Base
+00011ef8   __TI_CINIT_Limit
+00011ec4   __TI_Handler_Table_Base
+00011ed0   __TI_Handler_Table_Limit
+00000001   __TI_args_main
+0000983d   __TI_auto_init
+0000465d   __TI_cleanup
+20003c48   __TI_cleanup_ptr
+00009c81   __TI_closefile
+0000e9d5   __TI_decompress_none
+0000ec69   __TI_decompress_rle24
+0000892d   __TI_doflush
+20003c4c   __TI_dtors_ptr
+20003c10   __TI_ft_end
+00000f17   __TI_printfi
+00009227   __TI_rd_ok
+0000b7df   __TI_readmsg
+00000000   __TI_static_base__
+20002d90   __TI_tmpnams
+0000b7b1   __TI_writemsg
+000091c5   __TI_wrt_ok
+0000e74d   __TI_zero_init
+000000d4   __TRDR__
+00007d71   __aeabi_atexit
+0000a341   __aeabi_cdcmpeq
+0000a341   __aeabi_cdcmple
+0000a3c7   __aeabi_cdrcmple
+0000c23b   __aeabi_d2f
+0000c4c9   __aeabi_d2iz
+0000c859   __aeabi_d2uiz
+00004917   __aeabi_dadd
+0000643d   __aeabi_ddiv
+0000783d   __aeabi_dmul
+0000490d   __aeabi_dsub
+0000cee5   __aeabi_f2d
+0000d6e3   __aeabi_i2d
+0000e2e5   __aeabi_lmul
+0000aa53   __aeabi_memclr
+0000aa53   __aeabi_memclr4
+0000aa53   __aeabi_memclr8
+00009a15   __aeabi_memcpy
+00009a15   __aeabi_memcpy4
+00009a15   __aeabi_memcpy8
+0000aa55   __aeabi_memset
+0000aa55   __aeabi_memset4
+0000aa55   __aeabi_memset8
+20003c1c   __aeabi_stderr
+20003c14   __aeabi_stdin
+20003c18   __aeabi_stdout
+00004009   __aeabi_uldivmod
+ffffffff   __binit__
+ffffffff   __c_args__
+00007d5f   __cxa_atexit
+00007d19   __cxa_finalize
+00007d59   __cxa_ia64_exit
+20003c84   __stack
+0000ec63   __xdc__init
+20003504   __xdc__init__addr
+0000e2cd   _args_main
+0000bafd   _c_int00
+00010dec   _ctypes_
+20003508   _ftable
+20003c40   _lock
+0000e5d7   _nop
+0000e5cf   _register_lock
+0000e5c9   _register_unlock
+20003c44   _unlock
+0000c819   abort
+00002f0f   add_device
+00007d63   atexit
+0000c159   atoi
+ffffffff   binit
+00002ebd   close
+00011238   configString
+00004755   consoleFxn
+00011338   controlInterfaceString
+0000c7d1   copy_in
+0000c821   exit
+00009ce7   fclose
+0000d2b1   feraiseexcept
+00008979   fflush
+000046b3   fopen
+00009979   fputc
+00006575   fputs
+0000e2b5   free
+00004689   freopen
+0000b3d5   fseek
+20003c20   g_bUSBTimerInitialized
+20003c2c   g_iUSBMode
+00011234   g_pCDCCompSerConfigDescriptors
+20002f88   g_pfnTickHandlers
+00011230   g_ppCDCSerConfigDescriptors
+20002fdc   g_ppsDevInfo
+20003ac8   g_psCDCCompSerSections
+20003abc   g_psCDCSerSections
+20002eb8   g_psDCDInst
+00011500   g_pui8CDCSerCommInterface
+000116d8   g_pui8CDCSerDataInterface
+20003aaa   g_pui8CDCSerDescriptor
+20003a98   g_pui8CDCSerDeviceDescriptor
+20003ab3   g_pui8IADSerDescriptor
+20002fa0   g_pvTickInstance
+00011228   g_sCDCCompSerConfigHeader
+000112d8   g_sCDCHandlers
+00011210   g_sCDCSerCommInterfaceSection
+00011220   g_sCDCSerConfigHeader
+00011200   g_sCDCSerConfigSection
+00011218   g_sCDCSerDataInterfaceSection
+00011208   g_sIADSerConfigSection
+20003c24   g_ui32CurrentUSBTick
+20003c28   g_ui32USBSOFCount
+20003c30   g_ui32WaitTicks
+000111c4   gpioHWAttrs
+00011194   i2cTivaHWAttrs
+20002b90   i2cTivaObjects
+000116ef   langDescriptor
+00002e99   lseek
+0000baa1   ltoa
+00007741   main
+20003c7c   main_func_sp
+0000d6b5   malloc
+000113e0   manufacturerString
+0000e079   memccpy
+0000e4e9   memchr
+00009a15   memcpy
+0000aa5b   memset
+00002deb   open
+0000ad89   printf
+00011523   productString
+000099fd   putc
+00009a01   putchar
+00006681   puts
+0000d711   raise
+0000c1bb   rand
+00002dc7   read
+00002d3d   remove
+00002d9f   remove_device
+00002d61   rename
+000116f3   serialNumberString
+00008385   setvbuf
+0000caf5   signal
+00005a45   sqrt
+0000c1a5   srand
+0000e4ff   strchr
+0000e2fd   strcmp
+0000e807   strcpy
+00011648   stringDescriptors
+0000e5dd   strlen
+0000d569   strncpy
+000117ac   ti_catalog_arm_cortexm4_tiva_ce_Boot_A_mustUseEnhancedClockMode__C
+000117b0   ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsEnabled__C
+000117b4   ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsIncluded__C
+000117b8   ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsMask__C
+00010fc6   ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__id__C
+0000e9f1   ti_catalog_arm_cortexm4_tiva_ce_Boot_init__I
+0000731d   ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlClockSetI__I
+00009db1   ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlClockSet__E
+0000ec75   ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlDelayI__I
+000117bc   ti_sysbios_BIOS_Module__diagsEnabled__C
+000117c0   ti_sysbios_BIOS_Module__diagsIncluded__C
+000117c4   ti_sysbios_BIOS_Module__diagsMask__C
+0001126e   ti_sysbios_BIOS_Module__id__C
+20003360   ti_sysbios_BIOS_Module__state__V
+0000ecbd   ti_sysbios_BIOS_RtsGateProxy_enter__E
+0000ecc1   ti_sysbios_BIOS_RtsGateProxy_leave__E
+0000ecd5   ti_sysbios_BIOS_RtsGateProxy_query__E
+0000c511   ti_sysbios_BIOS_errorRaiseHook__I
+0000d879   ti_sysbios_BIOS_exitFunc__I
+0000e819   ti_sysbios_BIOS_getCpuFreq__E
+000117c8   ti_sysbios_BIOS_installedErrorHook__C
+00007feb   ti_sysbios_BIOS_nullFunc__I
+0000dc91   ti_sysbios_BIOS_registerRTSLock__I
+0000e095   ti_sysbios_BIOS_rtsLock__I
+0000b2a1   ti_sysbios_BIOS_rtsUnlock__I
+0000e829   ti_sysbios_BIOS_setThreadType__E
+0000de71   ti_sysbios_BIOS_startFunc__I
+0000e839   ti_sysbios_BIOS_start__E
+20003b48   ti_sysbios_family_arm_lm4_Timer_Module_State_0_device__A
+20003388   ti_sysbios_family_arm_lm4_Timer_Module_State_0_handles__A
+20003380   ti_sysbios_family_arm_lm4_Timer_Module__root__V
+0000e315   ti_sysbios_family_arm_lm4_Timer_Module__startupDone__F
+0000e315   ti_sysbios_family_arm_lm4_Timer_Module__startupDone__S
+200033a0   ti_sysbios_family_arm_lm4_Timer_Module__state__V
+0000b9e9   ti_sysbios_family_arm_lm4_Timer_Module_startup__E
+0000b9e9   ti_sysbios_family_arm_lm4_Timer_Module_startup__F
+20003928   ti_sysbios_family_arm_lm4_Timer_Object__table__V
+000117cc   ti_sysbios_family_arm_lm4_Timer_enableFunc__C
+00009515   ti_sysbios_family_arm_lm4_Timer_enableTimers__I
+00009271   ti_sysbios_family_arm_lm4_Timer_enableTiva__I
+0000ecc5   ti_sysbios_family_arm_lm4_Timer_getPeriod__E
+0000abb9   ti_sysbios_family_arm_lm4_Timer_isrStub__E
+0000ea39   ti_sysbios_family_arm_lm4_Timer_masterDisable__I
+0000ecc9   ti_sysbios_family_arm_lm4_Timer_masterEnable__I
+000117d0   ti_sysbios_family_arm_lm4_Timer_numTimerDevices__C
+000039e5   ti_sysbios_family_arm_lm4_Timer_start__E
+000117d4   ti_sysbios_family_arm_lm4_Timer_startupNeeded__C
+0000cb35   ti_sysbios_family_arm_lm4_Timer_startup__E
+0000c8e1   ti_sysbios_family_arm_lm4_Timer_stop__E
+200033ac   ti_sysbios_family_arm_lm4_TimestampProvider_Module__state__V
+0000ec7b   ti_sysbios_family_arm_lm4_TimestampProvider_Module_startup__E
+0000ec7b   ti_sysbios_family_arm_lm4_TimestampProvider_Module_startup__F
+00008ce1   ti_sysbios_family_arm_lm4_TimestampProvider_get32__E
+0000690d   ti_sysbios_family_arm_lm4_TimestampProvider_get64__E
+0000e819   ti_sysbios_family_arm_lm4_TimestampProvider_getFreq__E
+0000e849   ti_sysbios_family_arm_lm4_TimestampProvider_rolloverFunc__E
+0000ea45   ti_sysbios_family_arm_lm4_TimestampProvider_startTimer__E
+00011546   ti_sysbios_family_arm_lm4_TimestampProvider_useClockTimer__C
+000117d8   ti_sysbios_family_arm_m3_Hwi_E_NMI__C
+000117dc   ti_sysbios_family_arm_m3_Hwi_E_alreadyDefined__C
+000117e0   ti_sysbios_family_arm_m3_Hwi_E_busFault__C
+000117e4   ti_sysbios_family_arm_m3_Hwi_E_debugMon__C
+000117e8   ti_sysbios_family_arm_m3_Hwi_E_hardFault__C
+000117ec   ti_sysbios_family_arm_m3_Hwi_E_memFault__C
+000117f0   ti_sysbios_family_arm_m3_Hwi_E_noIsr__C
+000117f4   ti_sysbios_family_arm_m3_Hwi_E_reserved__C
+000117f8   ti_sysbios_family_arm_m3_Hwi_E_svCall__C
+000117fc   ti_sysbios_family_arm_m3_Hwi_E_usageFault__C
+0000e32d   ti_sysbios_family_arm_m3_Hwi_Handle__label__S
+0000dcb5   ti_sysbios_family_arm_m3_Hwi_Instance_finalize__F
+00009f6d   ti_sysbios_family_arm_m3_Hwi_Instance_init__F
+00011800   ti_sysbios_family_arm_m3_Hwi_LD_end__C
+00011804   ti_sysbios_family_arm_m3_Hwi_LM_begin__C
+20002ff0   ti_sysbios_family_arm_m3_Hwi_Module_State_0_dispatchTable__A
+200033bc   ti_sysbios_family_arm_m3_Hwi_Module_State_0_excActive__A
+200033c0   ti_sysbios_family_arm_m3_Hwi_Module_State_0_excContext__A
+200033c4   ti_sysbios_family_arm_m3_Hwi_Module_State_0_excStack__A
+00011808   ti_sysbios_family_arm_m3_Hwi_Module__diagsEnabled__C
+0001180c   ti_sysbios_family_arm_m3_Hwi_Module__diagsIncluded__C
+00011810   ti_sysbios_family_arm_m3_Hwi_Module__diagsMask__C
+00011706   ti_sysbios_family_arm_m3_Hwi_Module__id__C
+00011742   ti_sysbios_family_arm_m3_Hwi_Module__loggerDefined__C
+00011814   ti_sysbios_family_arm_m3_Hwi_Module__loggerFxn1__C
+00011818   ti_sysbios_family_arm_m3_Hwi_Module__loggerFxn8__C
+0001181c   ti_sysbios_family_arm_m3_Hwi_Module__loggerObj__C
+200033b4   ti_sysbios_family_arm_m3_Hwi_Module__root__V
+0000e345   ti_sysbios_family_arm_m3_Hwi_Module__startupDone__F
+0000e345   ti_sysbios_family_arm_m3_Hwi_Module__startupDone__S
+200039f8   ti_sysbios_family_arm_m3_Hwi_Module__state__V
+000095b9   ti_sysbios_family_arm_m3_Hwi_Module_startup__E
+000095b9   ti_sysbios_family_arm_m3_Hwi_Module_startup__F
+00011820   ti_sysbios_family_arm_m3_Hwi_NUM_INTERRUPTS__C
+00011548   ti_sysbios_family_arm_m3_Hwi_Object__DESC__C
+00011308   ti_sysbios_family_arm_m3_Hwi_Object__PARAMS__C
+0000adf1   ti_sysbios_family_arm_m3_Hwi_Object__create__S
+0000de91   ti_sysbios_family_arm_m3_Hwi_Object__delete__S
+0000e0b1   ti_sysbios_family_arm_m3_Hwi_Object__destruct__S
+20003b78   ti_sysbios_family_arm_m3_Hwi_Object__table__V
+0000ea51   ti_sysbios_family_arm_m3_Hwi_Params__init__S
+00011824   ti_sysbios_family_arm_m3_Hwi_ccr__C
+0000ea5d   ti_sysbios_family_arm_m3_Hwi_disableFxn__E
+0000c925   ti_sysbios_family_arm_m3_Hwi_disableInterrupt__E
+00006c89   ti_sysbios_family_arm_m3_Hwi_dispatchC__I
+00011828   ti_sysbios_family_arm_m3_Hwi_dispatchTable__C
+000066a9   ti_sysbios_family_arm_m3_Hwi_dispatch__I
+00008cdf   ti_sysbios_family_arm_m3_Hwi_doSwiRestore__I
+0000deb1   ti_sysbios_family_arm_m3_Hwi_doTaskRestore__I
+0000c969   ti_sysbios_family_arm_m3_Hwi_enableInterrupt__E
+000050d9   ti_sysbios_family_arm_m3_Hwi_excBusFault__I
+00008fb5   ti_sysbios_family_arm_m3_Hwi_excDebugMon__I
+00001ea1   ti_sysbios_family_arm_m3_Hwi_excDumpRegs__I
+000067bd   ti_sysbios_family_arm_m3_Hwi_excHandlerAsm__I
+0001182c   ti_sysbios_family_arm_m3_Hwi_excHandlerFunc__C
+00003c15   ti_sysbios_family_arm_m3_Hwi_excHandlerMax__I
+0000e859   ti_sysbios_family_arm_m3_Hwi_excHandler__I
+00008d99   ti_sysbios_family_arm_m3_Hwi_excHardFault__I
+00011764   ti_sysbios_family_arm_m3_Hwi_excHookFuncs__A
+00011830   ti_sysbios_family_arm_m3_Hwi_excHookFuncs__C
+00005e11   ti_sysbios_family_arm_m3_Hwi_excMemFault__I
+0000d2e5   ti_sysbios_family_arm_m3_Hwi_excNmi__I
+0000cf1d   ti_sysbios_family_arm_m3_Hwi_excNoIsr__I
+0000c559   ti_sysbios_family_arm_m3_Hwi_excReserved__I
+0000cc6d   ti_sysbios_family_arm_m3_Hwi_excSvCall__I
+00005659   ti_sysbios_family_arm_m3_Hwi_excUsageFault__I
+0000cf55   ti_sysbios_family_arm_m3_Hwi_getStackInfo__E
+000080d5   ti_sysbios_family_arm_m3_Hwi_initNVIC__E
+0000dac9   ti_sysbios_family_arm_m3_Hwi_initStacks__E
+e000e000   ti_sysbios_family_arm_m3_Hwi_nvic
+0000677f   ti_sysbios_family_arm_m3_Hwi_pendSV__I
+00011834   ti_sysbios_family_arm_m3_Hwi_priGroup__C
+00010eee   ti_sysbios_family_arm_m3_Hwi_priorities__A
+00011838   ti_sysbios_family_arm_m3_Hwi_priorities__C
+20000000   ti_sysbios_family_arm_m3_Hwi_ramVectors
+0000ae61   ti_sysbios_family_arm_m3_Hwi_reconfig__E
+00000000   ti_sysbios_family_arm_m3_Hwi_resetVectors
+0000ec81   ti_sysbios_family_arm_m3_Hwi_restoreFxn__E
+000067a3   ti_sysbios_family_arm_m3_Hwi_return
+0000ec09   ti_sysbios_family_arm_m3_Hwi_startup__E
+0000e5f1   ti_sysbios_family_arm_m3_Hwi_switchFromBootStack__E
+0000eccd   ti_sysbios_family_arm_m3_TaskSupport_Module__startupDone__S
+0000a1a1   ti_sysbios_family_arm_m3_TaskSupport_buildTaskStack
+0000e869   ti_sysbios_family_arm_m3_TaskSupport_glue
+0000cf8d   ti_sysbios_family_arm_m3_TaskSupport_start__E
+0000e35d   ti_sysbios_family_arm_m3_TaskSupport_swap__E
+0000e375   ti_sysbios_gates_GateHwi_Handle__label__S
+00008fb3   ti_sysbios_gates_GateHwi_Instance_init__F
+0001144c   ti_sysbios_gates_GateHwi_Module__FXNS__C
+200033c8   ti_sysbios_gates_GateHwi_Module__root__V
+00011568   ti_sysbios_gates_GateHwi_Object__DESC__C
+00011660   ti_sysbios_gates_GateHwi_Object__PARAMS__C
+0000cfc5   ti_sysbios_gates_GateHwi_Object__create__S
+0000ded1   ti_sysbios_gates_GateHwi_Object__delete__S
+200033d0   ti_sysbios_gates_GateHwi_Object__table__V
+0000ea69   ti_sysbios_gates_GateHwi_enter__E
+0000ec87   ti_sysbios_gates_GateHwi_leave__E
+0000ecd1   ti_sysbios_gates_GateHwi_query__E
+0000ecd1   ti_sysbios_gates_GateHwi_query__F
+0001183c   ti_sysbios_gates_GateMutex_A_badContext__C
+0000e38d   ti_sysbios_gates_GateMutex_Handle__label__S
+00011840   ti_sysbios_gates_GateMutex_Instance_State_sem__O
+0000e879   ti_sysbios_gates_GateMutex_Instance_finalize__F
+0000daf1   ti_sysbios_gates_GateMutex_Instance_init__F
+00011470   ti_sysbios_gates_GateMutex_Module__FXNS__C
+00011844   ti_sysbios_gates_GateMutex_Module__diagsEnabled__C
+00011848   ti_sysbios_gates_GateMutex_Module__diagsIncluded__C
+0001184c   ti_sysbios_gates_GateMutex_Module__diagsMask__C
+00011a0c   ti_sysbios_gates_GateMutex_Module__id__C
+200033d4   ti_sysbios_gates_GateMutex_Module__root__V
+00011588   ti_sysbios_gates_GateMutex_Object__DESC__C
+00011678   ti_sysbios_gates_GateMutex_Object__PARAMS__C
+0000cffd   ti_sysbios_gates_GateMutex_Object__create__S
+0000dcd9   ti_sysbios_gates_GateMutex_Object__delete__S
+20003ad8   ti_sysbios_gates_GateMutex_Object__table__V
+00008e4d   ti_sysbios_gates_GateMutex_enter__E
+0000e3a5   ti_sysbios_gates_GateMutex_leave__E
+0000ecd5   ti_sysbios_gates_GateMutex_query__E
+0000ecd5   ti_sysbios_gates_GateMutex_query__F
+0000ecd9   ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S
+0000e889   ti_sysbios_hal_Hwi_HwiProxy_Object__create__S
+0000ecdd   ti_sysbios_hal_Hwi_HwiProxy_Object__delete__S
+0000c925   ti_sysbios_hal_Hwi_HwiProxy_disableInterrupt__E
+0000ea5d   ti_sysbios_hal_Hwi_HwiProxy_disable__E
+0000c969   ti_sysbios_hal_Hwi_HwiProxy_enableInterrupt__E
+0000cf55   ti_sysbios_hal_Hwi_HwiProxy_getStackInfo__E
+0000ec81   ti_sysbios_hal_Hwi_HwiProxy_restore__E
+0000ec09   ti_sysbios_hal_Hwi_HwiProxy_startup__E
+0000e5f1   ti_sysbios_hal_Hwi_HwiProxy_switchFromBootStack__E
+0000eb81   ti_sysbios_hal_Hwi_Instance_finalize__F
+0000d319   ti_sysbios_hal_Hwi_Instance_init__F
+200033dc   ti_sysbios_hal_Hwi_Module__root__V
+0000e771   ti_sysbios_hal_Hwi_Module_startup__E
+0000e771   ti_sysbios_hal_Hwi_Module_startup__F
+000115a8   ti_sysbios_hal_Hwi_Object__DESC__C
+00011364   ti_sysbios_hal_Hwi_Object__PARAMS__C
+0000aed1   ti_sysbios_hal_Hwi_Object__create__S
+0000c925   ti_sysbios_hal_Hwi_disableInterrupt__E
+0000ea5d   ti_sysbios_hal_Hwi_disable__E
+0000c969   ti_sysbios_hal_Hwi_enableInterrupt__E
+0000cf55   ti_sysbios_hal_Hwi_getStackInfo__E
+0000d8a5   ti_sysbios_hal_Hwi_initStack
+0000ec81   ti_sysbios_hal_Hwi_restore__E
+0000ec09   ti_sysbios_hal_Hwi_startup__E
+0000e5f1   ti_sysbios_hal_Hwi_switchFromBootStack__E
+200033e4   ti_sysbios_hal_Timer_Module__root__V
+0000e3bd   ti_sysbios_hal_Timer_Module__startupDone__F
+0000e3bd   ti_sysbios_hal_Timer_Module__startupDone__S
+0000e783   ti_sysbios_hal_Timer_Module_startup__E
+0000e783   ti_sysbios_hal_Timer_Module_startup__F
+200033ec   ti_sysbios_hal_Timer_Object__table__V
+0000ece1   ti_sysbios_hal_Timer_TimerProxy_Module__startupDone__S
+0000ece5   ti_sysbios_hal_Timer_TimerProxy_getPeriod__E
+0000cb35   ti_sysbios_hal_Timer_TimerProxy_startup__E
+0000cb35   ti_sysbios_hal_Timer_startup__E
+00011850   ti_sysbios_heaps_HeapMem_A_align__C
+00011854   ti_sysbios_heaps_HeapMem_A_heapSize__C
+00011858   ti_sysbios_heaps_HeapMem_A_invalidFree__C
+0001185c   ti_sysbios_heaps_HeapMem_A_zeroBlock__C
+00011860   ti_sysbios_heaps_HeapMem_E_memory__C
+0000e3d5   ti_sysbios_heaps_HeapMem_Handle__label__S
+20002160   ti_sysbios_heaps_HeapMem_Instance_State_0_buf__A
+00006305   ti_sysbios_heaps_HeapMem_Instance_init__F
+0000ece9   ti_sysbios_heaps_HeapMem_Module_GateProxy_enter__E
+0000eced   ti_sysbios_heaps_HeapMem_Module_GateProxy_leave__E
+0000ecd5   ti_sysbios_heaps_HeapMem_Module_GateProxy_query__E
+00011390   ti_sysbios_heaps_HeapMem_Module__FXNS__C
+00011864   ti_sysbios_heaps_HeapMem_Module__diagsEnabled__C
+00011868   ti_sysbios_heaps_HeapMem_Module__diagsIncluded__C
+0001186c   ti_sysbios_heaps_HeapMem_Module__diagsMask__C
+00011870   ti_sysbios_heaps_HeapMem_Module__gateObj__C
+00011a0e   ti_sysbios_heaps_HeapMem_Module__id__C
+200033f4   ti_sysbios_heaps_HeapMem_Module__root__V
+000115c8   ti_sysbios_heaps_HeapMem_Object__DESC__C
+00011494   ti_sysbios_heaps_HeapMem_Object__PARAMS__C
+00011874   ti_sysbios_heaps_HeapMem_Object__count__C
+0000d035   ti_sysbios_heaps_HeapMem_Object__create__S
+0000def1   ti_sysbios_heaps_HeapMem_Object__delete__S
+0000e605   ti_sysbios_heaps_HeapMem_Object__get__S
+200033fc   ti_sysbios_heaps_HeapMem_Object__table__V
+000037b1   ti_sysbios_heaps_HeapMem_alloc__E
+00003569   ti_sysbios_heaps_HeapMem_free__E
+0000c5a1   ti_sysbios_heaps_HeapMem_getStats__E
+0000cca9   ti_sysbios_heaps_HeapMem_init__I
+0000ec8d   ti_sysbios_heaps_HeapMem_isBlocking__E
+00011878   ti_sysbios_heaps_HeapMem_reqAlign__C
+0001187c   ti_sysbios_knl_Clock_LM_begin__C
+00011880   ti_sysbios_knl_Clock_LM_tick__C
+00011884   ti_sysbios_knl_Clock_LW_delayed__C
+00011888   ti_sysbios_knl_Clock_Module_State_clockQ__O
+0001188c   ti_sysbios_knl_Clock_Module__diagsEnabled__C
+00011890   ti_sysbios_knl_Clock_Module__diagsIncluded__C
+00011894   ti_sysbios_knl_Clock_Module__diagsMask__C
+00011a10   ti_sysbios_knl_Clock_Module__id__C
+00011a12   ti_sysbios_knl_Clock_Module__loggerDefined__C
+00011898   ti_sysbios_knl_Clock_Module__loggerFxn1__C
+0001189c   ti_sysbios_knl_Clock_Module__loggerFxn2__C
+000118a0   ti_sysbios_knl_Clock_Module__loggerObj__C
+20003414   ti_sysbios_knl_Clock_Module__root__V
+20003ba8   ti_sysbios_knl_Clock_Module__state__V
+0000dcfd   ti_sysbios_knl_Clock_Module_startup__E
+0000dcfd   ti_sysbios_knl_Clock_Module_startup__F
+0000d8d1   ti_sysbios_knl_Clock_doTick__I
+0000b49d   ti_sysbios_knl_Clock_logTick__E
+00006a39   ti_sysbios_knl_Clock_workFunc__E
+2000341c   ti_sysbios_knl_Event_Module__root__V
+0001176c   ti_sysbios_knl_Idle_coreList__A
+00011774   ti_sysbios_knl_Idle_coreList__C
+0001177c   ti_sysbios_knl_Idle_funcList__A
+00011784   ti_sysbios_knl_Idle_funcList__C
+0000ec11   ti_sysbios_knl_Idle_loop__E
+0000d5c9   ti_sysbios_knl_Idle_run__E
+0000ec93   ti_sysbios_knl_Queue_Instance_init__F
+20003428   ti_sysbios_knl_Queue_Module__root__V
+000115e8   ti_sysbios_knl_Queue_Object__DESC__C
+00011690   ti_sysbios_knl_Queue_Object__PARAMS__C
+0000d06d   ti_sysbios_knl_Queue_Object__create__S
+0000e0cd   ti_sysbios_knl_Queue_Object__destruct__S
+0000ea75   ti_sysbios_knl_Queue_Object__get__S
+0000e9e3   ti_sysbios_knl_Queue_empty__E
+000118a4   ti_sysbios_knl_Semaphore_A_badContext__C
+000118a8   ti_sysbios_knl_Semaphore_A_noEvents__C
+000118ac   ti_sysbios_knl_Semaphore_A_overflow__C
+000118b0   ti_sysbios_knl_Semaphore_A_pendTaskDisabled__C
+000118b4   ti_sysbios_knl_Semaphore_Instance_State_pendQ__O
+0000e899   ti_sysbios_knl_Semaphore_Instance_finalize__F
+000093c5   ti_sysbios_knl_Semaphore_Instance_init__F
+000118b8   ti_sysbios_knl_Semaphore_LM_pend__C
+000118bc   ti_sysbios_knl_Semaphore_LM_post__C
+000118c0   ti_sysbios_knl_Semaphore_Module__diagsEnabled__C
+000118c4   ti_sysbios_knl_Semaphore_Module__diagsIncluded__C
+000118c8   ti_sysbios_knl_Semaphore_Module__diagsMask__C
+00011a14   ti_sysbios_knl_Semaphore_Module__id__C
+00011a16   ti_sysbios_knl_Semaphore_Module__loggerDefined__C
+000118cc   ti_sysbios_knl_Semaphore_Module__loggerFxn2__C
+000118d0   ti_sysbios_knl_Semaphore_Module__loggerFxn4__C
+000118d4   ti_sysbios_knl_Semaphore_Module__loggerObj__C
+20003430   ti_sysbios_knl_Semaphore_Module__root__V
+00011608   ti_sysbios_knl_Semaphore_Object__DESC__C
+000114b8   ti_sysbios_knl_Semaphore_Object__PARAMS__C
+0000cb75   ti_sysbios_knl_Semaphore_Object__create__S
+0000df11   ti_sysbios_knl_Semaphore_Object__destruct__S
+0000ea81   ti_sysbios_knl_Semaphore_Params__init__S
+0000ca33   ti_sysbios_knl_Semaphore_pendTimeout__I
+00002fbd   ti_sysbios_knl_Semaphore_pend__E
+00005b8d   ti_sysbios_knl_Semaphore_post__E
+20003444   ti_sysbios_knl_Swi_Module_State_0_readyQ__A
+2000343c   ti_sysbios_knl_Swi_Module__root__V
+2000344c   ti_sysbios_knl_Swi_Module__state__V
+0000ec99   ti_sysbios_knl_Swi_Module_startup__E
+0000ec99   ti_sysbios_knl_Swi_Module_startup__F
+000118d8   ti_sysbios_knl_Task_A_badTimeout__C
+000118dc   ti_sysbios_knl_Task_A_sleepTaskDisabled__C
+0000e3ed   ti_sysbios_knl_Task_Handle__label__S
+20002fe4   ti_sysbios_knl_Task_Instance_State_0_hookEnv__A
+20001360   ti_sysbios_knl_Task_Instance_State_0_stack__A
+20002fe8   ti_sysbios_knl_Task_Instance_State_1_hookEnv__A
+20001960   ti_sysbios_knl_Task_Instance_State_1_stack__A
+000118e0   ti_sysbios_knl_Task_LD_block__C
+000118e4   ti_sysbios_knl_Task_LD_exit__C
+000118e8   ti_sysbios_knl_Task_LD_ready__C
+000118ec   ti_sysbios_knl_Task_LM_sleep__C
+000118f0   ti_sysbios_knl_Task_LM_switch__C
+20003494   ti_sysbios_knl_Task_Module_State_0_idleTask__A
+20003474   ti_sysbios_knl_Task_Module_State_0_readyQ__A
+000118f4   ti_sysbios_knl_Task_Module_State_inactiveQ__O
+000118f8   ti_sysbios_knl_Task_Module__diagsEnabled__C
+000118fc   ti_sysbios_knl_Task_Module__diagsIncluded__C
+00011900   ti_sysbios_knl_Task_Module__diagsMask__C
+00011a18   ti_sysbios_knl_Task_Module__id__C
+00011a1a   ti_sysbios_knl_Task_Module__loggerDefined__C
+00011904   ti_sysbios_knl_Task_Module__loggerFxn2__C
+00011908   ti_sysbios_knl_Task_Module__loggerFxn4__C
+0001190c   ti_sysbios_knl_Task_Module__loggerObj__C
+20003468   ti_sysbios_knl_Task_Module__root__V
+20003a54   ti_sysbios_knl_Task_Module__state__V
+0000a6e1   ti_sysbios_knl_Task_Module_startup__E
+0000a6e1   ti_sysbios_knl_Task_Module_startup__F
+00011910   ti_sysbios_knl_Task_Object__count__C
+0000e8a9   ti_sysbios_knl_Task_Object__get__S
+00011914   ti_sysbios_knl_Task_Object__heap__C
+20003778   ti_sysbios_knl_Task_Object__table__V
+0000ecf1   ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S
+0000cf8d   ti_sysbios_knl_Task_SupportProxy_start__E
+0000e35d   ti_sysbios_knl_Task_SupportProxy_swap__E
+00011918   ti_sysbios_knl_Task_allBlockedFunc__C
+0000c9ad   ti_sysbios_knl_Task_allBlockedFunction__I
+0000946d   ti_sysbios_knl_Task_blockI__E
+0000e8b9   ti_sysbios_knl_Task_disable__E
+0000df31   ti_sysbios_knl_Task_enter__I
+00007429   ti_sysbios_knl_Task_exit__E
+000116a8   ti_sysbios_knl_Task_hooks__A
+0001178c   ti_sysbios_knl_Task_hooks__C
+00011a1c   ti_sysbios_knl_Task_initStackFlag__C
+0001191c   ti_sysbios_knl_Task_numConstructedTasks__C
+00007e0d   ti_sysbios_knl_Task_postInit__I
+0000db19   ti_sysbios_knl_Task_restore__E
+00007939   ti_sysbios_knl_Task_schedule__I
+0000d76d   ti_sysbios_knl_Task_sleepTimeout__I
+000041fd   ti_sysbios_knl_Task_sleep__E
+00007a35   ti_sysbios_knl_Task_startCore__E
+0000ecf5   ti_sysbios_knl_Task_startup__E
+0000e369   ti_sysbios_knl_Task_swapReturn
+00008b69   ti_sysbios_knl_Task_unblockI__E
+00011920   ti_sysbios_utils_Load_LS_cpuLoad__C
+00011924   ti_sysbios_utils_Load_LS_hwiLoad__C
+00011928   ti_sysbios_utils_Load_LS_taskLoad__C
+200034a0   ti_sysbios_utils_Load_Module_State_0_runningTask__A
+20003b10   ti_sysbios_utils_Load_Module_State_0_taskEnv__A
+2000349c   ti_sysbios_utils_Load_Module_State_0_taskStartTime__A
+0001192c   ti_sysbios_utils_Load_Module_State_taskList__O
+00011930   ti_sysbios_utils_Load_Module__diagsEnabled__C
+00011934   ti_sysbios_utils_Load_Module__diagsIncluded__C
+00011938   ti_sysbios_utils_Load_Module__diagsMask__C
+00011a1e   ti_sysbios_utils_Load_Module__id__C
+00011a20   ti_sysbios_utils_Load_Module__loggerDefined__C
+0001193c   ti_sysbios_utils_Load_Module__loggerFxn1__C
+00011940   ti_sysbios_utils_Load_Module__loggerFxn2__C
+00011944   ti_sysbios_utils_Load_Module__loggerFxn4__C
+00011948   ti_sysbios_utils_Load_Module__loggerObj__C
+20003498   ti_sysbios_utils_Load_Module__root__V
+20003810   ti_sysbios_utils_Load_Module__state__V
+0000b811   ti_sysbios_utils_Load_addTask__E
+00011a22   ti_sysbios_utils_Load_autoAddTasks__C
+00011a24   ti_sysbios_utils_Load_hwiEnabled__C
+00009065   ti_sysbios_utils_Load_idleFxn__E
+0000b501   ti_sysbios_utils_Load_logCPULoad__I
+00006da9   ti_sysbios_utils_Load_logLoads__I
+0001194c   ti_sysbios_utils_Load_postUpdate__C
+0000b091   ti_sysbios_utils_Load_taskCreateHook__E
+0000af41   ti_sysbios_utils_Load_taskDeleteHook__E
+0000ea8d   ti_sysbios_utils_Load_taskRegHook__E
+0000be4d   ti_sysbios_utils_Load_taskSwitchHook__E
+0000aacd   ti_sysbios_utils_Load_updateCurrentThreadTime__E
+00011a26   ti_sysbios_utils_Load_updateInIdle__C
+00009115   ti_sysbios_utils_Load_updateLoads__E
+0000720d   ti_sysbios_utils_Load_updateThreadContexts__E
+00009115   ti_sysbios_utils_Load_update__E
+00011950   ti_sysbios_utils_Load_windowInMs__C
+0000ecf9   ti_uia_runtime_LogSync_CpuTimestampProxy_Module__startupDone__S
+00008ce1   ti_uia_runtime_LogSync_CpuTimestampProxy_get32__E
+0000690d   ti_uia_runtime_LogSync_CpuTimestampProxy_get64__E
+0000e819   ti_uia_runtime_LogSync_CpuTimestampProxy_getFreq__E
+0000ecfd   ti_uia_runtime_LogSync_GlobalTimestampProxy_Module__startupDone__S
+200034a4   ti_uia_runtime_LogSync_Module__root__V
+200034ac   ti_uia_runtime_LogSync_Module__state__V
+0000db41   ti_uia_runtime_LogSync_Module_startup__E
+0000db41   ti_uia_runtime_LogSync_Module_startup__F
+200034b8   ti_uia_runtime_QueueDescriptor_Module__state__V
+0000e405   ti_uia_sysbios_LoggerIdle_Handle__label__S
+00009b4b   ti_uia_sysbios_LoggerIdle_Instance_init__F
+20000360   ti_uia_sysbios_LoggerIdle_Module_State_0_idleBuffer__A
+20002f48   ti_uia_sysbios_LoggerIdle_Module_State_0_tempBuffer__A
+000112a4   ti_uia_sysbios_LoggerIdle_Module__FXNS__C
+00011954   ti_uia_sysbios_LoggerIdle_Module__diagsEnabled__C
+00011958   ti_uia_sysbios_LoggerIdle_Module__diagsIncluded__C
+0001195c   ti_uia_sysbios_LoggerIdle_Module__diagsMask__C
+00011a28   ti_uia_sysbios_LoggerIdle_Module__id__C
+200034c4   ti_uia_sysbios_LoggerIdle_Module__root__V
+20003bd0   ti_uia_sysbios_LoggerIdle_Module__state__V
+00011628   ti_uia_sysbios_LoggerIdle_Object__DESC__C
+000116c0   ti_uia_sysbios_LoggerIdle_Object__PARAMS__C
+0000d0a5   ti_uia_sysbios_LoggerIdle_Object__create__S
+0000df51   ti_uia_sysbios_LoggerIdle_Object__delete__S
+200034cc   ti_uia_sysbios_LoggerIdle_Object__table__V
+0000e0e9   ti_uia_sysbios_LoggerIdle_disable__E
+0000e0e9   ti_uia_sysbios_LoggerIdle_disable__F
+0000e105   ti_uia_sysbios_LoggerIdle_enable__E
+0000e105   ti_uia_sysbios_LoggerIdle_enable__F
+0000ba45   ti_uia_sysbios_LoggerIdle_idleWrite__I
+00011a2a   ti_uia_sysbios_LoggerIdle_isTimestampEnabled__C
+00004ac5   ti_uia_sysbios_LoggerIdle_write0__E
+000043d1   ti_uia_sysbios_LoggerIdle_write1__E
+0000bc05   ti_uia_sysbios_LoggerIdle_write2__E
+0000b565   ti_uia_sysbios_LoggerIdle_write4__E
+0000a95d   ti_uia_sysbios_LoggerIdle_write8__E
+00011a2c   ti_uia_sysbios_LoggerIdle_writeWhenFull__C
+000114dc   txBuffer
+0000c5e9   uDMAChannelAttributeDisable
+0000dd21   uDMAChannelControlSet
+0000e41d   uDMAChannelDisable
+0000e435   uDMAChannelEnable
+0000db69   uDMAChannelModeGet
+0000a7e5   uDMAChannelTransferSet
+000111a4   uartTivaHWAttrs
+20002e30   uartTivaObjects
+00002d3d   unlink
+00002cad   write
+00011960   xdc_runtime_Assert_E_assertFailed__C
+0000c631   xdc_runtime_Assert_raise__I
+00011964   xdc_runtime_Core_A_initializedParams__C
+00011968   xdc_runtime_Core_Module__diagsEnabled__C
+0001196c   xdc_runtime_Core_Module__diagsIncluded__C
+00011970   xdc_runtime_Core_Module__diagsMask__C
+00011a2e   xdc_runtime_Core_Module__id__C
+0000d5f9   xdc_runtime_Core_assignLabel__I
+0000c679   xdc_runtime_Core_assignParams__I
+0000763d   xdc_runtime_Core_createObject__I
+0000b309   xdc_runtime_Core_deleteObject__I
+20003350   xdc_runtime_Diags_dictElems
+00011974   xdc_runtime_Error_E_memory__C
+00011978   xdc_runtime_Error_Module__diagsEnabled__C
+0001197c   xdc_runtime_Error_Module__diagsIncluded__C
+00011980   xdc_runtime_Error_Module__diagsMask__C
+00011a30   xdc_runtime_Error_Module__loggerDefined__C
+00011984   xdc_runtime_Error_Module__loggerFxn8__C
+00011988   xdc_runtime_Error_Module__loggerObj__C
+200034d0   xdc_runtime_Error_Module__state__V
+0000e121   xdc_runtime_Error_check__E
+0000e121   xdc_runtime_Error_check__F
+0000ed01   xdc_runtime_Error_getSite__E
+0000ed01   xdc_runtime_Error_getSite__F
+0000ea99   xdc_runtime_Error_init__E
+0000ea99   xdc_runtime_Error_init__F
+00011a32   xdc_runtime_Error_maxDepth__C
+00011545   xdc_runtime_Error_policy__C
+0000b0fd   xdc_runtime_Error_print__E
+0000b0fd   xdc_runtime_Error_print__F
+0001198c   xdc_runtime_Error_raiseHook__C
+000061c9   xdc_runtime_Error_raiseX__E
+000061c9   xdc_runtime_Error_raiseX__F
+0000eaa5   xdc_runtime_Gate_enterSystem__E
+0000eaa5   xdc_runtime_Gate_enterSystem__F
+0000e8c9   xdc_runtime_Gate_leaveSystem__E
+0000e8c9   xdc_runtime_Gate_leaveSystem__F
+00011990   xdc_runtime_IGateProvider_Interface__BASE__C
+00011994   xdc_runtime_IHeap_Interface__BASE__C
+00011998   xdc_runtime_ILogger_Interface__BASE__C
+0001199c   xdc_runtime_IModule_Interface__BASE__C
+000119a0   xdc_runtime_Log_L_error__C
+000119a4   xdc_runtime_Log_L_warning__C
+0000ecd1   xdc_runtime_Main_Module_GateProxy_query__E
+000119a8   xdc_runtime_Main_Module__diagsEnabled__C
+000119ac   xdc_runtime_Main_Module__diagsIncluded__C
+000119b0   xdc_runtime_Main_Module__diagsMask__C
+00011a34   xdc_runtime_Main_Module__id__C
+00011a36   xdc_runtime_Main_Module__loggerDefined__C
+000119b4   xdc_runtime_Main_Module__loggerFxn2__C
+000119b8   xdc_runtime_Main_Module__loggerFxn4__C
+000119bc   xdc_runtime_Main_Module__loggerObj__C
+200034d2   xdc_runtime_Main_Module__root__V
+0000ed05   xdc_runtime_Memory_HeapProxy_alloc__E
+0000ed09   xdc_runtime_Memory_HeapProxy_free__E
+00011a38   xdc_runtime_Memory_Module__id__C
+200034d4   xdc_runtime_Memory_Module__state__V
+0000b021   xdc_runtime_Memory_alloc__E
+0000b021   xdc_runtime_Memory_alloc__F
+0000eab1   xdc_runtime_Memory_calloc__E
+0000eab1   xdc_runtime_Memory_calloc__F
+000119c0   xdc_runtime_Memory_defaultHeapInstance__C
+0000e8d9   xdc_runtime_Memory_free__E
+0000e8d9   xdc_runtime_Memory_free__F
+0000eabd   xdc_runtime_Memory_getMaxDefaultTypeAlign__E
+0000eabd   xdc_runtime_Memory_getMaxDefaultTypeAlign__F
+0000e13d   xdc_runtime_Memory_valloc__E
+0000e13d   xdc_runtime_Memory_valloc__F
+200034d8   xdc_runtime_Registry_Module__state__V
+0000df71   xdc_runtime_Registry_findById__E
+0000df71   xdc_runtime_Registry_findById__F
+200034e0   xdc_runtime_Startup_Module__state__V
+00000001   xdc_runtime_Startup__EXECFXN__C
+00000001   xdc_runtime_Startup__RESETFXN__C
+000119c4   xdc_runtime_Startup_execImpl__C
+0000be9d   xdc_runtime_Startup_exec__E
+0000be9d   xdc_runtime_Startup_exec__F
+0000e795   xdc_runtime_Startup_exec__I
+00011708   xdc_runtime_Startup_firstFxns__A
+00011794   xdc_runtime_Startup_firstFxns__C
+0001179c   xdc_runtime_Startup_lastFxns__A
+000117a4   xdc_runtime_Startup_lastFxns__C
+000119c8   xdc_runtime_Startup_maxPasses__C
+00009f6b   xdc_runtime_Startup_reset__I
+0001171c   xdc_runtime_Startup_sfxnRts__A
+000119cc   xdc_runtime_Startup_sfxnRts__C
+000113b8   xdc_runtime_Startup_sfxnTab__A
+000119d0   xdc_runtime_Startup_sfxnTab__C
+00007b2d   xdc_runtime_Startup_startMods__I
+000119d4   xdc_runtime_SysCallback_abortFxn__C
+0000e8e9   xdc_runtime_SysCallback_abort__E
+0000e8e9   xdc_runtime_SysCallback_abort__F
+0000a2b7   xdc_runtime_SysCallback_defaultExit
+0000aacb   xdc_runtime_SysCallback_defaultFlush
+000119d8   xdc_runtime_SysCallback_exitFxn__C
+0000e8f9   xdc_runtime_SysCallback_exit__E
+0000e8f9   xdc_runtime_SysCallback_exit__F
+000119dc   xdc_runtime_SysCallback_flushFxn__C
+0000e909   xdc_runtime_SysCallback_flush__E
+0000e909   xdc_runtime_SysCallback_flush__F
+000119e0   xdc_runtime_SysCallback_putchFxn__C
+0000e919   xdc_runtime_SysCallback_putch__E
+0000e919   xdc_runtime_SysCallback_putch__F
+000119e4   xdc_runtime_SysCallback_readyFxn__C
+0000e929   xdc_runtime_SysCallback_ready__E
+0000e929   xdc_runtime_SysCallback_ready__F
+0000ed0d   xdc_runtime_System_Module_GateProxy_enter__E
+0000ed11   xdc_runtime_System_Module_GateProxy_leave__E
+0000ecd1   xdc_runtime_System_Module_GateProxy_query__E
+200034e8   xdc_runtime_System_Module_State_0_atexitHandlers__A
+000119e8   xdc_runtime_System_Module__gateObj__C
+200034f0   xdc_runtime_System_Module__state__V
+0000ec9f   xdc_runtime_System_Module_startup__E
+0000ec9f   xdc_runtime_System_Module_startup__F
+0000e8e9   xdc_runtime_System_SupportProxy_abort__E
+0000e8f9   xdc_runtime_System_SupportProxy_exit__E
+0000e909   xdc_runtime_System_SupportProxy_flush__E
+0000e919   xdc_runtime_System_SupportProxy_putch__E
+0000e929   xdc_runtime_System_SupportProxy_ready__E
+0000e619   xdc_runtime_System_abort__E
+0000e619   xdc_runtime_System_abort__F
+0000e1a7   xdc_runtime_System_aprintf__E
+0000ed15   xdc_runtime_System_aprintf_va__F
+0000cbb5   xdc_runtime_System_atexit__E
+0000cbb5   xdc_runtime_System_atexit__F
+0000db91   xdc_runtime_System_avprintf__F
+00002635   xdc_runtime_System_doPrint__I
+0000eac9   xdc_runtime_System_exit__E
+0000eac9   xdc_runtime_System_exit__F
+000119ec   xdc_runtime_System_extendFxn__C
+0000e909   xdc_runtime_System_flush__E
+0000e909   xdc_runtime_System_flush__F
+0000beed   xdc_runtime_System_formatNum__I
+0000ead5   xdc_runtime_System_lastFxn__I
+000119f0   xdc_runtime_System_maxAtexitHandlers__C
+00006fe5   xdc_runtime_System_printfExtend__I
+0000e1c1   xdc_runtime_System_printf__E
+0000ed19   xdc_runtime_System_printf_va__F
+0000d9d5   xdc_runtime_System_putchar__I
+0000d929   xdc_runtime_System_rtsExit__I
+0000dd45   xdc_runtime_System_vprintf__F
+0000ed1d   xdc_runtime_System_vsnprintf__E
+0000e939   xdc_runtime_System_vsnprintf__F
+200034fc   xdc_runtime_Text_Module__state__V
+00011a3a   xdc_runtime_Text_charCnt__C
+0000ed28   xdc_runtime_Text_charTab__A
+000119f4   xdc_runtime_Text_charTab__C
+0000d955   xdc_runtime_Text_cordText__E
+0000d955   xdc_runtime_Text_cordText__F
+00011a3c   xdc_runtime_Text_isLoaded__C
+000119f8   xdc_runtime_Text_nameEmpty__C
+000119fc   xdc_runtime_Text_nameStatic__C
+00011a00   xdc_runtime_Text_nameUnknown__C
+00011754   xdc_runtime_Text_nodeTab__A
+00011a04   xdc_runtime_Text_nodeTab__C
+0000d629   xdc_runtime_Text_printVisFxn__I
+00009e45   xdc_runtime_Text_putMod__E
+00009e45   xdc_runtime_Text_putMod__F
+00009b4d   xdc_runtime_Text_putSite__E
+00009b4d   xdc_runtime_Text_putSite__F
+00011a3e   xdc_runtime_Text_registryModsLastId__C
+0000e44d   xdc_runtime_Text_ropeText__E
+0000e44d   xdc_runtime_Text_ropeText__F
+00011a40   xdc_runtime_Text_unnamedModsLastId__C
+0000bf3d   xdc_runtime_Text_visitRope2__I
+00011a08   xdc_runtime_Text_visitRopeFxn__C
+0000eb9f   xdc_runtime_Text_visitRope__I
+0000cce5   xdc_runtime_Text_xprintf__I
+0000ed21   xdc_runtime_TimestampNull_Module__startupDone__S
+0000ed25   xdc_runtime_Timestamp_Module__startupDone__S
+00008ce1   xdc_runtime_Timestamp_SupportProxy_get32__E
+0000690d   xdc_runtime_Timestamp_SupportProxy_get64__E
+0000e819   xdc_runtime_Timestamp_SupportProxy_getFreq__E
+00008ce1   xdc_runtime_Timestamp_get32__E
+00008ce1   xdc_runtime_Timestamp_get32__F
+0000690d   xdc_runtime_Timestamp_get64__E
+0000690d   xdc_runtime_Timestamp_get64__F
+0000e819   xdc_runtime_Timestamp_getFreq__E
+0000e819   xdc_runtime_Timestamp_getFreq__F
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address    name
+--------   ----
+00000000   __ASM__
+00000000   __TI_static_base__
+00000000   ti_sysbios_family_arm_m3_Hwi_resetVectors
+00000001   __TI_args_main
+00000001   xdc_runtime_Startup__EXECFXN__C
+00000001   xdc_runtime_Startup__RESETFXN__C
+0000007a   __ISA__
+0000008d   __PLAT__
+000000ae   __TARG__
+000000d4   __TRDR__
+00000300   __STACK_SIZE
+00000f17   __TI_printfi
+00001221   Update_State
+00001ea1   ti_sysbios_family_arm_m3_Hwi_excDumpRegs__I
+00002635   xdc_runtime_System_doPrint__I
+00002cad   write
+00002d3d   remove
+00002d3d   unlink
+00002d61   rename
+00002d9f   remove_device
+00002dc7   read
+00002deb   open
+00002e99   lseek
+00002ebd   close
+00002f0f   add_device
+00002fbd   ti_sysbios_knl_Semaphore_pend__E
+00003295   HOSTwrite
+000032e1   HOSTunlink
+00003319   HOSTtime
+00003353   HOSTrename
+000033b1   HOSTread
+000033fd   HOSTopen
+0000344f   HOSTlseek
+000034ab   HOSTgetenv
+000034e9   HOSTclose
+00003521   HOSTclock
+00003569   ti_sysbios_heaps_HeapMem_free__E
+000037b1   ti_sysbios_heaps_HeapMem_alloc__E
+000039e5   ti_sysbios_family_arm_lm4_Timer_start__E
+00003c15   ti_sysbios_family_arm_m3_Hwi_excHandlerMax__I
+00004009   __aeabi_uldivmod
+000041fd   ti_sysbios_knl_Task_sleep__E
+000043d1   ti_uia_sysbios_LoggerIdle_write1__E
+0000465d   __TI_cleanup
+00004689   freopen
+000046b3   fopen
+00004755   consoleFxn
+0000490d   __aeabi_dsub
+00004917   __aeabi_dadd
+00004ac5   ti_uia_sysbios_LoggerIdle_write0__E
+00004e01   USBLibDMAInit
+000050d9   ti_sysbios_family_arm_m3_Hwi_excBusFault__I
+00005659   ti_sysbios_family_arm_m3_Hwi_excUsageFault__I
+000057ad   USBDeviceIntHandlerInternal
+000058fd   USBDCDInit
+00005a45   sqrt
+00005b8d   ti_sysbios_knl_Semaphore_post__E
+00005cd1   USBDeviceConfig
+00005e11   ti_sysbios_family_arm_m3_Hwi_excMemFault__I
+00005f51   Filter_Data
+0000608d   Read_Gyro
+000061c9   xdc_runtime_Error_raiseX__E
+000061c9   xdc_runtime_Error_raiseX__F
+00006305   ti_sysbios_heaps_HeapMem_Instance_init__F
+0000643d   __aeabi_ddiv
+00006575   fputs
+00006681   puts
+000066a9   ti_sysbios_family_arm_m3_Hwi_dispatch__I
+0000677f   ti_sysbios_family_arm_m3_Hwi_pendSV__I
+000067a3   ti_sysbios_family_arm_m3_Hwi_return
+000067bd   ti_sysbios_family_arm_m3_Hwi_excHandlerAsm__I
+000067dd   GPIOPadConfigSet
+0000690d   ti_sysbios_family_arm_lm4_TimestampProvider_get64__E
+0000690d   ti_uia_runtime_LogSync_CpuTimestampProxy_get64__E
+0000690d   xdc_runtime_Timestamp_SupportProxy_get64__E
+0000690d   xdc_runtime_Timestamp_get64__E
+0000690d   xdc_runtime_Timestamp_get64__F
+00006a39   ti_sysbios_knl_Clock_workFunc__E
+00006b65   Calib_Gyro
+00006c89   ti_sysbios_family_arm_m3_Hwi_dispatchC__I
+00006da9   ti_sysbios_utils_Load_logLoads__I
+00006fe5   xdc_runtime_System_printfExtend__I
+000070fd   _Dscale
+0000720d   ti_sysbios_utils_Load_updateThreadContexts__E
+0000731d   ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlClockSetI__I
+00007429   ti_sysbios_knl_Task_exit__E
+0000763d   xdc_runtime_Core_createObject__I
+00007741   main
+0000783d   __aeabi_dmul
+00007939   ti_sysbios_knl_Task_schedule__I
+00007a35   ti_sysbios_knl_Task_startCore__E
+00007b2d   xdc_runtime_Startup_startMods__I
+00007c25   GPIO_toggle
+00007d19   __cxa_finalize
+00007d59   __cxa_ia64_exit
+00007d5f   __cxa_atexit
+00007d63   atexit
+00007d71   __aeabi_atexit
+00007e0d   ti_sysbios_knl_Task_postInit__I
+00007feb   ti_sysbios_BIOS_nullFunc__I
+00007fed   GPIO_write
+000080d5   ti_sysbios_family_arm_m3_Hwi_initNVIC__E
+000081bd   Calib_Accel
+00008385   setvbuf
+00008461   USBDeviceEnumHandler
+000086e1   SysCtlClockGet
+000087a9   _Dnorm
+0000892d   __TI_doflush
+00008979   fflush
+00008b69   ti_sysbios_knl_Task_unblockI__E
+00008cdf   ti_sysbios_family_arm_m3_Hwi_doSwiRestore__I
+00008ce1   ti_sysbios_family_arm_lm4_TimestampProvider_get32__E
+00008ce1   ti_uia_runtime_LogSync_CpuTimestampProxy_get32__E
+00008ce1   xdc_runtime_Timestamp_SupportProxy_get32__E
+00008ce1   xdc_runtime_Timestamp_get32__E
+00008ce1   xdc_runtime_Timestamp_get32__F
+00008d99   ti_sysbios_family_arm_m3_Hwi_excHardFault__I
+00008e4d   ti_sysbios_gates_GateMutex_enter__E
+00008fb3   ti_sysbios_gates_GateHwi_Instance_init__F
+00008fb5   ti_sysbios_family_arm_m3_Hwi_excDebugMon__I
+00009065   ti_sysbios_utils_Load_idleFxn__E
+00009115   ti_sysbios_utils_Load_updateLoads__E
+00009115   ti_sysbios_utils_Load_update__E
+000091c5   __TI_wrt_ok
+00009227   __TI_rd_ok
+00009271   ti_sysbios_family_arm_lm4_Timer_enableTiva__I
+000093c5   ti_sysbios_knl_Semaphore_Instance_init__F
+0000946d   ti_sysbios_knl_Task_blockI__E
+00009515   ti_sysbios_family_arm_lm4_Timer_enableTimers__I
+000095b9   ti_sysbios_family_arm_m3_Hwi_Module_startup__E
+000095b9   ti_sysbios_family_arm_m3_Hwi_Module_startup__F
+000096fd   USBCDCD_init
+0000979d   USBDCDCCompositeInit
+0000983d   __TI_auto_init
+00009979   fputc
+000099fd   putc
+00009a01   putchar
+00009a15   __aeabi_memcpy
+00009a15   __aeabi_memcpy4
+00009a15   __aeabi_memcpy8
+00009a15   memcpy
+00009b4b   ti_uia_sysbios_LoggerIdle_Instance_init__F
+00009b4d   xdc_runtime_Text_putSite__E
+00009b4d   xdc_runtime_Text_putSite__F
+00009c81   __TI_closefile
+00009ce7   fclose
+00009db1   ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlClockSet__E
+00009e45   xdc_runtime_Text_putMod__E
+00009e45   xdc_runtime_Text_putMod__F
+00009f6b   xdc_runtime_Startup_reset__I
+00009f6d   ti_sysbios_family_arm_m3_Hwi_Instance_init__F
+00009ffd   UARTUtils_systemInit
+0000a115   USBDeviceConfigAlternate
+0000a1a1   ti_sysbios_family_arm_m3_TaskSupport_buildTaskStack
+0000a2b7   xdc_runtime_SysCallback_defaultExit
+0000a2b9   EK_TM4C123GXL_initGPIO
+0000a341   __aeabi_cdcmpeq
+0000a341   __aeabi_cdcmple
+0000a3c7   __aeabi_cdrcmple
+0000a44d   GetData_Accel
+0000a4d1   GetData_Gyro
+0000a555   GetData_Magn
+0000a5d9   Read_Magn
+0000a6e1   ti_sysbios_knl_Task_Module_startup__E
+0000a6e1   ti_sysbios_knl_Task_Module_startup__F
+0000a765   Read_Accel
+0000a7e5   uDMAChannelTransferSet
+0000a865   EK_TM4C123GXL_initI2C
+0000a95d   ti_uia_sysbios_LoggerIdle_write8__E
+0000a9d9   USBDevEndpointConfigSet
+0000aa53   __aeabi_memclr
+0000aa53   __aeabi_memclr4
+0000aa53   __aeabi_memclr8
+0000aa55   __aeabi_memset
+0000aa55   __aeabi_memset4
+0000aa55   __aeabi_memset8
+0000aa5b   memset
+0000aacb   xdc_runtime_SysCallback_defaultFlush
+0000aacd   ti_sysbios_utils_Load_updateCurrentThreadTime__E
+0000abb9   ti_sysbios_family_arm_lm4_Timer_isrStub__E
+0000ac2d   ProcessDataFromHost
+0000ad89   printf
+0000adf1   ti_sysbios_family_arm_m3_Hwi_Object__create__S
+0000ae61   ti_sysbios_family_arm_m3_Hwi_reconfig__E
+0000aed1   ti_sysbios_hal_Hwi_Object__create__S
+0000af41   ti_sysbios_utils_Load_taskDeleteHook__E
+0000b021   xdc_runtime_Memory_alloc__E
+0000b021   xdc_runtime_Memory_alloc__F
+0000b091   ti_sysbios_utils_Load_taskCreateHook__E
+0000b0fd   xdc_runtime_Error_print__E
+0000b0fd   xdc_runtime_Error_print__F
+0000b169   IntDisable
+0000b1d1   IntEnable
+0000b2a1   ti_sysbios_BIOS_rtsUnlock__I
+0000b309   xdc_runtime_Core_deleteObject__I
+0000b371   IntIsEnabled
+0000b3d5   fseek
+0000b439   _Dunscale
+0000b49d   ti_sysbios_knl_Clock_logTick__E
+0000b501   ti_sysbios_utils_Load_logCPULoad__I
+0000b565   ti_uia_sysbios_LoggerIdle_write4__E
+0000b691   I2C0_RxData
+0000b6f1   USBBufferEventCallback
+0000b7b1   __TI_writemsg
+0000b7db   C$$IO$$
+0000b7df   __TI_readmsg
+0000b811   ti_sysbios_utils_Load_addTask__E
+0000b871   ProcessDataToHost
+0000b8cf   USBDevEndpointStatusClear
+0000b98d   USBDCDCInit
+0000b9e9   ti_sysbios_family_arm_lm4_Timer_Module_startup__E
+0000b9e9   ti_sysbios_family_arm_lm4_Timer_Module_startup__F
+0000ba45   ti_uia_sysbios_LoggerIdle_idleWrite__I
+0000baa1   ltoa
+0000bafd   _c_int00
+0000bb55   I2C0_TxData
+0000bbad   USBDCDCPacketWrite
+0000bc05   ti_uia_sysbios_LoggerIdle_write2__E
+0000bcb5   I2C0_MasterInit
+0000bd09   ULPIConfigSet
+0000bd5d   SysCtlPeripheralReset
+0000bdad   USBDCDConfigDescGet
+0000bdfd   USBDeviceResumeTickHandler
+0000be4d   ti_sysbios_utils_Load_taskSwitchHook__E
+0000be9d   xdc_runtime_Startup_exec__E
+0000be9d   xdc_runtime_Startup_exec__F
+0000beed   xdc_runtime_System_formatNum__I
+0000bf3d   xdc_runtime_Text_visitRope2__I
+0000bf8d   USBDevEndpointStallClear
+0000c0c1   UART_Params_init
+0000c10d   USBEndpointDMAConfigSet
+0000c159   atoi
+0000c1a5   srand
+0000c1bb   rand
+0000c23b   __aeabi_d2f
+0000c2d1   EK_TM4C123GXL_initUSB
+0000c319   GPIOPinConfigure
+0000c3a9   I2CMasterInitExpClk
+0000c3f1   UART_open
+0000c481   USBDeviceEnumResetHandler
+0000c4c9   __aeabi_d2iz
+0000c511   ti_sysbios_BIOS_errorRaiseHook__I
+0000c559   ti_sysbios_family_arm_m3_Hwi_excReserved__I
+0000c5a1   ti_sysbios_heaps_HeapMem_getStats__E
+0000c5e9   uDMAChannelAttributeDisable
+0000c631   xdc_runtime_Assert_raise__I
+0000c679   xdc_runtime_Core_assignParams__I
+0000c6c1   USBCDCD_LoggerIdle_sendData
+0000c705   USBDCDDeviceInfoInit
+0000c78d   USBEndpointDataGet
+0000c7d1   copy_in
+0000c815   C$$EXIT
+0000c819   abort
+0000c821   exit
+0000c859   __aeabi_d2uiz
+0000c89d   _Dtest
+0000c8e1   ti_sysbios_family_arm_lm4_Timer_stop__E
+0000c925   ti_sysbios_family_arm_m3_Hwi_disableInterrupt__E
+0000c925   ti_sysbios_hal_Hwi_HwiProxy_disableInterrupt__E
+0000c925   ti_sysbios_hal_Hwi_disableInterrupt__E
+0000c969   ti_sysbios_family_arm_m3_Hwi_enableInterrupt__E
+0000c969   ti_sysbios_hal_Hwi_HwiProxy_enableInterrupt__E
+0000c969   ti_sysbios_hal_Hwi_enableInterrupt__E
+0000c9ad   ti_sysbios_knl_Task_allBlockedFunction__I
+0000c9f1   UARTConfigSetExpClk
+0000ca33   ti_sysbios_knl_Semaphore_pendTimeout__I
+0000ca75   Clear_Array
+0000cab5   EK_TM4C123GXL_initGeneral
+0000caf5   signal
+0000cb35   ti_sysbios_family_arm_lm4_Timer_startup__E
+0000cb35   ti_sysbios_hal_Timer_TimerProxy_startup__E
+0000cb35   ti_sysbios_hal_Timer_startup__E
+0000cb75   ti_sysbios_knl_Semaphore_Object__create__S
+0000cbb5   xdc_runtime_System_atexit__E
+0000cbb5   xdc_runtime_System_atexit__F
+0000cbf5   UART_close
+0000cc6d   ti_sysbios_family_arm_m3_Hwi_excSvCall__I
+0000cca9   ti_sysbios_heaps_HeapMem_init__I
+0000cce5   xdc_runtime_Text_xprintf__I
+0000cd21   USBDCDConfigGetInterfaceEndpoint
+0000cd5b   USBFIFOConfigSet
+0000cd95   I2CTiva_completeTransfer
+0000cdcd   I2C_init
+0000ce3d   UART_init
+0000ce75   USBIntStatusControl
+0000cead   USBRingBufAdvanceWrite
+0000cee5   __aeabi_f2d
+0000cf1d   ti_sysbios_family_arm_m3_Hwi_excNoIsr__I
+0000cf55   ti_sysbios_family_arm_m3_Hwi_getStackInfo__E
+0000cf55   ti_sysbios_hal_Hwi_HwiProxy_getStackInfo__E
+0000cf55   ti_sysbios_hal_Hwi_getStackInfo__E
+0000cf8d   ti_sysbios_family_arm_m3_TaskSupport_start__E
+0000cf8d   ti_sysbios_knl_Task_SupportProxy_start__E
+0000cfc5   ti_sysbios_gates_GateHwi_Object__create__S
+0000cffd   ti_sysbios_gates_GateMutex_Object__create__S
+0000d035   ti_sysbios_heaps_HeapMem_Object__create__S
+0000d06d   ti_sysbios_knl_Queue_Object__create__S
+0000d0a5   ti_uia_sysbios_LoggerIdle_Object__create__S
+0000d0dd   InternalUSBStartOfFrameTick
+0000d111   SysCtlPeripheralEnable
+0000d145   UARTUtils_deviceread
+0000d179   UARTUtils_devicewrite
+0000d1ad   UART_read
+0000d1e1   UART_write
+0000d215   UART_writePolling
+0000d2b1   feraiseexcept
+0000d2e5   ti_sysbios_family_arm_m3_Hwi_excNmi__I
+0000d319   ti_sysbios_hal_Hwi_Instance_init__F
+0000d3b1   ProcessNotificationToHost
+0000d3e3   USBDevEndpointStall
+0000d4a9   InternalUSBTickInit
+0000d509   USBEndpointDataPut
+0000d569   strncpy
+0000d599   _Feraise
+0000d5c9   ti_sysbios_knl_Idle_run__E
+0000d5f9   xdc_runtime_Core_assignLabel__I
+0000d629   xdc_runtime_Text_printVisFxn__I
+0000d659   UARTUtils_deviceopen
+0000d687   USBEndpointDataSend
+0000d6b5   malloc
+0000d6e3   __aeabi_i2d
+0000d711   raise
+0000d76d   ti_sysbios_knl_Task_sleepTimeout__I
+0000d79b   Accel_Init
+0000d7c9   EK_TM4C123GXL_initUART
+0000d7f5   Magn_Init
+0000d821   USBBufferWrite
+0000d84d   USBDescGet
+0000d879   ti_sysbios_BIOS_exitFunc__I
+0000d8a5   ti_sysbios_hal_Hwi_initStack
+0000d8d1   ti_sysbios_knl_Clock_doTick__I
+0000d929   xdc_runtime_System_rtsExit__I
+0000d955   xdc_runtime_Text_cordText__E
+0000d955   xdc_runtime_Text_cordText__F
+0000d981   GPIODirModeSet
+0000d9ab   USBDCDConfigDescGetNum
+0000d9d5   xdc_runtime_System_putchar__I
+0000da29   InternalUSBRegisterTickHandler
+0000da79   USBDescGetNum
+0000daa1   USBIntEnableControl
+0000dac9   ti_sysbios_family_arm_m3_Hwi_initStacks__E
+0000daf1   ti_sysbios_gates_GateMutex_Instance_init__F
+0000db19   ti_sysbios_knl_Task_restore__E
+0000db41   ti_uia_runtime_LogSync_Module_startup__E
+0000db41   ti_uia_runtime_LogSync_Module_startup__F
+0000db69   uDMAChannelModeGet
+0000db91   xdc_runtime_System_avprintf__F
+0000dbb9   GPIO_init
+0000dc01   UARTUtils_systemAbort
+0000dc25   USBDevEndpointDataAck
+0000dc49   USBEndpointDMADisable
+0000dc6d   USBEndpointDMAEnable
+0000dc91   ti_sysbios_BIOS_registerRTSLock__I
+0000dcb5   ti_sysbios_family_arm_m3_Hwi_Instance_finalize__F
+0000dcd9   ti_sysbios_gates_GateMutex_Object__delete__S
+0000dcfd   ti_sysbios_knl_Clock_Module_startup__E
+0000dcfd   ti_sysbios_knl_Clock_Module_startup__F
+0000dd21   uDMAChannelControlSet
+0000dd45   xdc_runtime_System_vprintf__F
+0000de11   UARTUtils_systemPutch
+0000de31   USBRingBufAdvanceRead
+0000de51   USBStackModeSet
+0000de71   ti_sysbios_BIOS_startFunc__I
+0000de91   ti_sysbios_family_arm_m3_Hwi_Object__delete__S
+0000deb1   ti_sysbios_family_arm_m3_Hwi_doTaskRestore__I
+0000ded1   ti_sysbios_gates_GateHwi_Object__delete__S
+0000def1   ti_sysbios_heaps_HeapMem_Object__delete__S
+0000df11   ti_sysbios_knl_Semaphore_Object__destruct__S
+0000df31   ti_sysbios_knl_Task_enter__I
+0000df51   ti_uia_sysbios_LoggerIdle_Object__delete__S
+0000df71   xdc_runtime_Registry_findById__E
+0000df71   xdc_runtime_Registry_findById__F
+0000dfaf   USBULPIRegRead
+0000dfcd   USBULPIRegWrite
+0000dfed   UARTDisable
+0000e009   USBDCDConfigGetInterface
+0000e025   USBDCDStallEP0
+0000e041   USBEndpointDataAvail
+0000e05d   USBRingBufContigFree
+0000e079   memccpy
+0000e095   ti_sysbios_BIOS_rtsLock__I
+0000e0b1   ti_sysbios_family_arm_m3_Hwi_Object__destruct__S
+0000e0cd   ti_sysbios_knl_Queue_Object__destruct__S
+0000e0e9   ti_uia_sysbios_LoggerIdle_disable__E
+0000e0e9   ti_uia_sysbios_LoggerIdle_disable__F
+0000e105   ti_uia_sysbios_LoggerIdle_enable__E
+0000e105   ti_uia_sysbios_LoggerIdle_enable__F
+0000e121   xdc_runtime_Error_check__E
+0000e121   xdc_runtime_Error_check__F
+0000e13d   xdc_runtime_Memory_valloc__E
+0000e13d   xdc_runtime_Memory_valloc__F
+0000e173   USBEndpointDMAChannel
+0000e18d   USBRingBufWrite
+0000e1a7   xdc_runtime_System_aprintf__E
+0000e1c1   xdc_runtime_System_printf__E
+0000e1db   GPIOPinTypeGPIOOutput
+0000e1f3   Gyro_Init
+0000e20d   I2C_open
+0000e23d   UARTUtils_deviceclose
+0000e255   USB0DeviceIntHandler
+0000e26d   USBDCDConfigDescGetSize
+0000e2b5   free
+0000e2cd   _args_main
+0000e2e5   __aeabi_lmul
+0000e2fd   strcmp
+0000e315   ti_sysbios_family_arm_lm4_Timer_Module__startupDone__F
+0000e315   ti_sysbios_family_arm_lm4_Timer_Module__startupDone__S
+0000e32d   ti_sysbios_family_arm_m3_Hwi_Handle__label__S
+0000e345   ti_sysbios_family_arm_m3_Hwi_Module__startupDone__F
+0000e345   ti_sysbios_family_arm_m3_Hwi_Module__startupDone__S
+0000e35d   ti_sysbios_family_arm_m3_TaskSupport_swap__E
+0000e35d   ti_sysbios_knl_Task_SupportProxy_swap__E
+0000e369   ti_sysbios_knl_Task_swapReturn
+0000e375   ti_sysbios_gates_GateHwi_Handle__label__S
+0000e38d   ti_sysbios_gates_GateMutex_Handle__label__S
+0000e3a5   ti_sysbios_gates_GateMutex_leave__E
+0000e3bd   ti_sysbios_hal_Timer_Module__startupDone__F
+0000e3bd   ti_sysbios_hal_Timer_Module__startupDone__S
+0000e3d5   ti_sysbios_heaps_HeapMem_Handle__label__S
+0000e3ed   ti_sysbios_knl_Task_Handle__label__S
+0000e405   ti_uia_sysbios_LoggerIdle_Handle__label__S
+0000e41d   uDMAChannelDisable
+0000e435   uDMAChannelEnable
+0000e44d   xdc_runtime_Text_ropeText__E
+0000e44d   xdc_runtime_Text_ropeText__F
+0000e491   I2CMasterErr
+0000e4a7   USBBufferInit
+0000e4bd   USBRingBufFlush
+0000e4d3   USBRingBufUsed
+0000e4e9   memchr
+0000e4ff   strchr
+0000e515   SysCtlUSBPLLEnable
+0000e529   UARTEnable
+0000e53d   UARTUtils_systemReady
+0000e551   USBDCDRequestDataEP0
+0000e565   USBDCDSendDataEP0
+0000e579   USBDMAChannelConfigSet
+0000e58d   USBHostResume
+0000e5a1   USBIntEnableEndpoint
+0000e5c9   _register_unlock
+0000e5cf   _register_lock
+0000e5d7   _nop
+0000e5dd   strlen
+0000e5f1   ti_sysbios_family_arm_m3_Hwi_switchFromBootStack__E
+0000e5f1   ti_sysbios_hal_Hwi_HwiProxy_switchFromBootStack__E
+0000e5f1   ti_sysbios_hal_Hwi_switchFromBootStack__E
+0000e605   ti_sysbios_heaps_HeapMem_Object__get__S
+0000e619   xdc_runtime_System_abort__E
+0000e619   xdc_runtime_System_abort__F
+0000e62d   GPIOPinTypeGPIOInput
+0000e63f   GPIOPinTypeI2C
+0000e651   GPIOPinTypeI2CSCL
+0000e663   GPIOPinTypeUART
+0000e675   GPIOPinTypeUSBAnalog
+0000e6bd   UARTUtils_devicelseek
+0000e6cf   USBDMAChannelDisable
+0000e6e1   USBDMAChannelEnable
+0000e6f3   USBDMAChannelIntDisable
+0000e705   USBDMAChannelIntEnable
+0000e717   USBRingBufFree
+0000e74d   __TI_zero_init
+0000e75f   _Dclass
+0000e771   ti_sysbios_hal_Hwi_Module_startup__E
+0000e771   ti_sysbios_hal_Hwi_Module_startup__F
+0000e783   ti_sysbios_hal_Timer_Module_startup__E
+0000e783   ti_sysbios_hal_Timer_Module_startup__F
+0000e795   xdc_runtime_Startup_exec__I
+0000e7a7   IntMasterDisable
+0000e7b7   IntMasterEnable
+0000e7c7   UARTUtils_devicerename
+0000e7d7   USBEndpointStatus
+0000e7e7   USBRingBufContigUsed
+0000e7f7   USBRingBufWriteOne
+0000e807   strcpy
+0000e819   ti_sysbios_BIOS_getCpuFreq__E
+0000e819   ti_sysbios_family_arm_lm4_TimestampProvider_getFreq__E
+0000e819   ti_uia_runtime_LogSync_CpuTimestampProxy_getFreq__E
+0000e819   xdc_runtime_Timestamp_SupportProxy_getFreq__E
+0000e819   xdc_runtime_Timestamp_getFreq__E
+0000e819   xdc_runtime_Timestamp_getFreq__F
+0000e829   ti_sysbios_BIOS_setThreadType__E
+0000e839   ti_sysbios_BIOS_start__E
+0000e849   ti_sysbios_family_arm_lm4_TimestampProvider_rolloverFunc__E
+0000e859   ti_sysbios_family_arm_m3_Hwi_excHandler__I
+0000e869   ti_sysbios_family_arm_m3_TaskSupport_glue
+0000e879   ti_sysbios_gates_GateMutex_Instance_finalize__F
+0000e889   ti_sysbios_hal_Hwi_HwiProxy_Object__create__S
+0000e899   ti_sysbios_knl_Semaphore_Instance_finalize__F
+0000e8a9   ti_sysbios_knl_Task_Object__get__S
+0000e8b9   ti_sysbios_knl_Task_disable__E
+0000e8c9   xdc_runtime_Gate_leaveSystem__E
+0000e8c9   xdc_runtime_Gate_leaveSystem__F
+0000e8d9   xdc_runtime_Memory_free__E
+0000e8d9   xdc_runtime_Memory_free__F
+0000e8e9   xdc_runtime_SysCallback_abort__E
+0000e8e9   xdc_runtime_SysCallback_abort__F
+0000e8e9   xdc_runtime_System_SupportProxy_abort__E
+0000e8f9   xdc_runtime_SysCallback_exit__E
+0000e8f9   xdc_runtime_SysCallback_exit__F
+0000e8f9   xdc_runtime_System_SupportProxy_exit__E
+0000e909   xdc_runtime_SysCallback_flush__E
+0000e909   xdc_runtime_SysCallback_flush__F
+0000e909   xdc_runtime_System_SupportProxy_flush__E
+0000e909   xdc_runtime_System_flush__E
+0000e909   xdc_runtime_System_flush__F
+0000e919   xdc_runtime_SysCallback_putch__E
+0000e919   xdc_runtime_SysCallback_putch__F
+0000e919   xdc_runtime_System_SupportProxy_putch__E
+0000e929   xdc_runtime_SysCallback_ready__E
+0000e929   xdc_runtime_SysCallback_ready__F
+0000e929   xdc_runtime_System_SupportProxy_ready__E
+0000e939   xdc_runtime_System_vsnprintf__F
+0000e957   UARTCharGetNonBlocking
+0000e965   UARTCharPutNonBlocking
+0000e973   UARTUtils_deviceunlink
+0000e981   USBDCDCTxPacketAvailable
+0000e98f   USBDMAChannelStatus
+0000e99d   USBDevLPMDisable
+0000e9ab   USBDevLPMEnable
+0000e9b9   USBULPIDisable
+0000e9c7   USBULPIEnable
+0000e9d5   __TI_decompress_none
+0000e9e3   ti_sysbios_knl_Queue_empty__E
+0000e9f1   ti_catalog_arm_cortexm4_tiva_ce_Boot_init__I
+0000e9fd   CPUcpsid
+0000ea09   CPUcpsie
+0000ea15   USBEndpointPacketCountSet
+0000ea21   USBLPMIntEnable
+0000ea2d   USBRingBufInit
+0000ea39   ti_sysbios_family_arm_lm4_Timer_masterDisable__I
+0000ea45   ti_sysbios_family_arm_lm4_TimestampProvider_startTimer__E
+0000ea51   ti_sysbios_family_arm_m3_Hwi_Params__init__S
+0000ea5d   ti_sysbios_family_arm_m3_Hwi_disableFxn__E
+0000ea5d   ti_sysbios_hal_Hwi_HwiProxy_disable__E
+0000ea5d   ti_sysbios_hal_Hwi_disable__E
+0000ea69   ti_sysbios_gates_GateHwi_enter__E
+0000ea75   ti_sysbios_knl_Queue_Object__get__S
+0000ea81   ti_sysbios_knl_Semaphore_Params__init__S
+0000ea8d   ti_sysbios_utils_Load_taskRegHook__E
+0000ea99   xdc_runtime_Error_init__E
+0000ea99   xdc_runtime_Error_init__F
+0000eaa5   xdc_runtime_Gate_enterSystem__E
+0000eaa5   xdc_runtime_Gate_enterSystem__F
+0000eab1   xdc_runtime_Memory_calloc__E
+0000eab1   xdc_runtime_Memory_calloc__F
+0000eabd   xdc_runtime_Memory_getMaxDefaultTypeAlign__E
+0000eabd   xdc_runtime_Memory_getMaxDefaultTypeAlign__F
+0000eac9   xdc_runtime_System_exit__E
+0000eac9   xdc_runtime_System_exit__F
+0000ead5   xdc_runtime_System_lastFxn__I
+0000eae1   I2CMasterDisable
+0000eaeb   I2CMasterEnable
+0000eaff   I2C_Params_init
+0000eb09   UARTCharGet
+0000eb13   UARTCharPut
+0000eb1d   UARTIntDisable
+0000eb27   UARTIntStatus
+0000eb3b   USBClockEnable
+0000eb45   USBControllerVersion
+0000eb4f   USBDMAChannelAddressSet
+0000eb59   USBDMAChannelCountSet
+0000eb63   USBDevConnect
+0000eb6d   USBDevDisconnect
+0000eb77   USBIntStatusEndpoint
+0000eb81   ti_sysbios_hal_Hwi_Instance_finalize__F
+0000eb9f   xdc_runtime_Text_visitRope__I
+0000eba9   I2CMasterBusy
+0000ebb1   I2CMasterIntClear
+0000ebb9   I2CMasterSlaveAddrSet
+0000ebc9   UARTIntEnable
+0000ebd9   USBDevMode
+0000ebe1   USBFIFOAddrGet
+0000ebe9   USBOTGMode
+0000ec09   ti_sysbios_family_arm_m3_Hwi_startup__E
+0000ec09   ti_sysbios_hal_Hwi_HwiProxy_startup__E
+0000ec09   ti_sysbios_hal_Hwi_startup__E
+0000ec11   ti_sysbios_knl_Idle_loop__E
+0000ec21   GPIOPinRead
+0000ec27   GPIOPinWrite
+0000ec2d   I2CMasterIntDisable
+0000ec33   I2CMasterIntEnable
+0000ec39   SysCtlDelay
+0000ec3f   UARTFIFOLevelSet
+0000ec45   USBBufferFlush
+0000ec4b   USBBufferSpaceAvailable
+0000ec51   USBDMAChannelIntStatus
+0000ec57   USBDevLPMConfig
+0000ec5d   USBLPMIntStatus
+0000ec63   __xdc__init
+0000ec69   __TI_decompress_rle24
+0000ec75   ti_catalog_arm_cortexm4_tiva_ce_Boot_sysCtlDelayI__I
+0000ec7b   ti_sysbios_family_arm_lm4_TimestampProvider_Module_startup__E
+0000ec7b   ti_sysbios_family_arm_lm4_TimestampProvider_Module_startup__F
+0000ec81   ti_sysbios_family_arm_m3_Hwi_restoreFxn__E
+0000ec81   ti_sysbios_hal_Hwi_HwiProxy_restore__E
+0000ec81   ti_sysbios_hal_Hwi_restore__E
+0000ec87   ti_sysbios_gates_GateHwi_leave__E
+0000ec8d   ti_sysbios_heaps_HeapMem_isBlocking__E
+0000ec93   ti_sysbios_knl_Queue_Instance_init__F
+0000ec99   ti_sysbios_knl_Swi_Module_startup__E
+0000ec99   ti_sysbios_knl_Swi_Module_startup__F
+0000ec9f   xdc_runtime_System_Module_startup__E
+0000ec9f   xdc_runtime_System_Module_startup__F
+0000eca9   I2CMasterControl
+0000ecad   I2CMasterDataGet
+0000ecb1   I2CMasterDataPut
+0000ecb5   UARTIntClear
+0000ecb9   USBDevAddrSet
+0000ecbd   ti_sysbios_BIOS_RtsGateProxy_enter__E
+0000ecc1   ti_sysbios_BIOS_RtsGateProxy_leave__E
+0000ecc5   ti_sysbios_family_arm_lm4_Timer_getPeriod__E
+0000ecc9   ti_sysbios_family_arm_lm4_Timer_masterEnable__I
+0000eccd   ti_sysbios_family_arm_m3_TaskSupport_Module__startupDone__S
+0000ecd1   ti_sysbios_gates_GateHwi_query__E
+0000ecd1   ti_sysbios_gates_GateHwi_query__F
+0000ecd1   xdc_runtime_Main_Module_GateProxy_query__E
+0000ecd1   xdc_runtime_System_Module_GateProxy_query__E
+0000ecd5   ti_sysbios_BIOS_RtsGateProxy_query__E
+0000ecd5   ti_sysbios_gates_GateMutex_query__E
+0000ecd5   ti_sysbios_gates_GateMutex_query__F
+0000ecd5   ti_sysbios_heaps_HeapMem_Module_GateProxy_query__E
+0000ecd9   ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S
+0000ecdd   ti_sysbios_hal_Hwi_HwiProxy_Object__delete__S
+0000ece1   ti_sysbios_hal_Timer_TimerProxy_Module__startupDone__S
+0000ece5   ti_sysbios_hal_Timer_TimerProxy_getPeriod__E
+0000ece9   ti_sysbios_heaps_HeapMem_Module_GateProxy_enter__E
+0000eced   ti_sysbios_heaps_HeapMem_Module_GateProxy_leave__E
+0000ecf1   ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S
+0000ecf5   ti_sysbios_knl_Task_startup__E
+0000ecf9   ti_uia_runtime_LogSync_CpuTimestampProxy_Module__startupDone__S
+0000ecfd   ti_uia_runtime_LogSync_GlobalTimestampProxy_Module__startupDone__S
+0000ed01   xdc_runtime_Error_getSite__E
+0000ed01   xdc_runtime_Error_getSite__F
+0000ed05   xdc_runtime_Memory_HeapProxy_alloc__E
+0000ed09   xdc_runtime_Memory_HeapProxy_free__E
+0000ed0d   xdc_runtime_System_Module_GateProxy_enter__E
+0000ed11   xdc_runtime_System_Module_GateProxy_leave__E
+0000ed15   xdc_runtime_System_aprintf_va__F
+0000ed19   xdc_runtime_System_printf_va__F
+0000ed1d   xdc_runtime_System_vsnprintf__E
+0000ed21   xdc_runtime_TimestampNull_Module__startupDone__S
+0000ed25   xdc_runtime_Timestamp_Module__startupDone__S
+0000ed28   xdc_runtime_Text_charTab__A
+00010dec   _ctypes_
+00010eee   ti_sysbios_family_arm_m3_Hwi_priorities__A
+00010fc6   ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__id__C
+0001117c   GPIO_config
+00011194   i2cTivaHWAttrs
+000111a4   uartTivaHWAttrs
+000111ac   UART_config
+000111c4   gpioHWAttrs
+00011200   g_sCDCSerConfigSection
+00011208   g_sIADSerConfigSection
+00011210   g_sCDCSerCommInterfaceSection
+00011218   g_sCDCSerDataInterfaceSection
+00011220   g_sCDCSerConfigHeader
+00011228   g_sCDCCompSerConfigHeader
+00011230   g_ppCDCSerConfigDescriptors
+00011234   g_pCDCCompSerConfigDescriptors
+00011238   configString
+0001126e   ti_sysbios_BIOS_Module__id__C
+000112a4   ti_uia_sysbios_LoggerIdle_Module__FXNS__C
+000112d8   g_sCDCHandlers
+00011308   ti_sysbios_family_arm_m3_Hwi_Object__PARAMS__C
+00011338   controlInterfaceString
+00011364   ti_sysbios_hal_Hwi_Object__PARAMS__C
+00011390   ti_sysbios_heaps_HeapMem_Module__FXNS__C
+000113b8   xdc_runtime_Startup_sfxnTab__A
+000113e0   manufacturerString
+00011404   I2C_config
+00011428   UARTTiva_fxnTable
+0001144c   ti_sysbios_gates_GateHwi_Module__FXNS__C
+00011470   ti_sysbios_gates_GateMutex_Module__FXNS__C
+00011494   ti_sysbios_heaps_HeapMem_Object__PARAMS__C
+000114b8   ti_sysbios_knl_Semaphore_Object__PARAMS__C
+000114dc   txBuffer
+00011500   g_pui8CDCSerCommInterface
+00011523   productString
+00011545   xdc_runtime_Error_policy__C
+00011546   ti_sysbios_family_arm_lm4_TimestampProvider_useClockTimer__C
+00011548   ti_sysbios_family_arm_m3_Hwi_Object__DESC__C
+00011568   ti_sysbios_gates_GateHwi_Object__DESC__C
+00011588   ti_sysbios_gates_GateMutex_Object__DESC__C
+000115a8   ti_sysbios_hal_Hwi_Object__DESC__C
+000115c8   ti_sysbios_heaps_HeapMem_Object__DESC__C
+000115e8   ti_sysbios_knl_Queue_Object__DESC__C
+00011608   ti_sysbios_knl_Semaphore_Object__DESC__C
+00011628   ti_uia_sysbios_LoggerIdle_Object__DESC__C
+00011648   stringDescriptors
+00011660   ti_sysbios_gates_GateHwi_Object__PARAMS__C
+00011678   ti_sysbios_gates_GateMutex_Object__PARAMS__C
+00011690   ti_sysbios_knl_Queue_Object__PARAMS__C
+000116a8   ti_sysbios_knl_Task_hooks__A
+000116c0   ti_uia_sysbios_LoggerIdle_Object__PARAMS__C
+000116d8   g_pui8CDCSerDataInterface
+000116ef   langDescriptor
+000116f3   serialNumberString
+00011706   ti_sysbios_family_arm_m3_Hwi_Module__id__C
+00011708   xdc_runtime_Startup_firstFxns__A
+0001171c   xdc_runtime_Startup_sfxnRts__A
+00011742   ti_sysbios_family_arm_m3_Hwi_Module__loggerDefined__C
+00011744   I2CTiva_fxnTable
+00011754   xdc_runtime_Text_nodeTab__A
+00011764   ti_sysbios_family_arm_m3_Hwi_excHookFuncs__A
+0001176c   ti_sysbios_knl_Idle_coreList__A
+00011774   ti_sysbios_knl_Idle_coreList__C
+0001177c   ti_sysbios_knl_Idle_funcList__A
+00011784   ti_sysbios_knl_Idle_funcList__C
+0001178c   ti_sysbios_knl_Task_hooks__C
+00011794   xdc_runtime_Startup_firstFxns__C
+0001179c   xdc_runtime_Startup_lastFxns__A
+000117a4   xdc_runtime_Startup_lastFxns__C
+000117ac   ti_catalog_arm_cortexm4_tiva_ce_Boot_A_mustUseEnhancedClockMode__C
+000117b0   ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsEnabled__C
+000117b4   ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsIncluded__C
+000117b8   ti_catalog_arm_cortexm4_tiva_ce_Boot_Module__diagsMask__C
+000117bc   ti_sysbios_BIOS_Module__diagsEnabled__C
+000117c0   ti_sysbios_BIOS_Module__diagsIncluded__C
+000117c4   ti_sysbios_BIOS_Module__diagsMask__C
+000117c8   ti_sysbios_BIOS_installedErrorHook__C
+000117cc   ti_sysbios_family_arm_lm4_Timer_enableFunc__C
+000117d0   ti_sysbios_family_arm_lm4_Timer_numTimerDevices__C
+000117d4   ti_sysbios_family_arm_lm4_Timer_startupNeeded__C
+000117d8   ti_sysbios_family_arm_m3_Hwi_E_NMI__C
+000117dc   ti_sysbios_family_arm_m3_Hwi_E_alreadyDefined__C
+000117e0   ti_sysbios_family_arm_m3_Hwi_E_busFault__C
+000117e4   ti_sysbios_family_arm_m3_Hwi_E_debugMon__C
+000117e8   ti_sysbios_family_arm_m3_Hwi_E_hardFault__C
+000117ec   ti_sysbios_family_arm_m3_Hwi_E_memFault__C
+000117f0   ti_sysbios_family_arm_m3_Hwi_E_noIsr__C
+000117f4   ti_sysbios_family_arm_m3_Hwi_E_reserved__C
+000117f8   ti_sysbios_family_arm_m3_Hwi_E_svCall__C
+000117fc   ti_sysbios_family_arm_m3_Hwi_E_usageFault__C
+00011800   ti_sysbios_family_arm_m3_Hwi_LD_end__C
+00011804   ti_sysbios_family_arm_m3_Hwi_LM_begin__C
+00011808   ti_sysbios_family_arm_m3_Hwi_Module__diagsEnabled__C
+0001180c   ti_sysbios_family_arm_m3_Hwi_Module__diagsIncluded__C
+00011810   ti_sysbios_family_arm_m3_Hwi_Module__diagsMask__C
+00011814   ti_sysbios_family_arm_m3_Hwi_Module__loggerFxn1__C
+00011818   ti_sysbios_family_arm_m3_Hwi_Module__loggerFxn8__C
+0001181c   ti_sysbios_family_arm_m3_Hwi_Module__loggerObj__C
+00011820   ti_sysbios_family_arm_m3_Hwi_NUM_INTERRUPTS__C
+00011824   ti_sysbios_family_arm_m3_Hwi_ccr__C
+00011828   ti_sysbios_family_arm_m3_Hwi_dispatchTable__C
+0001182c   ti_sysbios_family_arm_m3_Hwi_excHandlerFunc__C
+00011830   ti_sysbios_family_arm_m3_Hwi_excHookFuncs__C
+00011834   ti_sysbios_family_arm_m3_Hwi_priGroup__C
+00011838   ti_sysbios_family_arm_m3_Hwi_priorities__C
+0001183c   ti_sysbios_gates_GateMutex_A_badContext__C
+00011840   ti_sysbios_gates_GateMutex_Instance_State_sem__O
+00011844   ti_sysbios_gates_GateMutex_Module__diagsEnabled__C
+00011848   ti_sysbios_gates_GateMutex_Module__diagsIncluded__C
+0001184c   ti_sysbios_gates_GateMutex_Module__diagsMask__C
+00011850   ti_sysbios_heaps_HeapMem_A_align__C
+00011854   ti_sysbios_heaps_HeapMem_A_heapSize__C
+00011858   ti_sysbios_heaps_HeapMem_A_invalidFree__C
+0001185c   ti_sysbios_heaps_HeapMem_A_zeroBlock__C
+00011860   ti_sysbios_heaps_HeapMem_E_memory__C
+00011864   ti_sysbios_heaps_HeapMem_Module__diagsEnabled__C
+00011868   ti_sysbios_heaps_HeapMem_Module__diagsIncluded__C
+0001186c   ti_sysbios_heaps_HeapMem_Module__diagsMask__C
+00011870   ti_sysbios_heaps_HeapMem_Module__gateObj__C
+00011874   ti_sysbios_heaps_HeapMem_Object__count__C
+00011878   ti_sysbios_heaps_HeapMem_reqAlign__C
+0001187c   ti_sysbios_knl_Clock_LM_begin__C
+00011880   ti_sysbios_knl_Clock_LM_tick__C
+00011884   ti_sysbios_knl_Clock_LW_delayed__C
+00011888   ti_sysbios_knl_Clock_Module_State_clockQ__O
+0001188c   ti_sysbios_knl_Clock_Module__diagsEnabled__C
+00011890   ti_sysbios_knl_Clock_Module__diagsIncluded__C
+00011894   ti_sysbios_knl_Clock_Module__diagsMask__C
+00011898   ti_sysbios_knl_Clock_Module__loggerFxn1__C
+0001189c   ti_sysbios_knl_Clock_Module__loggerFxn2__C
+000118a0   ti_sysbios_knl_Clock_Module__loggerObj__C
+000118a4   ti_sysbios_knl_Semaphore_A_badContext__C
+000118a8   ti_sysbios_knl_Semaphore_A_noEvents__C
+000118ac   ti_sysbios_knl_Semaphore_A_overflow__C
+000118b0   ti_sysbios_knl_Semaphore_A_pendTaskDisabled__C
+000118b4   ti_sysbios_knl_Semaphore_Instance_State_pendQ__O
+000118b8   ti_sysbios_knl_Semaphore_LM_pend__C
+000118bc   ti_sysbios_knl_Semaphore_LM_post__C
+000118c0   ti_sysbios_knl_Semaphore_Module__diagsEnabled__C
+000118c4   ti_sysbios_knl_Semaphore_Module__diagsIncluded__C
+000118c8   ti_sysbios_knl_Semaphore_Module__diagsMask__C
+000118cc   ti_sysbios_knl_Semaphore_Module__loggerFxn2__C
+000118d0   ti_sysbios_knl_Semaphore_Module__loggerFxn4__C
+000118d4   ti_sysbios_knl_Semaphore_Module__loggerObj__C
+000118d8   ti_sysbios_knl_Task_A_badTimeout__C
+000118dc   ti_sysbios_knl_Task_A_sleepTaskDisabled__C
+000118e0   ti_sysbios_knl_Task_LD_block__C
+000118e4   ti_sysbios_knl_Task_LD_exit__C
+000118e8   ti_sysbios_knl_Task_LD_ready__C
+000118ec   ti_sysbios_knl_Task_LM_sleep__C
+000118f0   ti_sysbios_knl_Task_LM_switch__C
+000118f4   ti_sysbios_knl_Task_Module_State_inactiveQ__O
+000118f8   ti_sysbios_knl_Task_Module__diagsEnabled__C
+000118fc   ti_sysbios_knl_Task_Module__diagsIncluded__C
+00011900   ti_sysbios_knl_Task_Module__diagsMask__C
+00011904   ti_sysbios_knl_Task_Module__loggerFxn2__C
+00011908   ti_sysbios_knl_Task_Module__loggerFxn4__C
+0001190c   ti_sysbios_knl_Task_Module__loggerObj__C
+00011910   ti_sysbios_knl_Task_Object__count__C
+00011914   ti_sysbios_knl_Task_Object__heap__C
+00011918   ti_sysbios_knl_Task_allBlockedFunc__C
+0001191c   ti_sysbios_knl_Task_numConstructedTasks__C
+00011920   ti_sysbios_utils_Load_LS_cpuLoad__C
+00011924   ti_sysbios_utils_Load_LS_hwiLoad__C
+00011928   ti_sysbios_utils_Load_LS_taskLoad__C
+0001192c   ti_sysbios_utils_Load_Module_State_taskList__O
+00011930   ti_sysbios_utils_Load_Module__diagsEnabled__C
+00011934   ti_sysbios_utils_Load_Module__diagsIncluded__C
+00011938   ti_sysbios_utils_Load_Module__diagsMask__C
+0001193c   ti_sysbios_utils_Load_Module__loggerFxn1__C
+00011940   ti_sysbios_utils_Load_Module__loggerFxn2__C
+00011944   ti_sysbios_utils_Load_Module__loggerFxn4__C
+00011948   ti_sysbios_utils_Load_Module__loggerObj__C
+0001194c   ti_sysbios_utils_Load_postUpdate__C
+00011950   ti_sysbios_utils_Load_windowInMs__C
+00011954   ti_uia_sysbios_LoggerIdle_Module__diagsEnabled__C
+00011958   ti_uia_sysbios_LoggerIdle_Module__diagsIncluded__C
+0001195c   ti_uia_sysbios_LoggerIdle_Module__diagsMask__C
+00011960   xdc_runtime_Assert_E_assertFailed__C
+00011964   xdc_runtime_Core_A_initializedParams__C
+00011968   xdc_runtime_Core_Module__diagsEnabled__C
+0001196c   xdc_runtime_Core_Module__diagsIncluded__C
+00011970   xdc_runtime_Core_Module__diagsMask__C
+00011974   xdc_runtime_Error_E_memory__C
+00011978   xdc_runtime_Error_Module__diagsEnabled__C
+0001197c   xdc_runtime_Error_Module__diagsIncluded__C
+00011980   xdc_runtime_Error_Module__diagsMask__C
+00011984   xdc_runtime_Error_Module__loggerFxn8__C
+00011988   xdc_runtime_Error_Module__loggerObj__C
+0001198c   xdc_runtime_Error_raiseHook__C
+00011990   xdc_runtime_IGateProvider_Interface__BASE__C
+00011994   xdc_runtime_IHeap_Interface__BASE__C
+00011998   xdc_runtime_ILogger_Interface__BASE__C
+0001199c   xdc_runtime_IModule_Interface__BASE__C
+000119a0   xdc_runtime_Log_L_error__C
+000119a4   xdc_runtime_Log_L_warning__C
+000119a8   xdc_runtime_Main_Module__diagsEnabled__C
+000119ac   xdc_runtime_Main_Module__diagsIncluded__C
+000119b0   xdc_runtime_Main_Module__diagsMask__C
+000119b4   xdc_runtime_Main_Module__loggerFxn2__C
+000119b8   xdc_runtime_Main_Module__loggerFxn4__C
+000119bc   xdc_runtime_Main_Module__loggerObj__C
+000119c0   xdc_runtime_Memory_defaultHeapInstance__C
+000119c4   xdc_runtime_Startup_execImpl__C
+000119c8   xdc_runtime_Startup_maxPasses__C
+000119cc   xdc_runtime_Startup_sfxnRts__C
+000119d0   xdc_runtime_Startup_sfxnTab__C
+000119d4   xdc_runtime_SysCallback_abortFxn__C
+000119d8   xdc_runtime_SysCallback_exitFxn__C
+000119dc   xdc_runtime_SysCallback_flushFxn__C
+000119e0   xdc_runtime_SysCallback_putchFxn__C
+000119e4   xdc_runtime_SysCallback_readyFxn__C
+000119e8   xdc_runtime_System_Module__gateObj__C
+000119ec   xdc_runtime_System_extendFxn__C
+000119f0   xdc_runtime_System_maxAtexitHandlers__C
+000119f4   xdc_runtime_Text_charTab__C
+000119f8   xdc_runtime_Text_nameEmpty__C
+000119fc   xdc_runtime_Text_nameStatic__C
+00011a00   xdc_runtime_Text_nameUnknown__C
+00011a04   xdc_runtime_Text_nodeTab__C
+00011a08   xdc_runtime_Text_visitRopeFxn__C
+00011a0c   ti_sysbios_gates_GateMutex_Module__id__C
+00011a0e   ti_sysbios_heaps_HeapMem_Module__id__C
+00011a10   ti_sysbios_knl_Clock_Module__id__C
+00011a12   ti_sysbios_knl_Clock_Module__loggerDefined__C
+00011a14   ti_sysbios_knl_Semaphore_Module__id__C
+00011a16   ti_sysbios_knl_Semaphore_Module__loggerDefined__C
+00011a18   ti_sysbios_knl_Task_Module__id__C
+00011a1a   ti_sysbios_knl_Task_Module__loggerDefined__C
+00011a1c   ti_sysbios_knl_Task_initStackFlag__C
+00011a1e   ti_sysbios_utils_Load_Module__id__C
+00011a20   ti_sysbios_utils_Load_Module__loggerDefined__C
+00011a22   ti_sysbios_utils_Load_autoAddTasks__C
+00011a24   ti_sysbios_utils_Load_hwiEnabled__C
+00011a26   ti_sysbios_utils_Load_updateInIdle__C
+00011a28   ti_uia_sysbios_LoggerIdle_Module__id__C
+00011a2a   ti_uia_sysbios_LoggerIdle_isTimestampEnabled__C
+00011a2c   ti_uia_sysbios_LoggerIdle_writeWhenFull__C
+00011a2e   xdc_runtime_Core_Module__id__C
+00011a30   xdc_runtime_Error_Module__loggerDefined__C
+00011a32   xdc_runtime_Error_maxDepth__C
+00011a34   xdc_runtime_Main_Module__id__C
+00011a36   xdc_runtime_Main_Module__loggerDefined__C
+00011a38   xdc_runtime_Memory_Module__id__C
+00011a3a   xdc_runtime_Text_charCnt__C
+00011a3c   xdc_runtime_Text_isLoaded__C
+00011a3e   xdc_runtime_Text_registryModsLastId__C
+00011a40   xdc_runtime_Text_unnamedModsLastId__C
+00011ec4   __TI_Handler_Table_Base
+00011ed0   __TI_Handler_Table_Limit
+00011ee0   __TI_CINIT_Base
+00011ef8   __TI_CINIT_Limit
+20000000   ti_sysbios_family_arm_m3_Hwi_ramVectors
+20000360   ti_uia_sysbios_LoggerIdle_Module_State_0_idleBuffer__A
+20001360   ti_sysbios_knl_Task_Instance_State_0_stack__A
+20001960   ti_sysbios_knl_Task_Instance_State_1_stack__A
+20002160   ti_sysbios_heaps_HeapMem_Instance_State_0_buf__A
+20002960   __CIOBUF_
+20002b90   i2cTivaObjects
+20002d90   __TI_tmpnams
+20002e30   uartTivaObjects
+20002eb8   g_psDCDInst
+20002f48   ti_uia_sysbios_LoggerIdle_Module_State_0_tempBuffer__A
+20002f88   g_pfnTickHandlers
+20002fa0   g_pvTickInstance
+20002fdc   g_ppsDevInfo
+20002fe4   ti_sysbios_knl_Task_Instance_State_0_hookEnv__A
+20002fe8   ti_sysbios_knl_Task_Instance_State_1_hookEnv__A
+20002ff0   ti_sysbios_family_arm_m3_Hwi_Module_State_0_dispatchTable__A
+20003350   xdc_runtime_Diags_dictElems
+20003360   ti_sysbios_BIOS_Module__state__V
+20003380   ti_sysbios_family_arm_lm4_Timer_Module__root__V
+20003388   ti_sysbios_family_arm_lm4_Timer_Module_State_0_handles__A
+200033a0   ti_sysbios_family_arm_lm4_Timer_Module__state__V
+200033ac   ti_sysbios_family_arm_lm4_TimestampProvider_Module__state__V
+200033b4   ti_sysbios_family_arm_m3_Hwi_Module__root__V
+200033bc   ti_sysbios_family_arm_m3_Hwi_Module_State_0_excActive__A
+200033c0   ti_sysbios_family_arm_m3_Hwi_Module_State_0_excContext__A
+200033c4   ti_sysbios_family_arm_m3_Hwi_Module_State_0_excStack__A
+200033c8   ti_sysbios_gates_GateHwi_Module__root__V
+200033d0   ti_sysbios_gates_GateHwi_Object__table__V
+200033d4   ti_sysbios_gates_GateMutex_Module__root__V
+200033dc   ti_sysbios_hal_Hwi_Module__root__V
+200033e4   ti_sysbios_hal_Timer_Module__root__V
+200033ec   ti_sysbios_hal_Timer_Object__table__V
+200033f4   ti_sysbios_heaps_HeapMem_Module__root__V
+200033fc   ti_sysbios_heaps_HeapMem_Object__table__V
+20003414   ti_sysbios_knl_Clock_Module__root__V
+2000341c   ti_sysbios_knl_Event_Module__root__V
+20003428   ti_sysbios_knl_Queue_Module__root__V
+20003430   ti_sysbios_knl_Semaphore_Module__root__V
+2000343c   ti_sysbios_knl_Swi_Module__root__V
+20003444   ti_sysbios_knl_Swi_Module_State_0_readyQ__A
+2000344c   ti_sysbios_knl_Swi_Module__state__V
+20003468   ti_sysbios_knl_Task_Module__root__V
+20003474   ti_sysbios_knl_Task_Module_State_0_readyQ__A
+20003494   ti_sysbios_knl_Task_Module_State_0_idleTask__A
+20003498   ti_sysbios_utils_Load_Module__root__V
+2000349c   ti_sysbios_utils_Load_Module_State_0_taskStartTime__A
+200034a0   ti_sysbios_utils_Load_Module_State_0_runningTask__A
+200034a4   ti_uia_runtime_LogSync_Module__root__V
+200034ac   ti_uia_runtime_LogSync_Module__state__V
+200034b8   ti_uia_runtime_QueueDescriptor_Module__state__V
+200034c4   ti_uia_sysbios_LoggerIdle_Module__root__V
+200034cc   ti_uia_sysbios_LoggerIdle_Object__table__V
+200034d0   xdc_runtime_Error_Module__state__V
+200034d2   xdc_runtime_Main_Module__root__V
+200034d4   xdc_runtime_Memory_Module__state__V
+200034d8   xdc_runtime_Registry_Module__state__V
+200034e0   xdc_runtime_Startup_Module__state__V
+200034e8   xdc_runtime_System_Module_State_0_atexitHandlers__A
+200034f0   xdc_runtime_System_Module__state__V
+200034fc   xdc_runtime_Text_Module__state__V
+20003504   __xdc__init__addr
+20003508   _ftable
+20003778   ti_sysbios_knl_Task_Object__table__V
+200037c4   TSK_idle
+20003810   ti_sysbios_utils_Load_Module__state__V
+200038a8   _Denorm
+200038b8   _Eps
+200038c8   _Hugeval
+200038d8   _Inf
+200038e8   _Nan
+200038f8   _Snan
+20003908   _Rteps
+20003918   _Xbig
+20003920   _Zero
+20003928   ti_sysbios_family_arm_lm4_Timer_Object__table__V
+200039f8   ti_sysbios_family_arm_m3_Hwi_Module__state__V
+20003a54   ti_sysbios_knl_Task_Module__state__V
+20003a98   g_pui8CDCSerDeviceDescriptor
+20003aaa   g_pui8CDCSerDescriptor
+20003ab3   g_pui8IADSerDescriptor
+20003abc   g_psCDCSerSections
+20003ac8   g_psCDCCompSerSections
+20003ad8   ti_sysbios_gates_GateMutex_Object__table__V
+20003b10   ti_sysbios_utils_Load_Module_State_0_taskEnv__A
+20003b48   ti_sysbios_family_arm_lm4_Timer_Module_State_0_device__A
+20003b78   ti_sysbios_family_arm_m3_Hwi_Object__table__V
+20003ba8   ti_sysbios_knl_Clock_Module__state__V
+20003bd0   ti_uia_sysbios_LoggerIdle_Module__state__V
+20003c10   __TI_ft_end
+20003c14   __aeabi_stdin
+20003c18   __aeabi_stdout
+20003c1c   __aeabi_stderr
+20003c20   g_bUSBTimerInitialized
+20003c24   g_ui32CurrentUSBTick
+20003c28   g_ui32USBSOFCount
+20003c2c   g_iUSBMode
+20003c30   g_ui32WaitTicks
+20003c40   _lock
+20003c44   _unlock
+20003c48   __TI_cleanup_ptr
+20003c4c   __TI_dtors_ptr
+20003c50   _Fenv
+20003c54   _Tls_setup__Fenv
+20003c70   _Errno
+20003c7c   main_func_sp
+20003c84   __stack
+20003d84   __STACK_TOP
+20003f84   __STACK_END
+e000e000   ti_sysbios_family_arm_m3_Hwi_nvic
+ffffffff   __binit__
+ffffffff   __c_args__
+ffffffff   binit
+UNDEFED    SHT$$INIT_ARRAY$$Base
+UNDEFED    SHT$$INIT_ARRAY$$Limit
+
+[1010 symbols]

@@ -14,9 +14,9 @@ BIOS_DEFS =  -Dti_sysbios_BIOS_swiEnabled__D=FALSE -Dti_sysbios_BIOS_taskEnabled
 
 BIOS_INC  = -I"C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/"
 
-CC = C:/ti/ccsv5/tools/compiler/arm_5.1.1/bin/armcl -c $(CCOPTS) -I C:/ti/ccsv5/tools/compiler/arm_5.1.1/include
-ASM = C:/ti/ccsv5/tools/compiler/arm_5.1.1/bin/armcl -c $(CCOPTS) -I C:/ti/ccsv5/tools/compiler/arm_5.1.1/include
-AR = C:/ti/ccsv5/tools/compiler/arm_5.1.1/bin/armar rq
+CC = C:/ti/ccsv5/tools/compiler/arm_5.1.3/bin/armcl -c $(CCOPTS) -I C:/ti/ccsv5/tools/compiler/arm_5.1.3/include
+ASM = C:/ti/ccsv5/tools/compiler/arm_5.1.3/bin/armcl -c $(CCOPTS) -I C:/ti/ccsv5/tools/compiler/arm_5.1.3/include
+AR = C:/ti/ccsv5/tools/compiler/arm_5.1.3/bin/armar rq
 
 DEL = cmd.exe /q /c del /f
 CP = cmd.exe /q /c copy /Y

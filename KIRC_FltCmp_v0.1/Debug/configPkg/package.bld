@@ -11,7 +11,7 @@ var makeAssembly = false;
 var Executable = xdc.module('xdc.bld.Executable');
 
 var exeOpts = new Executable.Attrs({
-        cfgScript: 'C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/uartconsole.cfg',
+        cfgScript: 'C:/Users/asusHD/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/uartconsole.cfg',
         profile: 'release',
         cfgHome: 'configPkg',
 });
@@ -41,7 +41,7 @@ else {
 
 var thisObj = {
     cfg:        '../uartconsole.cfg',
-    outputPath: 'C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/Debug/configPkg',
+    outputPath: 'C:/Users/asusHD/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/Debug/configPkg',
     exeName:    'uartconsole' + suffix,
     exeIntName: 'uartconsole' + suffix.replace('.', '_'),
     targ:       targ,

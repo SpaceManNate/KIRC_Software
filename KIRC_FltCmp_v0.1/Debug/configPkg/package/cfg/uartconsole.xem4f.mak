@@ -3,7 +3,7 @@
 #  package.bld.  Any modifications to this file will be 
 #  overwritten whenever makefiles are re-generated.
 #
-#  target compatibility key = ti.targets.arm.elf.M4F{1,0,5.1,1
+#  target compatibility key = ti.targets.arm.elf.M4F{1,0,5.1,3
 #
 uartconsole.xem4f: package/cfg/uartconsole.xem4f.mak
 
