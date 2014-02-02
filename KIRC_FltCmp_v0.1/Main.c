@@ -32,6 +32,8 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	}
 	System_flush();
 
+	//barometer
+
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
 	IMUdata_t Magn, Magn_Offset;
