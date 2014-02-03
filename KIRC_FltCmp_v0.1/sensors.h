@@ -48,4 +48,8 @@ IMUdata_t Read_Magn(IMUdata_t Offset);
 IMUdata_t Filter_Data(IMUdata_t Data,float Memory[15]);
 void Clear_Array(float *Array, unsigned int size);
 
+//I2C APIs from customized from Tivaware
+unsigned char I2C0_RxData(unsigned char Slave_Addr,unsigned char Reg_Addr);
+void I2C0_TxData(unsigned char Slave_Addr,unsigned char Reg_Addr,unsigned char Data);
+
 #endif /* SENSORS_H_ */

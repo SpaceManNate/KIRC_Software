@@ -50,7 +50,6 @@
 #include "USBCDCD_LoggerIdle.h"
 
 //Custom headers produced for KIRC
-#include "drivers.h"
 #include "sensors.h"
 #include "quaternion.h"
 

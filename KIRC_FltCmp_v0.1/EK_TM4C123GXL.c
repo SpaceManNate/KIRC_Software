@@ -216,7 +216,7 @@ Void EK_TM4C123GXL_initGPIO(Void)
 void I2C0_MasterInit(void){
 	//Enable pins and I2C0 Port
     SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+    //SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
 
     // Select the I2C function for these pins (also controls pull-ups)
     //Set SCL and SDA lines for PB2 and PB3 respectively

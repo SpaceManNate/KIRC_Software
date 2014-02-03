@@ -7,6 +7,9 @@
  ************************************************************/
 #include "system.h"
 
+/* variable to be read by GUI Composer */
+int count = 0;
+
 // ======== consoleFxn ========
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	/*
@@ -66,6 +69,36 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	} //END OF WHILE(1)
 }
 
+/*
+ *  ======== gpioButtonFxn0 ========
+ *  Callback function for the GPIO interrupt on Board_BUTTON0.
+ */
+Void gpioButtonFxn0(Void)
+{
+    /* Clear the GPIO interrupt and toggle an LED */
+    GPIO_toggle(Board_LED2);
+    GPIO_clearInt(Board_BUTTON0);
+
+    if (count++ == 100) {
+        count = 0;
+    }
+}
+
+/*
+ *  ======== gpioButtonFxn1 ========
+ *  Callback function for the GPIO interrupt on Board_BUTTON1.
+ *  This may not be used for all boards.
+ */
+Void gpioButtonFxn1(Void)
+{
+    /* Clear the GPIO interrupt and toggle an LED */
+    GPIO_toggle(Board_LED2);
+    GPIO_clearInt(Board_BUTTON1);
+
+    if (count++ == 100) {
+        count = 0;
+    }
+}
 
 //======== main ========
 Int main(Void) {
@@ -81,12 +114,7 @@ Int main(Void) {
 
 	System_printf("Starting up KIRC flight computer software...\n");
 
-	/*
-	 *  Add the UART device to the system.
-	 *  All UART peripherals must be setup and the module must be initialized
-	 *  before opening.  This is done by Board_initUART().  The functions used
-	 *  are implemented in UARTUtils.c.
-	 */
+	// Add the UART device to the system.
 	add_device("UART", _MSA, UARTUtils_deviceopen, UARTUtils_deviceclose,
 			UARTUtils_deviceread, UARTUtils_devicewrite, UARTUtils_devicelseek,
 			UARTUtils_deviceunlink, UARTUtils_devicerename);
@@ -108,6 +136,14 @@ Int main(Void) {
 
 	// Initialize the USB CDC device for logging transport
 	USBCDCD_init();
+
+    // Initialize interrupts for all ports that need them
+    GPIO_setupCallbacks(&Board_gpioCallbacks0);
+    //GPIO_setupCallbacks(&Board_gpioCallbacks1);
+
+    // Enable interrupts
+    GPIO_enableInt(Board_BUTTON0, GPIO_INT_BOTH_EDGES);
+	GPIO_enableInt(Board_BUTTON1, GPIO_INT_BOTH_EDGES);
 
 	srand(0xBEA5);
 

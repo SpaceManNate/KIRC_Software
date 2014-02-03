@@ -328,3 +328,62 @@ void Clear_Array(float *Array, unsigned int size){
 		Array++;
 	}
 }
+
+//*************************************************************************
+// I2C0_RxData function
+// Input: Slave_Addr, Reg_Addr	Output: Recieved data
+// Sends a master request for data from specified slave address at a
+// specific register and returns that information
+//*************************************************************************
+unsigned char I2C0_RxData(unsigned char Slave_Addr,unsigned char Reg_Addr){
+	// Set I2C port to write mode
+    I2CMasterSlaveAddrSet(I2C0_BASE, Slave_Addr, false);
+
+    // Place the address of register to be read in queue
+	I2CMasterDataPut(I2C0_BASE, Reg_Addr);
+
+	// Initiate send of data from the master (sends slave address and reg address)
+	I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);
+
+	// Wait until master module is done sending
+	while(I2CMasterBusy(I2C0_BASE)){}
+
+    // Set I2C port to read mode
+    I2CMasterSlaveAddrSet(I2C0_BASE, Slave_Addr, true);
+
+    // Read data
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE);
+
+    // Wait until master module is done receiving
+    while(I2CMasterBusy(I2C0_BASE)){}
+
+    return I2CMasterDataGet(I2C0_BASE);
+}
+
+//*************************************************************************
+// I2C0_TxData function
+// Input: Slave_Addr, Reg_Addr	Output: Recieved data
+// Sends data as master to specified slave address and specific register
+//*************************************************************************
+void I2C0_TxData(unsigned char Slave_Addr,unsigned char Reg_Addr,unsigned char Data){
+	// Set I2C port to write mode
+    I2CMasterSlaveAddrSet(I2C0_BASE, Slave_Addr, false);
+
+    // Place the address of register to be read in queue
+	I2CMasterDataPut(I2C0_BASE, Reg_Addr);
+
+	// Initiate send of reg address from the master (sends slave address and reg address)
+	I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);
+
+	// Wait until master module is done sending
+	while(I2CMasterBusy(I2C0_BASE)){}
+
+    // Place the address of register to be read in queue
+	I2CMasterDataPut(I2C0_BASE, Data);
+
+	// Initiate send of data from the master
+	I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);
+
+	// Wait until master module is done sending
+	while(I2CMasterBusy(I2C0_BASE)){}
+}

@@ -14,7 +14,6 @@ C_SRCS += \
 ../Main.c \
 ../UARTUtils.c \
 ../USBCDCD_LoggerIdle.c \
-../drivers.c \
 ../quaternion.c \
 ../sensors.c 
 
@@ -23,7 +22,6 @@ OBJS += \
 ./Main.obj \
 ./UARTUtils.obj \
 ./USBCDCD_LoggerIdle.obj \
-./drivers.obj \
 ./quaternion.obj \
 ./sensors.obj 
 
@@ -32,7 +30,6 @@ C_DEPS += \
 ./Main.pp \
 ./UARTUtils.pp \
 ./USBCDCD_LoggerIdle.pp \
-./drivers.pp \
 ./quaternion.pp \
 ./sensors.pp 
 
@@ -61,7 +58,6 @@ C_DEPS__QUOTED += \
 "Main.pp" \
 "UARTUtils.pp" \
 "USBCDCD_LoggerIdle.pp" \
-"drivers.pp" \
 "quaternion.pp" \
 "sensors.pp" 
 
@@ -70,7 +66,6 @@ OBJS__QUOTED += \
 "Main.obj" \
 "UARTUtils.obj" \
 "USBCDCD_LoggerIdle.obj" \
-"drivers.obj" \
 "quaternion.obj" \
 "sensors.obj" 
 
@@ -79,7 +74,6 @@ C_SRCS__QUOTED += \
 "../Main.c" \
 "../UARTUtils.c" \
 "../USBCDCD_LoggerIdle.c" \
-"../drivers.c" \
 "../quaternion.c" \
 "../sensors.c" 
 
