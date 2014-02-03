@@ -51,6 +51,8 @@ LOG:
 		   The goal over the next several days is to clean up the software and add
 		   more modules to it.	
 
+*2/3/2014: Attempting more cleanup, removing unnessecary code
+
 
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated
