@@ -182,6 +182,7 @@ extern Void EK_TM4C123GXL_initGPIO(Void);
  *  I2C_config variable.
  */
 extern Void EK_TM4C123GXL_initI2C(Void);
+extern Void I2C0_MasterInit(Void);
 
 /*!
  *  @brief  Initialize board specific SDSPI settings

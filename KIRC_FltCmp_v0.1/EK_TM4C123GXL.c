@@ -207,6 +207,28 @@ Void EK_TM4C123GXL_initGPIO(Void)
 }
 #endif /* TI_DRIVERS_GPIO_INCLUDED */
 
+
+//*************************************************************************
+// I2C0_MasterInit function
+// I/O: Void
+// Enables the I2C0 port for 100Kbps operation, internal pull-ups,
+//*************************************************************************
+void I2C0_MasterInit(void){
+	//Enable pins and I2C0 Port
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+
+    // Select the I2C function for these pins (also controls pull-ups)
+    //Set SCL and SDA lines for PB2 and PB3 respectively
+    GPIOPinTypeI2CSCL(GPIO_PORTB_BASE, GPIO_PIN_2);
+    GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_3);
+    GPIOPinConfigure(GPIO_PB2_I2C0SCL);
+    GPIOPinConfigure(GPIO_PB3_I2C0SDA);
+
+	// Enable and initialize the I2C0 master module
+    I2CMasterInitExpClk(I2C0_BASE, SysCtlClockGet(), false);
+}
+
 #if TI_DRIVERS_I2C_INCLUDED
 #include <ti/drivers/I2C.h>
 #include <ti/drivers/i2c/I2CTiva.h>

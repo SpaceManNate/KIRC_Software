@@ -11,6 +11,7 @@
 // I/O: Void
 // Enables the tri-color LEDs to be used with the TivaWare functions
 //*************************************************************************
+/*
 void LEDsInit(void){
 	//Enable GPIO port F using system control
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
@@ -20,24 +21,26 @@ void LEDsInit(void){
 	//Turn OFF all the LEDs as default
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x00);
 }
-
+*/
 //*************************************************************************
 // UARTStringPut function
 // Input: The UART to be used, and the String, Out: Void
 // Sends the string held in StringBuf over the UART
 //*************************************************************************
+/*
 void UARTStringPut(uint32_t UART_BASE,char *StringBuf){
 	while(*StringBuf != NULL){
 		UARTCharPut(UART_BASE,*StringBuf);
 		StringBuf++;
 	}
-}
+}*/
 
 //*************************************************************************
 // UARTIntHandler function
 // I/O: Void
 // This is the interrupt handler for the UART receiving line
 //*************************************************************************
+/*
 void UARTIntHandler(void){
 	    uint32_t ui32Status;
 	    ui32Status = UARTIntStatus(UART0_BASE, true); //get interrupt status
@@ -50,12 +53,13 @@ void UARTIntHandler(void){
 	        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0); //turn off LED
 	    }
 }
-
+*/
 //*************************************************************************
 // UART1Init function
 // I/O: Void
 // Sets The UART1 Port for 115200b, no parity, 8data, one stop
 //*************************************************************************
+/*
 void UART1Init(void){
 	//Configure GPIOA & UART0
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
@@ -69,6 +73,7 @@ void UART1Init(void){
     UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
         (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 }
+*/
 
 //*************************************************************************
 // I2C0_MasterInit function
@@ -77,6 +82,7 @@ void UART1Init(void){
 // loopback mode, with internal slave
 // Also inits slave (To be changed)
 //*************************************************************************
+/*
 void I2C0_MasterInit(void){
 	//Enable pins and I2C0 Port
     SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
@@ -92,7 +98,7 @@ void I2C0_MasterInit(void){
 	// Enable and initialize the I2C0 master module
     I2CMasterInitExpClk(I2C0_BASE, SysCtlClockGet(), false);
 }
-
+*/
 //*************************************************************************
 // I2C0_RxData function
 // Input: Slave_Addr, Reg_Addr	Output: Recieved data
@@ -158,6 +164,7 @@ void I2C0_TxData(unsigned char Slave_Addr,unsigned char Reg_Addr,unsigned char D
 // Polls the I2C0 slave addresses from 0x00-0x7F
 // Lists all addresses that didn't return garbage
 //*************************************************************************
+/*
 void I2C0_DevMap(char Buff[100]){
 	unsigned short index=0;
 	unsigned char pui32DataRx;
@@ -170,4 +177,4 @@ void I2C0_DevMap(char Buff[100]){
 			UARTStringPut(UART0_BASE, Buff);
 		}
 	}
-}
+}*/

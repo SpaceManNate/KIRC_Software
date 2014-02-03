@@ -7,7 +7,7 @@ CMD_SRCS += \
 ../EK_TM4C123GXL.cmd 
 
 CFG_SRCS += \
-../uartconsole.cfg 
+../KIRC_FltCmp_RTOS.cfg 
 
 C_SRCS += \
 ../EK_TM4C123GXL.c \

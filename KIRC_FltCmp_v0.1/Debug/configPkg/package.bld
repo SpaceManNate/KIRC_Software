@@ -11,7 +11,7 @@ var makeAssembly = false;
 var Executable = xdc.module('xdc.bld.Executable');
 
 var exeOpts = new Executable.Attrs({
-        cfgScript: 'C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/uartconsole.cfg',
+        cfgScript: 'C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/KIRC_FltCmp_RTOS.cfg',
         profile: 'release',
         cfgHome: 'configPkg',
 });
@@ -20,7 +20,7 @@ exeOpts.cfgArgs = 'null';
 exeOpts.cfgArgsEncoded = true;
 
 var exe = Pkg[makeAssembly ? 'addAssembly': 'addExecutable'](
-    'uartconsole',
+    'KIRC_FltCmp_RTOS',
     targ,
     platform,
     exeOpts
@@ -40,10 +40,10 @@ else {
 }
 
 var thisObj = {
-    cfg:        '../uartconsole.cfg',
+    cfg:        '../KIRC_FltCmp_RTOS.cfg',
     outputPath: 'C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/Debug/configPkg',
-    exeName:    'uartconsole' + suffix,
-    exeIntName: 'uartconsole' + suffix.replace('.', '_'),
+    exeName:    'KIRC_FltCmp_RTOS' + suffix,
+    exeIntName: 'KIRC_FltCmp_RTOS' + suffix.replace('.', '_'),
     targ:       targ,
     linkerCommandFile: 'linker.cmd',
     compilerDefsFile: 'compiler.opt' + ".defs",

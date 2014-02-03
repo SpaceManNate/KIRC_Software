@@ -128,74 +128,74 @@ package/%.xdc.inc package/%_configPkg.c package/%.defs.h: %.xdc $(PKGCFGS)
 	@$(MSG) generating interfaces for package configPkg" (because $@ is older than $(firstword $?))" ...
 	$(XSRUN) -f xdc/services/intern/cmd/build.xs $(MK_IDLOPTS) -m package/package.xdc.dep -i package/package.xdc.inc package.xdc
 
-.dlls,em4f .dlls: uartconsole.pem4f
+.dlls,em4f .dlls: KIRC_FltCmp_RTOS.pem4f
 
--include package/cfg/uartconsole_pem4f.mak
--include package/cfg/uartconsole_pem4f.cfg.mak
+-include package/cfg/KIRC_FltCmp_RTOS_pem4f.mak
+-include package/cfg/KIRC_FltCmp_RTOS_pem4f.cfg.mak
 ifeq (,$(MK_NOGENDEPS))
--include package/cfg/uartconsole_pem4f.dep
+-include package/cfg/KIRC_FltCmp_RTOS_pem4f.dep
 endif
-uartconsole.pem4f: package/cfg/uartconsole_pem4f.xdl
+KIRC_FltCmp_RTOS.pem4f: package/cfg/KIRC_FltCmp_RTOS_pem4f.xdl
 	@
 
 
 ifeq (,$(wildcard .libraries,em4f))
-uartconsole.pem4f package/cfg/uartconsole_pem4f.c: .libraries,em4f
+KIRC_FltCmp_RTOS.pem4f package/cfg/KIRC_FltCmp_RTOS_pem4f.c: .libraries,em4f
 endif
 
-package/cfg/uartconsole_pem4f.c package/cfg/uartconsole_pem4f.h package/cfg/uartconsole_pem4f.xdl: override _PROG_NAME := uartconsole.xem4f
-package/cfg/uartconsole_pem4f.c: package/cfg/uartconsole_pem4f.cfg
+package/cfg/KIRC_FltCmp_RTOS_pem4f.c package/cfg/KIRC_FltCmp_RTOS_pem4f.h package/cfg/KIRC_FltCmp_RTOS_pem4f.xdl: override _PROG_NAME := KIRC_FltCmp_RTOS.xem4f
+package/cfg/KIRC_FltCmp_RTOS_pem4f.c: package/cfg/KIRC_FltCmp_RTOS_pem4f.cfg
 
 clean:: clean,em4f
-	-$(RM) package/cfg/uartconsole_pem4f.cfg
-	-$(RM) package/cfg/uartconsole_pem4f.dep
-	-$(RM) package/cfg/uartconsole_pem4f.c
-	-$(RM) package/cfg/uartconsole_pem4f.xdc.inc
+	-$(RM) package/cfg/KIRC_FltCmp_RTOS_pem4f.cfg
+	-$(RM) package/cfg/KIRC_FltCmp_RTOS_pem4f.dep
+	-$(RM) package/cfg/KIRC_FltCmp_RTOS_pem4f.c
+	-$(RM) package/cfg/KIRC_FltCmp_RTOS_pem4f.xdc.inc
 
 clean,em4f::
-	-$(RM) uartconsole.pem4f
-.executables,em4f .executables: uartconsole.xem4f
+	-$(RM) KIRC_FltCmp_RTOS.pem4f
+.executables,em4f .executables: KIRC_FltCmp_RTOS.xem4f
 
-uartconsole.xem4f: |uartconsole.pem4f
+KIRC_FltCmp_RTOS.xem4f: |KIRC_FltCmp_RTOS.pem4f
 
--include package/cfg/uartconsole.xem4f.mak
-uartconsole.xem4f: package/cfg/uartconsole_pem4f.oem4f 
+-include package/cfg/KIRC_FltCmp_RTOS.xem4f.mak
+KIRC_FltCmp_RTOS.xem4f: package/cfg/KIRC_FltCmp_RTOS_pem4f.oem4f 
 	$(RM) $@
 	@$(MSG) lnkem4f $@ ...
 	$(RM) $(XDCCFGDIR)/$@.map
-	$(ti.targets.arm.elf.M4F.rootDir)/bin/armlnk -w -q -u _c_int00 -fs $(XDCCFGDIR)$(dir $@).  -q -o $@ package/cfg/uartconsole_pem4f.oem4f   package/cfg/uartconsole_pem4f.xdl --silicon_version=7M4 --strict_compatibility=on -c -m $(XDCCFGDIR)/$@.map -l $(ti.targets.arm.elf.M4F.rootDir)/lib/libc.a
+	$(ti.targets.arm.elf.M4F.rootDir)/bin/armlnk -w -q -u _c_int00 -fs $(XDCCFGDIR)$(dir $@).  -q -o $@ package/cfg/KIRC_FltCmp_RTOS_pem4f.oem4f   package/cfg/KIRC_FltCmp_RTOS_pem4f.xdl --silicon_version=7M4 --strict_compatibility=on -c -m $(XDCCFGDIR)/$@.map -l $(ti.targets.arm.elf.M4F.rootDir)/lib/libc.a
 	
-uartconsole.xem4f: export C_DIR=
-uartconsole.xem4f: PATH:=$(ti.targets.arm.elf.M4F.rootDir)/bin/;$(PATH)
-uartconsole.xem4f: Path:=$(ti.targets.arm.elf.M4F.rootDir)/bin/;$(PATH)
+KIRC_FltCmp_RTOS.xem4f: export C_DIR=
+KIRC_FltCmp_RTOS.xem4f: PATH:=$(ti.targets.arm.elf.M4F.rootDir)/bin/;$(PATH)
+KIRC_FltCmp_RTOS.xem4f: Path:=$(ti.targets.arm.elf.M4F.rootDir)/bin/;$(PATH)
 
-uartconsole.test test,em4f test: uartconsole.xem4f.test
+KIRC_FltCmp_RTOS.test test,em4f test: KIRC_FltCmp_RTOS.xem4f.test
 
-uartconsole.xem4f.test:: uartconsole.xem4f
+KIRC_FltCmp_RTOS.xem4f.test:: KIRC_FltCmp_RTOS.xem4f
 ifeq (,$(_TESTLEVEL))
-	@$(MAKE) -R -r --no-print-directory -f $(XDCROOT)/packages/xdc/bld/xdc.mak _TESTLEVEL=1 uartconsole.xem4f.test
+	@$(MAKE) -R -r --no-print-directory -f $(XDCROOT)/packages/xdc/bld/xdc.mak _TESTLEVEL=1 KIRC_FltCmp_RTOS.xem4f.test
 else
 	@$(MSG) running $<  ...
-	$(call EXEC.uartconsole.xem4f, ) 
+	$(call EXEC.KIRC_FltCmp_RTOS.xem4f, ) 
 endif
 
 clean,em4f::
-	-$(RM) .tmp,uartconsole.xem4f,0,*
+	-$(RM) .tmp,KIRC_FltCmp_RTOS.xem4f,0,*
 
 
 clean:: clean,em4f
 
 clean,em4f::
-	-$(RM) uartconsole.xem4f
+	-$(RM) KIRC_FltCmp_RTOS.xem4f
 clean:: 
-	-$(RM) package/cfg/uartconsole_pem4f.pjt
+	-$(RM) package/cfg/KIRC_FltCmp_RTOS_pem4f.pjt
 %,copy:
 	@$(if $<,,$(MSG) don\'t know how to build $*; exit 1)
 	@$(MSG) cp $< $@
 	$(RM) $@
 	$(CP) $< $@
-uartconsole_pem4f.oem4f,copy : package/cfg/uartconsole_pem4f.oem4f
-uartconsole_pem4f.sem4f,copy : package/cfg/uartconsole_pem4f.sem4f
+KIRC_FltCmp_RTOS_pem4f.oem4f,copy : package/cfg/KIRC_FltCmp_RTOS_pem4f.oem4f
+KIRC_FltCmp_RTOS_pem4f.sem4f,copy : package/cfg/KIRC_FltCmp_RTOS_pem4f.sem4f
 
 $(XDCCFGDIR)%.c $(XDCCFGDIR)%.h $(XDCCFGDIR)%.xdl: $(XDCCFGDIR)%.cfg .interfaces $(XDCROOT)/packages/xdc/cfg/Main.xs
 	@$(MSG) "configuring $(_PROG_NAME) from $< ..."

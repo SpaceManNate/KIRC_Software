@@ -8,16 +8,8 @@
 #include "system.h"
 
 // ======== consoleFxn ========
-Void consoleFxn(UArg arg0, UArg arg1) {
-
-	//Read write example
+Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	/*
-	 printf("Enter a duration (ms): ");
-	 fflush(stdout);
-	 scanf("%d", &sleepDur);
-	 fflush(stdin);
-	 */
-
 	I2C_Handle i2c;
 	I2C_Params i2cParams;
 
@@ -31,6 +23,7 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 		System_printf("I2C Initialized!\n");
 	}
 	System_flush();
+	*/
 
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
@@ -43,7 +36,7 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	float Gyro_memory[15];
 	Clear_Array(Gyro_memory, sizeof(Gyro_memory) / 4); //Clear gyro memory array
 
-	I2C0_MasterInit();	//delete later maybe
+	//I2C0_MasterInit();	//delete later maybe
 
 	//Init Sensors
 	Accel_Init();
@@ -86,7 +79,7 @@ Int main(Void) {
 	// Turn on user LED
 	GPIO_write(Board_LED0, Board_LED_ON);
 
-	System_printf("Starting KIRC flight computer software...\n");
+	System_printf("Starting up KIRC flight computer software...\n");
 
 	/*
 	 *  Add the UART device to the system.
