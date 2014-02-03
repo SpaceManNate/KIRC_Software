@@ -25,6 +25,7 @@
 #include "inc/hw_types.h"
 #include "driverlib/gpio.h"
 #include "driverlib/i2c.h"
+#include "driverlib/pwm.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"

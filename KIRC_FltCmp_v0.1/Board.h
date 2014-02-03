@@ -42,6 +42,7 @@ extern "C" {
 #define Board_initDMA               EK_TM4C123GXL_initDMA
 #define Board_initGeneral           EK_TM4C123GXL_initGeneral
 #define Board_initGPIO              EK_TM4C123GXL_initGPIO
+#define Board_initPWM				EK_TM4C123GXL_initPWM
 //#define Board_initI2C				EK_TM4C123GXL_initI2C
 #define Board_initI2C				I2C0_MasterInit
 #define Board_initSDSPI             EK_TM4C123GXL_initSDSPI

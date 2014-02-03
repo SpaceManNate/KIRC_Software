@@ -109,4 +109,22 @@ LOG:
 	 scanf("%d", &sleepDur);
 	 fflush(stdin);
 	 */
+	 
+	 
+	 /*
+	I2C_Handle i2c;
+	I2C_Params i2cParams;
+
+	// Create I2C for usage
+	I2C_Params_init(&i2cParams);
+	i2cParams.bitRate = I2C_400kHz;
+	i2c = I2C_open(Board_I2C0, &i2cParams);
+	if (i2c == NULL) {
+		System_abort("Error Initializing I2C\n");
+	} else {
+		System_printf("I2C Initialized!\n");
+	}
+	System_flush();
+	*/
+	 
  

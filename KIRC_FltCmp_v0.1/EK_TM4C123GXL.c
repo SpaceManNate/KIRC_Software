@@ -71,6 +71,9 @@
 #include <driverlib/ssi.h>
 #include <driverlib/udma.h>
 #include <driverlib/pin_map.h>
+#include "driverlib/debug.h"
+#include "driverlib/pwm.h"
+#include "driverlib/rom.h"
 
 #include <xdc/std.h>
 #include <xdc/cfg/global.h>
@@ -128,6 +131,20 @@ Void EK_TM4C123GXL_initDMA(Void)
         DMA_initialized = TRUE;
     }
 }
+
+/*
+ * ======== Init PWM ========
+ */
+Void EK_TM4C123GXL_initPWM(Void){
+	volatile uint32_t ui32Load;
+	volatile uint32_t ui32PWMClock;
+
+	SysCtlPWMClockSet(SYSCTL_PWMDIV_64);
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
+	GPIOPinTypePWM(GPIO_PORTD_BASE, GPIO_PIN_0);
+	GPIOPinConfigure(GPIO_PD0_M1PWM0);
+}
+
 
 /*
  *  ======== EK_TM4C123GXL_initGeneral ========

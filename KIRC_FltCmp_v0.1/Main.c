@@ -7,27 +7,13 @@
  ************************************************************/
 #include "system.h"
 
-/* variable to be read by GUI Composer */
-int count = 0;
+#define PWM_FREQUENCY 51
+volatile uint32_t ui32Load;
+volatile uint32_t ui32PWMClock;
+volatile uint32_t ui8Adjust = 500;
 
 // ======== consoleFxn ========
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
-	/*
-	I2C_Handle i2c;
-	I2C_Params i2cParams;
-
-	// Create I2C for usage
-	I2C_Params_init(&i2cParams);
-	i2cParams.bitRate = I2C_400kHz;
-	i2c = I2C_open(Board_I2C0, &i2cParams);
-	if (i2c == NULL) {
-		System_abort("Error Initializing I2C\n");
-	} else {
-		System_printf("I2C Initialized!\n");
-	}
-	System_flush();
-	*/
-
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
 	IMUdata_t Magn, Magn_Offset;
@@ -78,10 +64,11 @@ Void gpioButtonFxn0(Void)
     /* Clear the GPIO interrupt and toggle an LED */
     GPIO_toggle(Board_LED2);
     GPIO_clearInt(Board_BUTTON0);
-
-    if (count++ == 100) {
-        count = 0;
-    }
+    ui8Adjust -= 5;
+	if (ui8Adjust < 500){
+		ui8Adjust = 500;
+	}
+	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
 }
 
 /*
@@ -94,10 +81,11 @@ Void gpioButtonFxn1(Void)
     /* Clear the GPIO interrupt and toggle an LED */
     GPIO_toggle(Board_LED2);
     GPIO_clearInt(Board_BUTTON1);
-
-    if (count++ == 100) {
-        count = 0;
-    }
+    ui8Adjust += 5;
+	if (ui8Adjust > 1000){
+		ui8Adjust = 1000;
+	}
+	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
 }
 
 //======== main ========
@@ -108,6 +96,7 @@ Int main(Void) {
 	Board_initUART();
 	Board_initUSB(Board_USBDEVICE);
 	Board_initI2C();
+	Board_initPWM();
 
 	// Turn on user LED
 	GPIO_write(Board_LED0, Board_LED_ON);
@@ -139,11 +128,19 @@ Int main(Void) {
 
     // Initialize interrupts for all ports that need them
     GPIO_setupCallbacks(&Board_gpioCallbacks0);
-    //GPIO_setupCallbacks(&Board_gpioCallbacks1);
 
     // Enable interrupts
     GPIO_enableInt(Board_BUTTON0, GPIO_INT_BOTH_EDGES);
 	GPIO_enableInt(Board_BUTTON1, GPIO_INT_BOTH_EDGES);
+
+	ui32PWMClock = SysCtlClockGet() / 64;
+	ui32Load = (ui32PWMClock / PWM_FREQUENCY) - 1;
+	PWMGenConfigure(PWM1_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN);
+	PWMGenPeriodSet(PWM1_BASE, PWM_GEN_0, ui32Load);
+
+	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, 500 * ui32Load / 10000);
+	PWMOutputState(PWM1_BASE, PWM_OUT_0_BIT, true);
+	PWMGenEnable(PWM1_BASE, PWM_GEN_0);
 
 	srand(0xBEA5);
 

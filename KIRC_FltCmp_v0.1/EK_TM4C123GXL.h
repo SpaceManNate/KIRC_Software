@@ -152,6 +152,16 @@ typedef enum EK_TM4C123GXL_WiFiName {
 extern Void EK_TM4C123GXL_initDMA(Void);
 
 /*!
+ *  @brief  Initialize the board PWM generator 0
+ *
+ *  This function initializes the general board specific settings. This include
+ *     - Flash wait states based on the process
+ *     - Disable clock source to watchdog module
+ *     - Enable clock sources for peripherals
+ */
+extern Void EK_TM4C123GXL_initPWM(Void);
+
+/*!
  *  @brief  Initialize the general board specific settings
  *
  *  This function initializes the general board specific settings. This include
