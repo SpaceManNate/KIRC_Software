@@ -18,9 +18,9 @@ PINS:   This software needs access to the following peripherals:
 		-I2C0:  SCL-PB2, SDA-PB3 		(for IMU)
 		-UART0: Rx-PA0, Tx-PA1, 115200b (for USB-UART terminal)
 		-LEDs:  (Red = PF1, Blue = RF2, Green = PF3) (for indicator lights)
-		-PWMs:	M0G0-PB6, M0G1-PB4, M0G2-PE4, M0G3-PD0 (for motor control)
+		-PWMs:	M0G0-PB6, M0G1-PB4, M0G2-PE4, M0G3-PC4 (for motor control)
 		-UART1:	(for GPS input)
-		-Interrupt Pins: PD1, PD2, PD3, PE5 (for PWM input)
+		-Interrupt Pins: PD0, PD1, PD2, PD3  (for PWM input)
 		-Interrupt Pins: (for IMU interrupt)
 	
 NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
@@ -35,7 +35,7 @@ NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
 		  
 *DATE:	  1/31/2014
 
-*LAST EDITED: 2/1/2014
+*LAST EDITED: 2/5/2014
 
 *TO-DO:  -Add PWM output support
 		 -Add PWM input support (Interrupt driven)
@@ -53,6 +53,8 @@ LOG:
 
 *2/3/2014: Attempting more cleanup, removing unnessecary code
 
+*2/5/2014: Added support for 4 PWM outputs
+		   Attempted to add support for channel reading, but CLOCK input reading flooded interrupt channel	
 
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated

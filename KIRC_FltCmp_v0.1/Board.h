@@ -59,6 +59,10 @@ extern "C" {
 #define Board_LED2                  EK_TM4C123GXL_LED_RED
 #define Board_BUTTON0               EK_TM4C123GXL_SW1
 #define Board_BUTTON1               EK_TM4C123GXL_SW2
+#define Board_PA2					EK_TM4C123GXL_PA2
+#define Board_PA3					EK_TM4C123GXL_PA3
+#define Board_PA4					EK_TM4C123GXL_PA4
+#define Board_PA5					EK_TM4C123GXL_PA5
 
 #define Board_I2C0					EK_TM4C123GXL_I2C0
 #define Board_I2C1
@@ -83,7 +87,7 @@ extern "C" {
 #define Board_WIFI                  EK_TM4C123GXL_WIFI
 
 #define Board_gpioCallbacks0        EK_TM4C123GXL_gpioPortFCallbacks
-#define Board_gpioCallbacks1        EK_TM4C123GXL_gpioPortFCallbacks
+#define Board_gpioCallbacks1        EK_TM4C123GXL_gpioPortACallbacks
 
 #ifdef __cplusplus
 }

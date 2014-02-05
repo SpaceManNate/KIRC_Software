@@ -11,6 +11,10 @@
 volatile uint32_t ui32Load;
 volatile uint32_t ui32PWMClock;
 volatile uint32_t ui8Adjust = 500;
+int i = 0;
+float total;
+int total2;
+uint32_t t[3];
 
 // ======== consoleFxn ========
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
@@ -48,8 +52,8 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 		Gyro = Filter_Data(Gyro, Gyro_memory); //Filter the gyro data
 		State = Update_State(Gyro, Accel, State, SAMPLETIME);
 
-		printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
-		fflush(stdout);
+		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		//fflush(stdout);
 
 		Task_sleep(25);
 	} //END OF WHILE(1)
@@ -61,7 +65,7 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
  */
 Void gpioButtonFxn0(Void)
 {
-    /* Clear the GPIO interrupt and toggle an LED */
+    // Clear the GPIO interrupt and toggle an LED
     GPIO_toggle(Board_LED2);
     GPIO_clearInt(Board_BUTTON0);
     ui8Adjust -= 5;
@@ -81,7 +85,7 @@ Void gpioButtonFxn0(Void)
  */
 Void gpioButtonFxn1(Void)
 {
-    /* Clear the GPIO interrupt and toggle an LED */
+    // Clear the GPIO interrupt and toggle an LED
     GPIO_toggle(Board_LED2);
     GPIO_clearInt(Board_BUTTON1);
     ui8Adjust += 5;
@@ -93,6 +97,62 @@ Void gpioButtonFxn1(Void)
 	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
 	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 }
+
+/*
+ *  ======== gpioButtonFxn1 ========
+ */
+Void PWMinputFxn0(Void)
+{
+    // Clear the GPIO interrupt and toggle an LED
+    t[i] = Clock_getTicks();
+    i++;
+    if(i==3){
+   		i=0;
+   		total = (float)((t[1]-t[0])/(float)(t[2]-t[0]));
+
+   		if(total>0.11)
+   			total = ((t[2]-t[1])/(t[2]-t[0]));
+
+   		total2 = (int) 1000*total;
+   		System_printf("t0: %d, t1: %d, t2:, %d, total: %d\n", t[0], t[1], t[2], total2);
+    	System_flush();
+    }
+    GPIO_toggle(Board_LED2);
+    GPIO_clearInt(Board_PA2);
+	//System_printf("PWM0\n");
+	//System_flush();
+}
+
+/*
+ *  ======== gpioButtonFxn1 ========
+ */
+Void PWMinputFxn1(Void)
+{
+    // Clear the GPIO interrupt and toggle an LED
+    GPIO_toggle(Board_LED2);
+    GPIO_clearInt(Board_PA3);
+}
+
+/*
+ *  ======== gpioButtonFxn1 ========
+ */
+Void PWMinputFxn2(Void)
+{
+    // Clear the GPIO interrupt and toggle an LED
+    GPIO_toggle(Board_LED2);
+    GPIO_clearInt(Board_PA4);
+}
+
+/*
+ *  ======== gpioButtonFxn1 ========
+ */
+Void PWMinputFxn3(Void)
+{
+    // Clear the GPIO interrupt and toggle an LED
+    GPIO_toggle(Board_LED2);
+    GPIO_clearInt(Board_PA5);
+}
+
 
 //======== main ========
 Int main(Void) {
@@ -108,6 +168,7 @@ Int main(Void) {
 	GPIO_write(Board_LED0, Board_LED_ON);
 
 	System_printf("Starting up KIRC flight computer software...\n");
+	System_flush();
 
 	// Add the UART device to the system.
 	add_device("UART", _MSA, UARTUtils_deviceopen, UARTUtils_deviceclose,
@@ -134,10 +195,12 @@ Int main(Void) {
 
     // Initialize interrupts for all ports that need them
     GPIO_setupCallbacks(&Board_gpioCallbacks0);
+    GPIO_setupCallbacks(&Board_gpioCallbacks1);
 
     // Enable interrupts
     GPIO_enableInt(Board_BUTTON0, GPIO_INT_BOTH_EDGES);
 	GPIO_enableInt(Board_BUTTON1, GPIO_INT_BOTH_EDGES);
+	GPIO_enableInt(Board_PA2,GPIO_INT_BOTH_EDGES);
 
 	// Enable PWM
 	ui32PWMClock = SysCtlClockGet() / 64;

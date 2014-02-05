@@ -39,6 +39,8 @@
 // BIOS Header files
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/utils/Load.h>
+#include <ti/sysbios/hal/Timer.h>
+#include <ti/sysbios/knl/Clock.h>
 
 // TI-RTOS Header files
 #include <ti/drivers/GPIO.h>

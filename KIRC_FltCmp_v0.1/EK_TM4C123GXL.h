@@ -56,6 +56,7 @@ extern "C" {
 
 /* GPIO_Callbacks structure for GPIO interrupts */
 extern const GPIO_Callbacks EK_TM4C123GXL_gpioPortFCallbacks;
+extern const GPIO_Callbacks EK_TM4C123GXL_gpioPortACallbacks;
 
 /*!
  *  @def    EK_TM4C123GXL_GPIOName
@@ -67,6 +68,10 @@ typedef enum EK_TM4C123GXL_GPIOName {
     EK_TM4C123GXL_LED_GREEN,
     EK_TM4C123GXL_SW1,
     EK_TM4C123GXL_SW2,
+    EK_TM4C123GXL_PA2,
+    EK_TM4C123GXL_PA3,
+    EK_TM4C123GXL_PA4,
+    EK_TM4C123GXL_PA5,
 
     EK_TM4C123GXL_GPIOCOUNT
 } EK_TM4C123GXL_GPIOName;
