@@ -68,7 +68,10 @@ Void gpioButtonFxn0(Void)
 	if (ui8Adjust < 500){
 		ui8Adjust = 500;
 	}
-	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 }
 
 /*
@@ -85,7 +88,10 @@ Void gpioButtonFxn1(Void)
 	if (ui8Adjust > 1000){
 		ui8Adjust = 1000;
 	}
-	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 }
 
 //======== main ========
@@ -133,14 +139,31 @@ Int main(Void) {
     GPIO_enableInt(Board_BUTTON0, GPIO_INT_BOTH_EDGES);
 	GPIO_enableInt(Board_BUTTON1, GPIO_INT_BOTH_EDGES);
 
+	// Enable PWM
 	ui32PWMClock = SysCtlClockGet() / 64;
 	ui32Load = (ui32PWMClock / PWM_FREQUENCY) - 1;
-	PWMGenConfigure(PWM1_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN);
-	PWMGenPeriodSet(PWM1_BASE, PWM_GEN_0, ui32Load);
 
-	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, 500 * ui32Load / 10000);
-	PWMOutputState(PWM1_BASE, PWM_OUT_0_BIT, true);
-	PWMGenEnable(PWM1_BASE, PWM_GEN_0);
+	PWMGenConfigure(PWM0_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN);
+	PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, ui32Load);
+	PWMGenConfigure(PWM0_BASE, PWM_GEN_1, PWM_GEN_MODE_DOWN);
+	PWMGenPeriodSet(PWM0_BASE, PWM_GEN_1, ui32Load);
+	PWMGenConfigure(PWM0_BASE, PWM_GEN_2, PWM_GEN_MODE_DOWN);
+	PWMGenPeriodSet(PWM0_BASE, PWM_GEN_2, ui32Load);
+	PWMGenConfigure(PWM0_BASE, PWM_GEN_3, PWM_GEN_MODE_DOWN);
+	PWMGenPeriodSet(PWM0_BASE, PWM_GEN_3, ui32Load);
+
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, 500 * ui32Load / 10000);
+	PWMOutputState(PWM0_BASE, PWM_OUT_0_BIT, true);
+	PWMGenEnable(PWM0_BASE, PWM_GEN_0);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, 500 * ui32Load / 10000);
+	PWMOutputState(PWM0_BASE, PWM_OUT_2_BIT, true);
+	PWMGenEnable(PWM0_BASE, PWM_GEN_1);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, 500 * ui32Load / 10000);
+	PWMOutputState(PWM0_BASE, PWM_OUT_4_BIT, true);
+	PWMGenEnable(PWM0_BASE, PWM_GEN_2);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, 500 * ui32Load / 10000);
+	PWMOutputState(PWM0_BASE, PWM_OUT_6_BIT, true);
+	PWMGenEnable(PWM0_BASE, PWM_GEN_3);
 
 	srand(0xBEA5);
 

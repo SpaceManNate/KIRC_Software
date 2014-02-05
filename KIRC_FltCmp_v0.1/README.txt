@@ -18,7 +18,7 @@ PINS:   This software needs access to the following peripherals:
 		-I2C0:  SCL-PB2, SDA-PB3 		(for IMU)
 		-UART0: Rx-PA0, Tx-PA1, 115200b (for USB-UART terminal)
 		-LEDs:  (Red = PF1, Blue = RF2, Green = PF3) (for indicator lights)
-		-PWMs:	M0G0-PB6, M0G1-PB5, M0G2-PA6, M0G3-PD0 (for motor control)
+		-PWMs:	M0G0-PB6, M0G1-PB4, M0G2-PE4, M0G3-PD0 (for motor control)
 		-UART1:	(for GPS input)
 		-Interrupt Pins: PD1, PD2, PD3, PE5 (for PWM input)
 		-Interrupt Pins: (for IMU interrupt)

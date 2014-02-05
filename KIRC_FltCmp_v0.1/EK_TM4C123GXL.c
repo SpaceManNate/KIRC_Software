@@ -136,13 +136,16 @@ Void EK_TM4C123GXL_initDMA(Void)
  * ======== Init PWM ========
  */
 Void EK_TM4C123GXL_initPWM(Void){
-	volatile uint32_t ui32Load;
-	volatile uint32_t ui32PWMClock;
-
-	SysCtlPWMClockSet(SYSCTL_PWMDIV_64);
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
-	GPIOPinTypePWM(GPIO_PORTD_BASE, GPIO_PIN_0);
-	GPIOPinConfigure(GPIO_PD0_M1PWM0);
+	SysCtlPWMClockSet(SYSCTL_PWMDIV_64); //Config PWM clock
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0); //Config PWM module 0
+	GPIOPinTypePWM(GPIO_PORTB_BASE,GPIO_PIN_6); //Config PB6 as PWMout0
+	GPIOPinConfigure(GPIO_PB6_M0PWM0);
+	GPIOPinTypePWM(GPIO_PORTB_BASE,GPIO_PIN_4); //Config PB4 as PWMout2
+	GPIOPinConfigure(GPIO_PB4_M0PWM2);
+	GPIOPinTypePWM(GPIO_PORTE_BASE,GPIO_PIN_4); //Config PE4 as PWMout4
+	GPIOPinConfigure(GPIO_PE4_M0PWM4);
+	GPIOPinTypePWM(GPIO_PORTC_BASE,GPIO_PIN_4); //Config PD0 as PWMout6
+	GPIOPinConfigure(GPIO_PC4_M0PWM6);
 }
 
 
