@@ -11,15 +11,16 @@
 volatile uint32_t ui32Load;
 volatile uint32_t ui32PWMClock;
 volatile uint32_t ui8Adjust = 500;
+volatile uint32_t ui8Adjust2 = 500;
 int i = 0;
 float total;
 int total2;
 uint32_t t[3];
+uint32_t rising,falling;
+uint8_t flag=0;
 
-// ======== consoleFxn ========
+// ======== ReadSensorsFxn ========
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
-	System_printf("IN FUNCTION 1\n");
-	System_flush();
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
 	IMUdata_t Magn, Magn_Offset;
@@ -45,7 +46,7 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	Task_sleep(50);
 
 	while (1) {
-		//System_printf("IN FUNCTION 1\n");
+		//System_printf("Task 1\n");
 		//System_flush();
 		GPIO_toggle(Board_LED1);
 		Accel = Read_Accel(); //Read the accelerometer
@@ -56,10 +57,29 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 
 		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
 		//fflush(stdout);
-
 		Task_sleep(2500);
 	} //END OF WHILE(1)
 }
+
+
+// ======== ReadInput3Fxn ========
+Void ReadInputFxn(UArg arg0, UArg arg1) {
+	while (1) {
+		GPIO_toggle(Board_LED2);
+		//System_printf("Task 2\n");
+		//System_flush();
+		GPIO_enableInt(Board_PA2,GPIO_INT_RISING);
+		Task_sleep(1000);
+		GPIO_disableInt(Board_PA2); //might be redundant
+		GPIO_enableInt(Board_PA3,GPIO_INT_RISING);
+		Task_sleep(1000);
+		GPIO_disableInt(Board_PA3); //might be redundant
+		Task_sleep(1000);
+   		System_printf("input 1: %d,	input 2: %d\n", ui8Adjust,ui8Adjust2);
+    	System_flush();
+	} //END OF WHILE(1)
+}
+
 
 /*
  *  ======== gpioButtonFxn0 ========
@@ -100,49 +120,57 @@ Void gpioButtonFxn1(Void)
 	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 }
 
-/*
- *  ======== gpioButtonFxn1 ========
- */
+//
 Void PWMinputFxn0(Void)
 {
-    // Clear the GPIO interrupt and toggle an LED
-    t[i] = Clock_getTicks();
-    i++;
-    if(i==3){
-   		i=0;
-   		total = (float)((t[1]-t[0])/(float)(t[2]-t[0]));
+	if(flag == 0){
+		rising = Clock_getTicks();
+		GPIO_enableInt(Board_PA2,GPIO_INT_FALLING);
+		flag = 1;
+	}
+	else if(flag == 1){
+		falling = Clock_getTicks();
+		GPIO_disableInt(Board_PA2);
+		flag = 0;
+		total = (float) (falling - rising)*51.18;
+		total2 = (int) (total/10) + 5;
+		if(total2 < 1100)
+			ui8Adjust = total2;
 
-   		if(total>0.11)
-   			total = ((t[2]-t[1])/(t[2]-t[0]));
-
-   		total2 = (int) 10000*total + 5;
-   		System_printf("t0: %d, t1: %d, t2: %d, total: %d\n", t[0], t[1], t[2], total2);
-    	System_flush();
-    }
-    ui8Adjust = total2;
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
-    GPIO_toggle(Board_LED2);
-    GPIO_clearInt(Board_PA2);
-	//System_printf("PWM0\n");
-	//System_flush();
+		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
+		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
+		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
+		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
+	    GPIO_clearInt(Board_PA2);
+	}
 }
 
-/*
- *  ======== gpioButtonFxn1 ========
- */
+//
 Void PWMinputFxn1(Void)
 {
-    // Clear the GPIO interrupt and toggle an LED
-    GPIO_toggle(Board_LED2);
-    GPIO_clearInt(Board_PA3);
+	if(flag == 0){
+		rising = Clock_getTicks();
+		GPIO_enableInt(Board_PA3,GPIO_INT_FALLING);
+		flag = 1;
+	}
+	else if(flag == 1){
+		falling = Clock_getTicks();
+		GPIO_disableInt(Board_PA3);
+		flag = 0;
+		total = (float) (falling - rising)*51.18;
+		total2 = (int) (total/10) + 5;
+		if(total2 < 1100)
+			ui8Adjust2 = total2;
+
+		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
+		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
+		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
+		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
+	    GPIO_clearInt(Board_PA3);
+	}
 }
 
-/*
- *  ======== gpioButtonFxn1 ========
- */
+//
 Void PWMinputFxn2(Void)
 {
     // Clear the GPIO interrupt and toggle an LED
@@ -150,9 +178,7 @@ Void PWMinputFxn2(Void)
     GPIO_clearInt(Board_PA4);
 }
 
-/*
- *  ======== gpioButtonFxn1 ========
- */
+//
 Void PWMinputFxn3(Void)
 {
     // Clear the GPIO interrupt and toggle an LED
@@ -207,11 +233,12 @@ Int main(Void) {
     // Enable interrupts
     GPIO_enableInt(Board_BUTTON0, GPIO_INT_BOTH_EDGES);
 	GPIO_enableInt(Board_BUTTON1, GPIO_INT_BOTH_EDGES);
-	GPIO_enableInt(Board_PA2,GPIO_INT_BOTH_EDGES);
+	//GPIO_enableInt(Board_PA2,GPIO_INT_BOTH_EDGES);
 
 	// Enable PWM
 	ui32PWMClock = SysCtlClockGet() / 64;
 	ui32Load = (ui32PWMClock / PWM_FREQUENCY) - 1;
+
 
 	PWMGenConfigure(PWM0_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN);
 	PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, ui32Load);
@@ -235,8 +262,6 @@ Int main(Void) {
 	PWMOutputState(PWM0_BASE, PWM_OUT_6_BIT, true);
 	PWMGenEnable(PWM0_BASE, PWM_GEN_3);
 
-	// Start BIOS
-	BIOS_start();
-
+	BIOS_start();	// Start BIOS
 	return (0);
 }

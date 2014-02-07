@@ -128,5 +128,35 @@ LOG:
 	}
 	System_flush();
 	*/
+	
+	    // Clear the GPIO interrupt and toggle an LED
+	/*
+    t[i] = Clock_getTicks();
+    i++;
+    if(i==3){
+   		i=0;
+   		total = (float)((t[1]-t[0])/(float)(t[2]-t[0]));
+
+   		if(total>0.11)
+   			total = ((t[2]-t[1])/(t[2]-t[0]));
+
+   		total2 = (int) 10000*total + 5;
+   		System_printf("t0: %d, t1: %d, t2: %d, total: %d\n", t[0], t[1], t[2], total2);
+    	System_flush();
+    }
+
+    ui8Adjust = total2;
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
+    GPIO_toggle(Board_LED2);
+    GPIO_clearInt(Board_PA2);
+    */
+    
+    //int key;
+	//key = Swi_disable();
+	//key = Hwi_disable();
+    
 	 
  
