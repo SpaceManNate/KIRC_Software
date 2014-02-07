@@ -18,6 +18,8 @@ uint32_t t[3];
 
 // ======== consoleFxn ========
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
+	System_printf("IN FUNCTION 1\n");
+	System_flush();
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
 	IMUdata_t Magn, Magn_Offset;
@@ -28,8 +30,6 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	State.q4 = 0.0;
 	float Gyro_memory[15];
 	Clear_Array(Gyro_memory, sizeof(Gyro_memory) / 4); //Clear gyro memory array
-
-	//I2C0_MasterInit();	//delete later maybe
 
 	//Init Sensors
 	Accel_Init();
@@ -45,6 +45,8 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	Task_sleep(50);
 
 	while (1) {
+		//System_printf("IN FUNCTION 1\n");
+		//System_flush();
 		GPIO_toggle(Board_LED1);
 		Accel = Read_Accel(); //Read the accelerometer
 		Gyro = Read_Gyro(Gyro_Offset); //Read the Gyroscope
@@ -55,7 +57,7 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
 		//fflush(stdout);
 
-		Task_sleep(25);
+		Task_sleep(2500);
 	} //END OF WHILE(1)
 }
 
@@ -113,10 +115,15 @@ Void PWMinputFxn0(Void)
    		if(total>0.11)
    			total = ((t[2]-t[1])/(t[2]-t[0]));
 
-   		total2 = (int) 1000*total;
-   		System_printf("t0: %d, t1: %d, t2:, %d, total: %d\n", t[0], t[1], t[2], total2);
+   		total2 = (int) 10000*total + 5;
+   		System_printf("t0: %d, t1: %d, t2: %d, total: %d\n", t[0], t[1], t[2], total2);
     	System_flush();
     }
+    ui8Adjust = total2;
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
+	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
     GPIO_toggle(Board_LED2);
     GPIO_clearInt(Board_PA2);
 	//System_printf("PWM0\n");
@@ -227,8 +234,6 @@ Int main(Void) {
 	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, 500 * ui32Load / 10000);
 	PWMOutputState(PWM0_BASE, PWM_OUT_6_BIT, true);
 	PWMGenEnable(PWM0_BASE, PWM_GEN_3);
-
-	srand(0xBEA5);
 
 	// Start BIOS
 	BIOS_start();

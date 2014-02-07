@@ -41,6 +41,8 @@
 #include <ti/sysbios/utils/Load.h>
 #include <ti/sysbios/hal/Timer.h>
 #include <ti/sysbios/knl/Clock.h>
+#include <ti/sysbios/knl/Swi.h>
+#include <ti/sysbios/hal/Hwi.h>
 
 // TI-RTOS Header files
 #include <ti/drivers/GPIO.h>
