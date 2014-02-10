@@ -14,6 +14,8 @@
 #define GYRO_READ_ADDRESS 0x28
 #define MAGN_SLAVE_ADDRESS 0x1E
 #define MAGN_READ_ADDRESS 0x03
+#define ALTM_SLAVE_ADDRESS 0x77
+#define ALTM_READ_ADDRESS 0xF6
 
 //Raw IMU Data Structure
 typedef struct RawIMUdata{
@@ -28,6 +30,21 @@ typedef struct IMUdata{
 	float y;
 	float z;
 } IMUdata_t;
+
+//Processed IMU Data Structure
+typedef struct ALTM_CalData{
+	short AC1;
+	short AC2;
+	short AC3;
+	unsigned short AC4;
+	unsigned short AC5;
+	unsigned short AC6;
+	short B1;
+	short B2;
+	short MB;
+	short MC;
+	short MD;
+} ALTM_CalData_t;
 
 //Function Prototypes
 void Accel_Init(void);
@@ -44,6 +61,9 @@ void Magn_Init(void);
 RawIMUdata_t GetData_Magn(void);
 IMUdata_t Calib_Magn(void);
 IMUdata_t Read_Magn(IMUdata_t Offset);
+
+ALTM_CalData_t Altm_Init(void);
+float Get_Altitude(ALTM_CalData_t Cal);
 
 IMUdata_t Filter_Data(IMUdata_t Data,float Memory[15]);
 void Clear_Array(float *Array, unsigned int size);

@@ -213,6 +213,7 @@ sensors.obj: ../USBCDCD_LoggerIdle.h
 sensors.obj: ../drivers.h
 sensors.obj: ../sensors.h
 sensors.obj: ../quaternion.h
+sensors.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/math.h
 
 ../sensors.c: 
 ../system.h: 
@@ -427,3 +428,4 @@ C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h:
 ../drivers.h: 
 ../sensors.h: 
 ../quaternion.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/math.h: 

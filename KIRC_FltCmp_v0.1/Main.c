@@ -32,11 +32,15 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	}
 	System_flush();
 
-	//barometer 0.1
 
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
 	IMUdata_t Magn, Magn_Offset;
+	ALTM_CalData_t Altim_caldata;
+	float Altitude;
+	float groundLevel=0;
+	int i;
+
 	Quaternion_t State;
 	State.q1 = 1.0;
 	State.q2 = 0.0;
@@ -53,13 +57,19 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	Gyro_Init();
 	Task_sleep(50);
 	Magn_Init();
+	Altim_caldata = Altm_Init();
 
 	//Calibrate sensors
 	Calib_Accel();
 	Task_sleep(50);
 	Gyro_Offset = Calib_Gyro();
 	Task_sleep(50);
-
+/*
+	for(i=0; i<15; i++){
+		groundLevel += Get_Altitude(Altim_caldata);
+	}
+	groundLevel = groundLevel/15.0;
+*/
 	while (1) {
 		GPIO_toggle(Board_LED1);
 		Accel = Read_Accel(); //Read the accelerometer
@@ -68,7 +78,11 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 		Gyro = Filter_Data(Gyro, Gyro_memory); //Filter the gyro data
 		State = Update_State(Gyro, Accel, State, SAMPLETIME);
 
-		printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		//Altitude = Get_Altitude(Altim_caldata)-groundLevel;
+		Altitude = Get_Altitude(Altim_caldata);
+		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		//printf("%f\n", Altitude);
+		printf("Altitude\t%0.1f Feet\n", ((double)Altitude)*3.280839895);
 		fflush(stdout);
 
 		Task_sleep(25);
@@ -118,7 +132,6 @@ Int main(Void) {
 	// Initialize the USB CDC device for logging transport
 	USBCDCD_init();
 
-	srand(0xBEA5);
 
 	// Start BIOS
 	BIOS_start();

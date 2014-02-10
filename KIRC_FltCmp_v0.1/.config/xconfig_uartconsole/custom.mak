@@ -2,4 +2,4 @@
 .configuro: .libraries,em4f linker.cmd package/cfg/uartconsole_pem4f.oem4f
 
 linker.cmd: package/cfg/uartconsole_pem4f.xdl
-	$(SED) 's"^\"\(package/cfg/uartconsole_pem4fcfg.cmd\)\"$""\"C:/Users/asusHD/workspace_v5_5/uartconsole_TivaTM4C123GH6PM/.config/xconfig_uartconsole/\1\""' package/cfg/uartconsole_pem4f.xdl > $@
+	$(SED) 's"^\"\(package/cfg/uartconsole_pem4fcfg.cmd\)\"$""\"C:/Users/asusHD/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/.config/xconfig_uartconsole/\1\""' package/cfg/uartconsole_pem4f.xdl > $@
