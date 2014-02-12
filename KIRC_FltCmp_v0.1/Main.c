@@ -10,10 +10,7 @@
 #define PWM_FREQUENCY 51
 volatile uint32_t ui32Load;
 volatile uint32_t ui32PWMClock;
-volatile uint32_t ui8Adjust = 500;
-volatile uint32_t ui8Adjust2 = 500;
-volatile uint32_t ui8Adjust3 = 500;
-volatile uint32_t ui8Adjust4 = 500;
+volatile uint32_t input[4];
 int i = 0;
 float total;
 int total2;
@@ -36,16 +33,16 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 
 	//Init Sensors
 	Accel_Init();
-	Task_sleep(50);
+	Task_sleep(500);
 	Gyro_Init();
-	Task_sleep(50);
+	Task_sleep(500);
 	Magn_Init();
 
 	//Calibrate sensors
 	Calib_Accel();
-	Task_sleep(50);
+	Task_sleep(500);
 	Gyro_Offset = Calib_Gyro();
-	Task_sleep(50);
+	Task_sleep(500);
 
 	while (1) {
 		//System_printf("Task 1\n");
@@ -64,31 +61,84 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 }
 
 
-// ======== ReadInput3Fxn ========
+// ======== ReadInputFxn ========
 Void ReadInputFxn(UArg arg0, UArg arg1) {
+	input[0] = 533;
+	input[1] = 533;
+	input[2] = 533;
+	input[3] = 533;
 	while (1) {
 		GPIO_toggle(Board_LED2);
 		//System_printf("Task 2\n");
 		//System_flush();
 		GPIO_enableInt(Board_PA2,GPIO_INT_RISING);
-		Task_sleep(1000);
+		Task_sleep(700);
 		GPIO_disableInt(Board_PA2); //might be redundant
 		GPIO_enableInt(Board_PA3,GPIO_INT_RISING);
-		Task_sleep(1000);
+		Task_sleep(700);
 		GPIO_disableInt(Board_PA3); //might be redundant
 		GPIO_enableInt(Board_PA4,GPIO_INT_RISING);
-		Task_sleep(1000);
+		Task_sleep(700);
 		GPIO_disableInt(Board_PA4); //might be redundant
 		GPIO_enableInt(Board_PA5,GPIO_INT_RISING);
-		Task_sleep(1000);
+		Task_sleep(700);
 		GPIO_disableInt(Board_PA5); //might be redundant
-		System_printf("input 1: %d,	input 2: %d, input 3: %d, input 4: %d\n", ui8Adjust,ui8Adjust2,ui8Adjust3,ui8Adjust4);
-    	System_flush();
-    	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
-    	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
-    	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
-    	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
-    	Task_sleep(1000);
+		//System_printf("input 1: %d,	input 2: %d, input 3: %d, input 4: %d\n", input[0],input[1],input[2],input[3]);
+    	//System_flush();
+	} //END OF WHILE(1)
+}
+
+
+// ======== ControlFxn ========
+Void ControlFxn(UArg arg0, UArg arg1) {
+	uint32_t output[4];
+	float error[3];
+	float cntl_input[3];
+	float feedback[3];
+	float Kp=2,Ki=0,Kd=0;
+	int Compensation[3];
+	while (1) {
+		//Convert input into degrees
+		cntl_input[0] =(float) 30.0*(input[1]-532)/430.0 - 15.0;
+		cntl_input[1] =(float) 30.0*(input[3]-532)/430.0 - 15.0;
+
+		//Convert IMU feedback into euler angles
+		feedback[0] = 0.0;
+		feedback[1] = 0.0;
+
+
+		//printf("%2.3f, %2.3f\r\n",cntl_input[0],cntl_input[1]);
+		//fflush(stdout);
+
+		//Error Calculation, and throw out bad inputs
+		if(cntl_input[0]<15.0 && cntl_input[0]>-15.0 )
+			error[0] = cntl_input[0]-feedback[0]; //PITCH CALCULATION
+		if(cntl_input[1]<15.0 && cntl_input[1]>-15.0 )
+			error[1] = cntl_input[1]-feedback[1]; //ROLL CALCULATION
+
+
+		//PID compensation calculation
+		Compensation[0] = (int) (Kp*error[0]+Ki*error[0]+Kd*error[0]);
+		Compensation[1] = (int) (Kp*error[1]+Ki*error[1]+Kd*error[1]);
+
+		//printf("%d, %d\r\n",Compensation[0],Compensation[1]);
+		//fflush(stdout);
+
+		//Calculate control actions
+		output[0] = input[0]+Compensation[0]-Compensation[1];
+		output[1] = input[0]-Compensation[0]-Compensation[1];
+		output[2] = input[0]+Compensation[0]+Compensation[1];
+		output[3] = input[0]-Compensation[0]+Compensation[1];
+
+		//printf("%2.3f,  %2.3f,  %2.3f,  %2.3f\r\n",output[0],output[1],output[2],output[3]);
+		//fflush(stdout);
+
+		//Output PWM to motors
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, (output[0]+30) * ui32Load / 10000);
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, output[1] * ui32Load / 10000);
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, output[2] * ui32Load / 10000);
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, output[3] * ui32Load / 10000);
+		Task_sleep(2500);
 	} //END OF WHILE(1)
 }
 
@@ -97,39 +147,21 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
  *  ======== gpioButtonFxn0 ========
  *  Callback function for the GPIO interrupt on Board_BUTTON0.
  */
-Void gpioButtonFxn0(Void)
-{
+Void gpioButtonFxn0(Void){
     // Clear the GPIO interrupt and toggle an LED
     GPIO_toggle(Board_LED2);
     GPIO_clearInt(Board_BUTTON0);
-    ui8Adjust -= 5;
-	if (ui8Adjust < 500){
-		ui8Adjust = 500;
-	}
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 }
+
 
 /*
  *  ======== gpioButtonFxn1 ========
  *  Callback function for the GPIO interrupt on Board_BUTTON1.
- *  This may not be used for all boards.
  */
-Void gpioButtonFxn1(Void)
-{
+Void gpioButtonFxn1(Void){
     // Clear the GPIO interrupt and toggle an LED
     GPIO_toggle(Board_LED2);
     GPIO_clearInt(Board_BUTTON1);
-    ui8Adjust += 5;
-	if (ui8Adjust > 1000){
-		ui8Adjust = 1000;
-	}
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
-	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 }
 
 //
@@ -147,12 +179,8 @@ Void PWMinputFxn0(Void)
 		total = (float) (falling - rising)*51.18;
 		total2 = (int) (total/10) + 5;
 		if(total2 < 1100)
-			ui8Adjust = total2;
+			input[0] = total2;
 
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 	    GPIO_clearInt(Board_PA2);
 	}
 }
@@ -172,12 +200,8 @@ Void PWMinputFxn1(Void)
 		total = (float) (falling - rising)*51.18;
 		total2 = (int) (total/10) + 5;
 		if(total2 < 1100)
-			ui8Adjust2 = total2;
+			input[1] = total2;
 
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 	    GPIO_clearInt(Board_PA3);
 	}
 }
@@ -197,12 +221,8 @@ Void PWMinputFxn2(Void)
 		total = (float) (falling - rising)*51.18;
 		total2 = (int) (total/10) + 5;
 		if(total2 < 1100)
-			ui8Adjust3 = total2;
+			input[2] = total2;
 
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 	    GPIO_clearInt(Board_PA5);
 	}
 }
@@ -222,12 +242,8 @@ Void PWMinputFxn3(Void)
 		total = (float) (falling - rising)*51.18;
 		total2 = (int) (total/10) + 5;
 		if(total2 < 1100)
-			ui8Adjust4 = total2;
+			input[3] = total2;
 
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, ui8Adjust * ui32Load / 10000);
-		//PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, ui8Adjust * ui32Load / 10000);
 	    GPIO_clearInt(Board_PA5);
 	}
 }
