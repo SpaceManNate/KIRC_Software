@@ -20,8 +20,18 @@ PINS:   This software needs access to the following peripherals:
 		-LEDs:  (Red = PF1, Blue = RF2, Green = PF3) (for indicator lights)
 		-PWMs:	M0G0-PB6, M0G1-PB4, M0G2-PE4, M0G3-PC4 (for motor control)
 		-UART1:	(for GPS input)
-		-Interrupt Pins: PD0, PD1, PD2, PD3  (for PWM input)
-		-Interrupt Pins: (for IMU interrupt)
+		-Interrupt Pins: PA2, PA3, PA4, PA5  (for PWM input)
+		
+MOTOR MAPPING:
+		PB6 - Output[0] - Motor1
+		PB4 - Output[1] - Motor2
+		PE4 - Output[2] - Motor3
+		PC4 - Output[3] - Motor4
+		
+		PA2 - Input[0] - Throttle (Channel 2)
+		PA3 - Input[1] - Pitch    (Channel 3)
+		PA4 - Input[2] - Yaw      (Channel 1)
+		PA5 - Input[3] - Roll     (Channel 4)
 	
 NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
 		to be called before compiling in order to shift the config files to the
@@ -35,13 +45,11 @@ NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
 		  
 *DATE:	  1/31/2014
 
-*LAST EDITED: 2/5/2014
+*LAST EDITED: 2/12/2014
 
-*TO-DO:  -Add PWM output support
-		 -Add PWM input support (Interrupt driven)
+*TO-DO:  -CODE CLEANUP
 		 -Make IMU input functions interrupt driven
 		 -Add PID control algorithms
-		 -Program motor control algorithm
 		 -Add A/D support
 		 -Add Altimeter support
 		 -Read GPS functions
@@ -55,6 +63,10 @@ LOG:
 
 *2/5/2014: Added support for 4 PWM outputs
 		   Attempted to add support for channel reading, but CLOCK input reading flooded interrupt channel	
+
+*2/7/2014: Added support for 4 channel PWM input reading, fixed the CLOCK issue.
+		   
+*2/12/2014: Added Roll, Pitch motor control. Still need PID support.
 
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated

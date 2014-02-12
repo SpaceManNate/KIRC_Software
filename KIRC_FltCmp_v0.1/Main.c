@@ -83,8 +83,8 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 		GPIO_enableInt(Board_PA5,GPIO_INT_RISING);
 		Task_sleep(700);
 		GPIO_disableInt(Board_PA5); //might be redundant
-		//System_printf("input 1: %d,	input 2: %d, input 3: %d, input 4: %d\n", input[0],input[1],input[2],input[3]);
-    	//System_flush();
+		System_printf("input 1: %d,	input 2: %d, input 3: %d, input 4: %d\n", input[0],input[1],input[2],input[3]);
+    	System_flush();
 	} //END OF WHILE(1)
 }
 
@@ -106,32 +106,21 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 		feedback[0] = 0.0;
 		feedback[1] = 0.0;
 
-
-		//printf("%2.3f, %2.3f\r\n",cntl_input[0],cntl_input[1]);
-		//fflush(stdout);
-
 		//Error Calculation, and throw out bad inputs
 		if(cntl_input[0]<15.0 && cntl_input[0]>-15.0 )
 			error[0] = cntl_input[0]-feedback[0]; //PITCH CALCULATION
 		if(cntl_input[1]<15.0 && cntl_input[1]>-15.0 )
 			error[1] = cntl_input[1]-feedback[1]; //ROLL CALCULATION
 
-
 		//PID compensation calculation
 		Compensation[0] = (int) (Kp*error[0]+Ki*error[0]+Kd*error[0]);
 		Compensation[1] = (int) (Kp*error[1]+Ki*error[1]+Kd*error[1]);
-
-		//printf("%d, %d\r\n",Compensation[0],Compensation[1]);
-		//fflush(stdout);
 
 		//Calculate control actions
 		output[0] = input[0]+Compensation[0]-Compensation[1];
 		output[1] = input[0]-Compensation[0]-Compensation[1];
 		output[2] = input[0]+Compensation[0]+Compensation[1];
 		output[3] = input[0]-Compensation[0]+Compensation[1];
-
-		//printf("%2.3f,  %2.3f,  %2.3f,  %2.3f\r\n",output[0],output[1],output[2],output[3]);
-		//fflush(stdout);
 
 		//Output PWM to motors
 		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, (output[0]+30) * ui32Load / 10000);
