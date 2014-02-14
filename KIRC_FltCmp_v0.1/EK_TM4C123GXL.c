@@ -166,8 +166,8 @@ Void EK_TM4C123GXL_initGeneral(Void)
 #include <ti/drivers/GPIO.h>
 
 /* Callback functions for the GPIO interrupt example. */
-Void gpioButtonFxn0(Void);
-Void gpioButtonFxn1(Void);
+//Void gpioButtonFxn0(Void);
+//Void gpioButtonFxn1(Void);
 Void PWMinputFxn0(Void);
 Void PWMinputFxn1(Void);
 Void PWMinputFxn2(Void);
@@ -195,7 +195,7 @@ Hwi_Struct callbackHwi2;
 /* GPIO callback structure to set callbacks for GPIO interrupts */
 const GPIO_Callbacks EK_TM4C123GXL_gpioPortFCallbacks = {
     GPIO_PORTF_BASE, INT_GPIOF, &callbackHwi,
-    {gpioButtonFxn1, NULL, NULL, NULL, gpioButtonFxn0, NULL, NULL, NULL}
+    {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };
 
 /* GPIO callback structure to set callbacks for GPIO interrupts on port D*/

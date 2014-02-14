@@ -52,7 +52,7 @@
 // Example/Board Header files
 #include "Board.h"
 #include "UARTUtils.h"
-#include "USBCDCD_LoggerIdle.h"
+//#include "USBCDCD_LoggerIdle.h"
 
 //Custom headers produced for KIRC
 #include "sensors.h"

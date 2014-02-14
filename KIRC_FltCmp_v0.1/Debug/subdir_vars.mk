@@ -13,7 +13,6 @@ C_SRCS += \
 ../EK_TM4C123GXL.c \
 ../Main.c \
 ../UARTUtils.c \
-../USBCDCD_LoggerIdle.c \
 ../quaternion.c \
 ../sensors.c 
 
@@ -21,7 +20,6 @@ OBJS += \
 ./EK_TM4C123GXL.obj \
 ./Main.obj \
 ./UARTUtils.obj \
-./USBCDCD_LoggerIdle.obj \
 ./quaternion.obj \
 ./sensors.obj 
 
@@ -29,7 +27,6 @@ C_DEPS += \
 ./EK_TM4C123GXL.pp \
 ./Main.pp \
 ./UARTUtils.pp \
-./USBCDCD_LoggerIdle.pp \
 ./quaternion.pp \
 ./sensors.pp 
 
@@ -57,7 +54,6 @@ C_DEPS__QUOTED += \
 "EK_TM4C123GXL.pp" \
 "Main.pp" \
 "UARTUtils.pp" \
-"USBCDCD_LoggerIdle.pp" \
 "quaternion.pp" \
 "sensors.pp" 
 
@@ -65,7 +61,6 @@ OBJS__QUOTED += \
 "EK_TM4C123GXL.obj" \
 "Main.obj" \
 "UARTUtils.obj" \
-"USBCDCD_LoggerIdle.obj" \
 "quaternion.obj" \
 "sensors.obj" 
 
@@ -73,7 +68,6 @@ C_SRCS__QUOTED += \
 "../EK_TM4C123GXL.c" \
 "../Main.c" \
 "../UARTUtils.c" \
-"../USBCDCD_LoggerIdle.c" \
 "../quaternion.c" \
 "../sensors.c" 
 

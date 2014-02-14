@@ -131,28 +131,6 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	} //END OF WHILE(1)
 }
 
-
-/*
- *  ======== gpioButtonFxn0 ========
- *  Callback function for the GPIO interrupt on Board_BUTTON0.
- */
-Void gpioButtonFxn0(Void){
-    // Clear the GPIO interrupt and toggle an LED
-    GPIO_toggle(Board_LED2);
-    GPIO_clearInt(Board_BUTTON0);
-}
-
-
-/*
- *  ======== gpioButtonFxn1 ========
- *  Callback function for the GPIO interrupt on Board_BUTTON1.
- */
-Void gpioButtonFxn1(Void){
-    // Clear the GPIO interrupt and toggle an LED
-    GPIO_toggle(Board_LED2);
-    GPIO_clearInt(Board_BUTTON1);
-}
-
 //
 Void PWMinputFxn0(Void)
 {
@@ -244,7 +222,6 @@ Int main(Void) {
 	Board_initGeneral();
 	Board_initGPIO();
 	Board_initUART();
-	//Board_initUSB(Board_USBDEVICE);
 	Board_initI2C();
 	Board_initPWM();
 
@@ -274,16 +251,8 @@ Int main(Void) {
 	 */
 	UARTUtils_systemInit(0);
 
-	// Initialize the USB CDC device for logging transport
-	//USBCDCD_init();
-
     // Initialize interrupts for all ports that need them
-    GPIO_setupCallbacks(&Board_gpioCallbacks0);
     GPIO_setupCallbacks(&Board_gpioCallbacks1);
-
-    // Enable interrupts
-    GPIO_enableInt(Board_BUTTON0, GPIO_INT_BOTH_EDGES);
-	GPIO_enableInt(Board_BUTTON1, GPIO_INT_BOTH_EDGES);
 
 	// Enable PWM
 	ui32PWMClock = SysCtlClockGet() / 64;
