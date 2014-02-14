@@ -1,6 +1,6 @@
 /*************************************************************
  * TITLE: Main.c
- * DESCR: Contains entry point into program
+ * DESCR: Contains entry point into program, and task routines
  *		  See README.txt for description of project
  * AUTHR: Nathaniel Cain
  * 		  Wade Henderson
@@ -22,7 +22,7 @@ uint8_t flag=0;
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
-	IMUdata_t Magn, Magn_Offset;
+	//IMUdata_t Magn, Magn_Offset;
 	Quaternion_t State;
 	State.q1 = 1.0;
 	State.q2 = 0.0;
@@ -36,7 +36,7 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	Task_sleep(500);
 	Gyro_Init();
 	Task_sleep(500);
-	Magn_Init();
+	//Magn_Init();
 
 	//Calibrate sensors
 	Calib_Accel();
@@ -50,27 +50,26 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 		GPIO_toggle(Board_LED1);
 		Accel = Read_Accel(); //Read the accelerometer
 		Gyro = Read_Gyro(Gyro_Offset); //Read the Gyroscope
-		Magn = Read_Magn(Magn_Offset); //Read Magnetometer
+		//Magn = Read_Magn(Magn_Offset); //Read Magnetometer
 		Gyro = Filter_Data(Gyro, Gyro_memory); //Filter the gyro data
 		State = Update_State(Gyro, Accel, State, SAMPLETIME);
 
-		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
-		//fflush(stdout);
-		Task_sleep(2500);
+		printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		fflush(stdout);
+		Task_sleep(2500); //Delay (100 Hz)
 	} //END OF WHILE(1)
 }
 
 
 // ======== ReadInputFxn ========
 Void ReadInputFxn(UArg arg0, UArg arg1) {
+	//Init inputs to "safe" values
 	input[0] = 533;
 	input[1] = 533;
 	input[2] = 533;
 	input[3] = 533;
 	while (1) {
-		GPIO_toggle(Board_LED2);
-		//System_printf("Task 2\n");
-		//System_flush();
+		//GPIO_toggle(Board_LED2);
 		GPIO_enableInt(Board_PA2,GPIO_INT_RISING);
 		Task_sleep(700);
 		GPIO_disableInt(Board_PA2); //might be redundant
@@ -83,14 +82,15 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 		GPIO_enableInt(Board_PA5,GPIO_INT_RISING);
 		Task_sleep(700);
 		GPIO_disableInt(Board_PA5); //might be redundant
-		System_printf("input 1: %d,	input 2: %d, input 3: %d, input 4: %d\n", input[0],input[1],input[2],input[3]);
-    	System_flush();
+		//System_printf("input 1: %d,	input 2: %d, input 3: %d, input 4: %d\n", input[0],input[1],input[2],input[3]);
+    	//System_flush();
 	} //END OF WHILE(1)
 }
 
 
 // ======== ControlFxn ========
 Void ControlFxn(UArg arg0, UArg arg1) {
+	//init vars
 	uint32_t output[4];
 	float error[3];
 	float cntl_input[3];
@@ -123,11 +123,11 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 		output[3] = input[0]-Compensation[0]+Compensation[1];
 
 		//Output PWM to motors
-		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, (output[0]+30) * ui32Load / 10000);
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, (output[0]) * ui32Load / 10000);
 		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, output[1] * ui32Load / 10000);
 		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, output[2] * ui32Load / 10000);
 		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, output[3] * ui32Load / 10000);
-		Task_sleep(2500);
+		Task_sleep(2500); //Delay (100Hz)
 	} //END OF WHILE(1)
 }
 
@@ -244,7 +244,7 @@ Int main(Void) {
 	Board_initGeneral();
 	Board_initGPIO();
 	Board_initUART();
-	Board_initUSB(Board_USBDEVICE);
+	//Board_initUSB(Board_USBDEVICE);
 	Board_initI2C();
 	Board_initPWM();
 
@@ -275,7 +275,7 @@ Int main(Void) {
 	UARTUtils_systemInit(0);
 
 	// Initialize the USB CDC device for logging transport
-	USBCDCD_init();
+	//USBCDCD_init();
 
     // Initialize interrupts for all ports that need them
     GPIO_setupCallbacks(&Board_gpioCallbacks0);
@@ -284,7 +284,6 @@ Int main(Void) {
     // Enable interrupts
     GPIO_enableInt(Board_BUTTON0, GPIO_INT_BOTH_EDGES);
 	GPIO_enableInt(Board_BUTTON1, GPIO_INT_BOTH_EDGES);
-	//GPIO_enableInt(Board_PA2,GPIO_INT_BOTH_EDGES);
 
 	// Enable PWM
 	ui32PWMClock = SysCtlClockGet() / 64;
