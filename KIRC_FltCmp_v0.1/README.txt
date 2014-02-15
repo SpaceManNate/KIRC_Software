@@ -45,7 +45,7 @@ NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
 		  
 *DATE:	  1/31/2014
 
-*LAST EDITED: 2/12/2014
+*LAST EDITED: 2/14/2014
 
 *TO-DO:  -CODE CLEANUP
 		 -Make IMU input functions interrupt driven
@@ -67,6 +67,9 @@ LOG:
 *2/7/2014: Added support for 4 channel PWM input reading, fixed the CLOCK issue.
 		   
 *2/12/2014: Added Roll, Pitch motor control. Still need PID support.
+
+*2/14/2014: Cleaned up code, got rid of the logging functions, as they are not necessary for the final project
+
 
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated
