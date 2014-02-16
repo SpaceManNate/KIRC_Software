@@ -339,7 +339,7 @@ void Clear_Array(float *Array, unsigned int size){
 ALTM_CalData_t Altm_Init(void){
 
 	ALTM_CalData_t Altim;
-	char cal[22];
+	unsigned char cal[22];
 	unsigned short i;
 	unsigned char registerAddr = 0xA9;
 
@@ -365,19 +365,15 @@ ALTM_CalData_t Altm_Init(void){
 }
 
 //*************************************************************************
-// Get_Altitude
+// Get_Temp
 // I/O: Void
 // Gets raw temp and pressure, calculates both
 // converts to altitude
 //*************************************************************************
-float Get_Altitude(ALTM_CalData_t Cal){
+long Get_Temp(ALTM_CalData_t Cal){
 
-	char read[3];
-	long UT, UP, X1, X2, X3, B3, B5, B6, T, p;
-	unsigned long B4, B7;
-	short oss = 3; //over-sampling setting
-	float altitude;
-
+	unsigned char read[2];
+	long UT, X1, X2, B5, T;
 
 	////// Read uncompensated temperature value //////
 	I2C0_TxData(ALTM_SLAVE_ADDRESS,0xF4,0x2E);
@@ -387,6 +383,37 @@ float Get_Altitude(ALTM_CalData_t Cal){
 	read[1] = I2C0_RxData(ALTM_SLAVE_ADDRESS,0xF7);
 	UT = (read[0] << 8) | read[1];
 
+	////// Calculate true temperature //////
+	X1 = ((UT-Cal.AC6)*Cal.AC5) >> 15;
+	X2 = (Cal.MC << 11) / (X1+Cal.MD);
+	B5 = X1 + X2;
+	T = (B5+8) >> 4;
+
+	return T;
+
+}
+
+long Get_TempC(ALTM_CalData_t Cal){
+
+	long B5;
+
+	B5 = Get_Temp(Cal);
+
+	return (B5+8) >> 4; //in 0.1 degrees C
+}
+
+//*************************************************************************
+// Get_Pressure
+// I/O: Void
+// Gets raw temp and pressure, calculates both
+// converts to altitude
+//*************************************************************************
+long Get_Pressure(ALTM_CalData_t Cal, long B5){
+
+	char read[3];
+	long UP, X1, X2, X3, B3, B6, p;
+	unsigned long B4, B7;
+	short oss = 3; //over-sampling setting
 
 	////// Read uncompensated pressure value //////
 	I2C0_TxData(ALTM_SLAVE_ADDRESS,0xF4,(0x34 + (oss << 6)));
@@ -396,13 +423,6 @@ float Get_Altitude(ALTM_CalData_t Cal){
 	read[1] = I2C0_RxData(ALTM_SLAVE_ADDRESS,0xF7); //LSB
 	read[2] = I2C0_RxData(ALTM_SLAVE_ADDRESS,0xF8); //XLSB
 	UP = ((read[0] << 16) | (read[1] << 8) | read[2]) >> (8-oss);
-
-
-	////// Calculate true temperature //////
-	X1 = ((UT-Cal.AC6)*Cal.AC5) >> 15;
-	X2 = (Cal.MC << 11) / (X1+Cal.MD);
-	B5 = X1 + X2;
-	T = (B5+8) >> 4; //in 0.1 degrees C
 
 
 	////// Calculate true pressure //////
@@ -430,9 +450,21 @@ float Get_Altitude(ALTM_CalData_t Cal){
 	p = p + (X1+X2+3791) >> 4;
 
 
-	////// Calculate altitude //////
-	//altitude = 44330.0*(1.0-powf((p*0.01)/1013.25, 1.0/5.255));
+	return p; //in Pa
+}
 
+float Get_Altitude(ALTM_CalData_t Cal){
+
+	long temp;
+	float pressure, altitude;
+
+	temp = Get_Temp(Cal);
+	pressure = Get_Pressure(Cal, temp);
+
+
+	altitude = 44330.0*(1.0-powf((pressure*0.01)/1013.25, 1.0/5.255));
+
+/*
 	float A, B, C;
 	    A = p/101794.58;
 	    B = 1/5.25588;
@@ -441,7 +473,7 @@ float Get_Altitude(ALTM_CalData_t Cal){
 	   C = C / 0.0000225577;
 
 	   return C;
-
-	//return altitude; //in Pa
+*/
+	return altitude;
 }
 

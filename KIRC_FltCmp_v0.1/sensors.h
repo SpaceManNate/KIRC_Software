@@ -63,7 +63,11 @@ IMUdata_t Calib_Magn(void);
 IMUdata_t Read_Magn(IMUdata_t Offset);
 
 ALTM_CalData_t Altm_Init(void);
+long Get_Temp(ALTM_CalData_t Cal);
+long Get_TempC(ALTM_CalData_t Cal);
+long Get_Pressure(ALTM_CalData_t Cal, long B5);
 float Get_Altitude(ALTM_CalData_t Cal);
+
 
 IMUdata_t Filter_Data(IMUdata_t Data,float Memory[15]);
 void Clear_Array(float *Array, unsigned int size);

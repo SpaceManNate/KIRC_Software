@@ -37,7 +37,8 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	IMUdata_t Gyro, Gyro_Offset;
 	IMUdata_t Magn, Magn_Offset;
 	ALTM_CalData_t Altim_caldata;
-	float Altitude;
+	float altitude;
+	long temp, tempC, pressure;
 	float groundLevel=0;
 	int i;
 
@@ -79,10 +80,16 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 		State = Update_State(Gyro, Accel, State, SAMPLETIME);
 
 		//Altitude = Get_Altitude(Altim_caldata)-groundLevel;
-		Altitude = Get_Altitude(Altim_caldata);
+		altitude = Get_Altitude(Altim_caldata);
+		temp =  Get_Temp(Altim_caldata);
+		tempC = Get_TempC(Altim_caldata);
+		pressure = Get_Pressure(Altim_caldata, temp);
+
 		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
 		//printf("%f\n", Altitude);
-		printf("Altitude\t%0.1f Feet\n", ((double)Altitude)*3.280839895);
+		//printf("Altitude\t%0.1f Feet\n", ((double)Altitude)*3.280839895);
+
+		printf("Pressure %d Pa, TempC %d C, Temp %d, Altitude %0.1f\n", (int)pressure, (int)tempC, (int)temp, altitude);
 		fflush(stdout);
 
 		Task_sleep(25);
