@@ -64,7 +64,7 @@ IMUdata_t Read_Magn(IMUdata_t Offset);
 
 ALTM_CalData_t Altm_Init(void);
 long Get_Temp(ALTM_CalData_t Cal);
-long Get_TempC(ALTM_CalData_t Cal);
+float Get_TempC(ALTM_CalData_t Cal);
 long Get_Pressure(ALTM_CalData_t Cal, long B5);
 float Get_Altitude(ALTM_CalData_t Cal);
 

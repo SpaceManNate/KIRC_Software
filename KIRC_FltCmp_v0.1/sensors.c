@@ -341,12 +341,11 @@ ALTM_CalData_t Altm_Init(void){
 	ALTM_CalData_t Altim;
 	unsigned char cal[22];
 	unsigned short i;
-	unsigned char registerAddr = 0xA9;
+	unsigned char registerAddr = 0xAA;
 
 	for(i=0; i<22; i++){
 		cal[i] = I2C0_RxData(ALTM_SLAVE_ADDRESS,registerAddr++);
 	}
-
 
 	Altim.AC1 = (cal[0] << 8) | cal[1];
 	Altim.AC2 = (cal[2] << 8) | cal[3];
@@ -360,7 +359,6 @@ ALTM_CalData_t Altm_Init(void){
 	Altim.MC = (cal[18] << 8) | cal[19];
 	Altim.MD = (cal[20] << 8) | cal[21];
 
-
 	return Altim;
 }
 
@@ -373,12 +371,12 @@ ALTM_CalData_t Altm_Init(void){
 long Get_Temp(ALTM_CalData_t Cal){
 
 	unsigned char read[2];
-	long UT, X1, X2, B5, T;
+	long UT, X1, X2, B5;
 
 	////// Read uncompensated temperature value //////
 	I2C0_TxData(ALTM_SLAVE_ADDRESS,0xF4,0x2E);
-	//wait 25.5 ms
-	Task_sleep(2550);
+	//wait 4.5 ms
+	Task_sleep(450);
 	read[0] = I2C0_RxData(ALTM_SLAVE_ADDRESS,0xF6);
 	read[1] = I2C0_RxData(ALTM_SLAVE_ADDRESS,0xF7);
 	UT = (read[0] << 8) | read[1];
@@ -387,19 +385,17 @@ long Get_Temp(ALTM_CalData_t Cal){
 	X1 = ((UT-Cal.AC6)*Cal.AC5) >> 15;
 	X2 = (Cal.MC << 11) / (X1+Cal.MD);
 	B5 = X1 + X2;
-	T = (B5+8) >> 4;
 
-	return T;
+	return B5;
 
 }
 
-long Get_TempC(ALTM_CalData_t Cal){
+float Get_TempC(ALTM_CalData_t Cal){
 
 	long B5;
-
 	B5 = Get_Temp(Cal);
 
-	return (B5+8) >> 4; //in 0.1 degrees C
+	return ((float)((B5+8) >> 4))/10; //in 1.0 degrees C
 }
 
 //*************************************************************************
@@ -410,7 +406,7 @@ long Get_TempC(ALTM_CalData_t Cal){
 //*************************************************************************
 long Get_Pressure(ALTM_CalData_t Cal, long B5){
 
-	char read[3];
+	unsigned char read[3];
 	long UP, X1, X2, X3, B3, B6, p;
 	unsigned long B4, B7;
 	short oss = 3; //over-sampling setting
@@ -419,11 +415,11 @@ long Get_Pressure(ALTM_CalData_t Cal, long B5){
 	I2C0_TxData(ALTM_SLAVE_ADDRESS,0xF4,(0x34 + (oss << 6)));
 	//wait 25.5 ms
 	Task_sleep(2550);
+
 	read[0] = I2C0_RxData(ALTM_SLAVE_ADDRESS,0xF6); //MSB
 	read[1] = I2C0_RxData(ALTM_SLAVE_ADDRESS,0xF7); //LSB
 	read[2] = I2C0_RxData(ALTM_SLAVE_ADDRESS,0xF8); //XLSB
 	UP = ((read[0] << 16) | (read[1] << 8) | read[2]) >> (8-oss);
-
 
 	////// Calculate true pressure //////
 	B6 = B5 - 4000;
@@ -431,7 +427,7 @@ long Get_Pressure(ALTM_CalData_t Cal, long B5){
 	X1 = (X1*Cal.B2) >> 11;
 	X2 = (Cal.AC2 * B6) >> 11;
 	X3 = X1 + X2;
-	B3 = (((Cal.AC1 << 2) + X3) << oss +2) >> 2;
+	B3 = ((((Cal.AC1 << 2) + X3) << oss) + 2) >> 2;
 	X1 = (Cal.AC3*B6) >> 13;
 	X2 = (B6*B6) >> 12;
 	X2 = (X2*Cal.B1) >> 16;
@@ -444,10 +440,10 @@ long Get_Pressure(ALTM_CalData_t Cal, long B5){
 	else
 		p = (B7/B4) << 1;
 
-	X1 = (p >> 8) * (p >> 8);
-	X1 = (X1*3038) >> 16;
+	X1 = (p >> 8);
+	X1 = (X1*X1*3038) >> 16;
 	X2 = (-7357*p) >> 16;
-	p = p + (X1+X2+3791) >> 4;
+	p += ((X1+X2+3791) >> 4);
 
 
 	return p; //in Pa
@@ -456,24 +452,16 @@ long Get_Pressure(ALTM_CalData_t Cal, long B5){
 float Get_Altitude(ALTM_CalData_t Cal){
 
 	long temp;
-	float pressure, altitude;
+	float pressure, altitude, A, B;
 
 	temp = Get_Temp(Cal);
 	pressure = Get_Pressure(Cal, temp);
 
+	A = pressure/101325;
+	B = 0.190284;
+	altitude = 1- powf(A,B);
+	altitude = altitude *145366.45;
 
-	altitude = 44330.0*(1.0-powf((pressure*0.01)/1013.25, 1.0/5.255));
-
-/*
-	float A, B, C;
-	    A = p/101794.58;
-	    B = 1/5.25588;
-	    C = pow(A,B);
-	   C = 1 - C;
-	   C = C / 0.0000225577;
-
-	   return C;
-*/
 	return altitude;
 }
 
