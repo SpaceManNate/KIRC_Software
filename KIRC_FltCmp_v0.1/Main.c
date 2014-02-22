@@ -33,9 +33,9 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 
 	//Init Sensors
 	Accel_Init();
-	Task_sleep(500);
+	//Task_sleep(500);
 	Gyro_Init();
-	Task_sleep(500);
+	Task_sleep(1000000);
 	//Magn_Init();
 
 	//Calibrate sensors
@@ -93,12 +93,19 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	//init vars
 	uint32_t output[4];
 	float error[3];
+	float previous_error[3];
+	float integral0=0,integral1=0,integral2=0;
+	float derivative0,derivative1,derivative2;
 	float cntl_input[3];
 	float feedback[3];
 	float Kp=2,Ki=0,Kd=0;
 	int Compensation[3];
+	previous_error[0]=0.0;
+	previous_error[1]=0.0;
+	previous_error[2]=0.0;
+
 	while (1) {
-		//Convert input into degrees
+		//Convert input (pitch roll) into degrees
 		cntl_input[0] =(float) 30.0*(input[1]-532)/430.0 - 15.0;
 		cntl_input[1] =(float) 30.0*(input[3]-532)/430.0 - 15.0;
 
@@ -112,9 +119,20 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 		if(cntl_input[1]<15.0 && cntl_input[1]>-15.0 )
 			error[1] = cntl_input[1]-feedback[1]; //ROLL CALCULATION
 
-		//PID compensation calculation
-		Compensation[0] = (int) (Kp*error[0]+Ki*error[0]+Kd*error[0]);
-		Compensation[1] = (int) (Kp*error[1]+Ki*error[1]+Kd*error[1]);
+		//PID calculations
+		integral0 = integral0 + error[0]*SAMPLETIME;
+		integral1 = integral1 + error[1]*SAMPLETIME;
+		derivative0 = (error[0] - previous_error[0])/SAMPLETIME;
+		derivative1 = (error[1] - previous_error[1])/SAMPLETIME;
+
+		//PID compensations
+		Compensation[0] = (int) (Kp*error[0]+Ki*integral0+Kd*derivative0);
+		Compensation[1] = (int) (Kp*error[1]+Ki*integral1+Kd*derivative1);
+
+		//previous_error = error
+		previous_error[0] = error[0];
+		previous_error[1] = error[1];
+		previous_error[2] = error[2];
 
 		//Calculate control actions
 		output[0] = input[0]+Compensation[0]-Compensation[1];
@@ -123,10 +141,10 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 		output[3] = input[0]-Compensation[0]+Compensation[1];
 
 		//Output PWM to motors
-		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, (output[0]) * ui32Load / 10000);
-		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, output[1] * ui32Load / 10000);
-		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, output[2] * ui32Load / 10000);
-		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, output[3] * ui32Load / 10000);
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0, (output[0]+20) * ui32Load / 10000);
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_2, (output[1]-10) * ui32Load / 10000);
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4, (output[2]-10) * ui32Load / 10000);
+		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, (output[3]-10) * ui32Load / 10000);
 		Task_sleep(2500); //Delay (100Hz)
 	} //END OF WHILE(1)
 }
