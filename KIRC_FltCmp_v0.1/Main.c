@@ -17,13 +17,15 @@ int total2;
 uint32_t t[3];
 uint32_t rising,falling;
 uint8_t flag=0;
+Quaternion_t State;
+float pitch=0.0;
+float roll=0.0;
 
 // ======== ReadSensorsFxn ========
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
 	//IMUdata_t Magn, Magn_Offset;
-	Quaternion_t State;
 	State.q1 = 1.0;
 	State.q2 = 0.0;
 	State.q3 = 0.0;
@@ -35,7 +37,7 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	Accel_Init();
 	//Task_sleep(500);
 	Gyro_Init();
-	Task_sleep(1000000);
+	Task_sleep(100000);
 	//Magn_Init();
 
 	//Calibrate sensors
@@ -54,7 +56,10 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 		Gyro = Filter_Data(Gyro, Gyro_memory); //Filter the gyro data
 		State = Update_State(Gyro, Accel, State, SAMPLETIME);
 
-		printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		roll = -2.0*180.0*State.q2/PI;
+		pitch = 2.0*180.0*State.q3/PI;
+		printf("%2.3f,%2.3f\r\n",roll,pitch);
+		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
 		fflush(stdout);
 		Task_sleep(2500); //Delay (100 Hz)
 	} //END OF WHILE(1)
@@ -98,7 +103,7 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	float derivative0,derivative1,derivative2;
 	float cntl_input[3];
 	float feedback[3];
-	float Kp=2,Ki=0,Kd=0;
+	float Kp=2,Ki=1,Kd=0;
 	int Compensation[3];
 	previous_error[0]=0.0;
 	previous_error[1]=0.0;
@@ -110,8 +115,8 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 		cntl_input[1] =(float) 30.0*(input[3]-532)/430.0 - 15.0;
 
 		//Convert IMU feedback into euler angles
-		feedback[0] = 0.0;
-		feedback[1] = 0.0;
+		feedback[0] = pitch;
+		feedback[1] = roll;
 
 		//Error Calculation, and throw out bad inputs
 		if(cntl_input[0]<15.0 && cntl_input[0]>-15.0 )

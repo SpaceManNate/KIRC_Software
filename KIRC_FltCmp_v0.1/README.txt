@@ -70,6 +70,9 @@ LOG:
 
 *2/14/2014: Cleaned up code, got rid of the logging functions, as they are not necessary for the final project
 
+*2/21/2014: Added PWM support, and got controller feedback working. Still needs work, yaw doesn't translate for each axis.
+			PID needs to be tuned, and code needs to be finalized
+
 
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated
