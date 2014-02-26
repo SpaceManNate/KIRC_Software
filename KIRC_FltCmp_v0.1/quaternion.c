@@ -78,6 +78,7 @@ void Update_State(void){
     State.q3 = q3 * norm;
     State.q4 = q4 * norm;
 
+    //Change quaternion state estimate to euler angles
 	controlData.angle_current[0] = asin(2*(State.q1*State.q3-State.q4*State.q2))*180.0/PI;
 	controlData.angle_current[1] = -1.0*atan2f(2*(State.q1*State.q2+State.q3*State.q4), 1-2*(State.q2*State.q2 + State.q3*State.q3)) * (180.0/PI);
 	controlData.angle_current[2] = atan2f(2*(State.q1*State.q4+State.q2*State.q3), 1-2*(State.q3*State.q3+State.q4*State.q4)) * (180.0/PI);

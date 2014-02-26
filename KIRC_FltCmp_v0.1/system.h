@@ -52,11 +52,11 @@
 // Example/Board Header files
 #include "Board.h"
 #include "UARTUtils.h"
-//#include "USBCDCD_LoggerIdle.h"
 
 //Custom headers produced for KIRC
 #include "sensors.h"
 #include "quaternion.h"
+#include "motors.h"
 
 //Global Definitions
 #define PI  3.14159265
