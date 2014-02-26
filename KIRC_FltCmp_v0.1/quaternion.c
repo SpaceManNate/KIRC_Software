@@ -2,10 +2,13 @@
 * HEAD: quaternion.c file
 * DESC: Contains functions for taking the sensor data
 * 		and turning it into a quaternion state estimate
-* 		also contains functions for the PID algorithms
 * AUTH: Nathaniel Cain
 ********************************************************************/
-#include "system.h"
+#include "quaternion.h"
+
+extern _IMUdata IMUdata;
+extern _controlData controlData;
+Quaternion_t State = {1.0, 0.0, 0.0, 0.0};
 
 //*************************************************************************
 // Update_State function
@@ -15,12 +18,11 @@
 // This algorithm was taken from the Madgwick AHRS IMU algorithm
 // See: http://www.x-io.co.uk/node/8#open_source_ahrs_and_imu_algorithms
 //*************************************************************************
-Quaternion_t Update_State(IMUdata_t Gyro, IMUdata_t Accel, Quaternion_t Data, float SamplePeriod){
-	Quaternion_t Return; //Return structure
+void Update_State(void){
 	// short name local variable for readability
-	float q1 = Data.q1, q2 = Data.q2, q3 = Data.q3, q4 = Data.q4;
-	float ax = Accel.x,ay = Accel.y, az = Accel.z;
-	float gx = Gyro.x, gy = Gyro.y, gz = Gyro.z;
+	float q1 = State.q1, q2 = State.q2, q3 = State.q3, q4 = State.q4;
+	float ax = IMUdata.acc[0], ay = IMUdata.acc[1], az = IMUdata.acc[2];
+	float gx = IMUdata.gyr[0], gy = IMUdata.gyr[1], gz = IMUdata.gyr[2];
     float norm;
     float s1, s2, s3, s4;
     float qDot1, qDot2, qDot3, qDot4;
@@ -42,7 +44,7 @@ Quaternion_t Update_State(IMUdata_t Gyro, IMUdata_t Accel, Quaternion_t Data, fl
 
     // Normalize accelerometer measurement
     norm = (float)sqrt(ax*ax + ay*ay + az*az);
-    if (norm == 0.0) return Data; // handle NaN
+    if (norm == 0.0) return; // handle NaN
     norm = 1.0 / norm;        // use reciprocal for division
     ax *= norm;
     ay *= norm;
@@ -66,15 +68,18 @@ Quaternion_t Update_State(IMUdata_t Gyro, IMUdata_t Accel, Quaternion_t Data, fl
     qDot4 = 0.5 * (q1 * gz + q2 * gy - q3 * gx) - BETA * s4;
 
     // Integrate to yield quaternion
-    q1 += qDot1 * SamplePeriod;
-    q2 += qDot2 * SamplePeriod;
-    q3 += qDot3 * SamplePeriod;
-    q4 += qDot4 * SamplePeriod;
+    q1 += qDot1 * dT;
+    q2 += qDot2 * dT;
+    q3 += qDot3 * dT;
+    q4 += qDot4 * dT;
     norm = 1.0 / (float)sqrt(q1*q1 + q2*q2 + q3*q3 + q4*q4);    // normalize quaternion
-    Return.q1 = q1 * norm;
-    Return.q2 = q2 * norm;
-    Return.q3 = q3 * norm;
-    Return.q4 = q4 * norm;
-    return Return;
+    State.q1 = q1 * norm;
+    State.q2 = q2 * norm;
+    State.q3 = q3 * norm;
+    State.q4 = q4 * norm;
+
+	controlData.angle_current[0] = asin(2*(State.q1*State.q3-State.q4*State.q2))*180.0/PI;
+	controlData.angle_current[1] = -1.0*atan2f(2*(State.q1*State.q2+State.q3*State.q4), 1-2*(State.q2*State.q2 + State.q3*State.q3)) * (180.0/PI);
+	controlData.angle_current[2] = atan2f(2*(State.q1*State.q4+State.q2*State.q3), 1-2*(State.q3*State.q3+State.q4*State.q4)) * (180.0/PI);
 }
 

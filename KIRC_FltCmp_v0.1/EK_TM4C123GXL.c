@@ -172,6 +172,7 @@ Void PWMinputFxn0(Void);
 Void PWMinputFxn1(Void);
 Void PWMinputFxn2(Void);
 Void PWMinputFxn3(Void);
+//Void RCinputIntHandler(Void);
 //Void PWMinputFxn4(Void);
 
 /* GPIO configuration structure */
@@ -198,7 +199,7 @@ const GPIO_Callbacks EK_TM4C123GXL_gpioPortFCallbacks = {
     {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };
 
-/* GPIO callback structure to set callbacks for GPIO interrupts on port D*/
+/* GPIO callback structure to set callbacks for GPIO interrupts on port A*/
 const GPIO_Callbacks EK_TM4C123GXL_gpioPortACallbacks = {
     GPIO_PORTA_BASE, INT_GPIOA, &callbackHwi2,
     {NULL, NULL, PWMinputFxn0, PWMinputFxn1, PWMinputFxn2, PWMinputFxn3, NULL, NULL}
@@ -239,7 +240,7 @@ Void EK_TM4C123GXL_initGPIO(Void)
     GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_STRENGTH_4MA, GPIO_PIN_TYPE_STD_WPU);
     HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = GPIO_LOCK_M;
 
-   	//Setup 4 inputs on PC0-PC3
+   	//Setup 4 inputs on PA2-PA5
     GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2);  /* EK_TM4C123GXL_GPIO_SW1 */
     GPIOPadConfigSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_STRENGTH_4MA, GPIO_PIN_TYPE_STD_WPU);
     GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_3);  /* EK_TM4C123GXL_GPIO_SW1 */

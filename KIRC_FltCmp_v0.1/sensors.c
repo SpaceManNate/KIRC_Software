@@ -4,7 +4,12 @@
 * 		different sensors contained in the IMU
 * AUTH: Nathaniel Cain
 ********************************************************************/
-#include "system.h"
+#include "sensors.h"
+
+extern _IMUdata IMUdata;
+float Gyro_Memory[15] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+float Gyro_Offset[3] = {0,0,0};
+float Magn_Offset[3] = {0,0,0};
 
 //*************************************************************************
 // Accel_Init function
@@ -85,19 +90,15 @@ void Calib_Accel(void){
 // Processes the raw accelerometer data by converting to float
 // and filtering noise
 //*************************************************************************
-IMUdata_t Read_Accel(void){
-	IMUdata_t Accel;
+void Read_Accel(void){
 	RawIMUdata_t rawAccel;
 
 	//Read the accelerometer
 	rawAccel = GetData_Accel();
 	//Convert to float and put into structure
-	Accel.x = 0.0039*rawAccel.x;
-	Accel.y = 0.0039*rawAccel.y;
-	Accel.z = 0.0039*rawAccel.z;
-	//PUT FILTERING ALGORITHM HERE
-
-	return Accel;
+	IMUdata.acc[0] = 0.0039*rawAccel.x;
+	IMUdata.acc[1] = 0.0039*rawAccel.y;
+	IMUdata.acc[2] = 0.0039*rawAccel.z;
 }
 
 //*************************************************************************
@@ -142,8 +143,7 @@ RawIMUdata_t GetData_Gyro(void){
 // Outputs Calibration info as IMUdata_t structure
 // Calibrates the gyroscope for all axes
 //*************************************************************************
-IMUdata_t Calib_Gyro(void){
-	IMUdata_t Gyro_Offset;
+void Calib_Gyro(void){
 	RawIMUdata_t rawGyro;
 	unsigned short i;
 	float tot_x=0, tot_y=0, tot_z=0;
@@ -153,46 +153,43 @@ IMUdata_t Calib_Gyro(void){
 		SysCtlDelay(100000); //delay some to get new samples
 		rawGyro = GetData_Gyro(); //read accel
 		//Convert to float, subtract offset, and put into structure
-		Gyro_Offset.x = 1.2*0.02625*rawGyro.x;
-		Gyro_Offset.y = 1.2*0.02625*rawGyro.y;
-		Gyro_Offset.z = 1.2*0.02625*rawGyro.z;
+		Gyro_Offset[0] = 1.2*0.02625*rawGyro.x;
+		Gyro_Offset[1] = 1.2*0.02625*rawGyro.y;
+		Gyro_Offset[2] = 1.2*0.02625*rawGyro.z;
 
 		//Keep running total for each axis
-		tot_x += Gyro_Offset.x;
-		tot_y += Gyro_Offset.y;
-		tot_z += Gyro_Offset.z;
+		tot_x += Gyro_Offset[0];
+		tot_y += Gyro_Offset[1];
+		tot_z += Gyro_Offset[2];
 	}
 
 	//take average of all the samples as an offset
-	Gyro_Offset.x = tot_x/200.0;
-	Gyro_Offset.y = tot_y/200.0;
-	Gyro_Offset.z = tot_z/200.0;
-	return Gyro_Offset; //Return the structure
+	Gyro_Offset[0] = tot_x/200.0;
+	Gyro_Offset[1] = tot_y/200.0;
+	Gyro_Offset[2] = tot_z/200.0;
 }
 
 //*************************************************************************
 // Read_Gyro function
-// Outputs processed gyro data as structure
+// Outputs processed gyro data into structure
 // Input is offset from calibration
-// Reads the gyro, processes the data, and outputs in structure format
+// Reads the gyro, processes the data
 //*************************************************************************
-IMUdata_t Read_Gyro(IMUdata_t Offset){
-	IMUdata_t Gyro;
+void Read_Gyro(void){
 	RawIMUdata_t rawGyro;
 
 	//Read the sensor
 	rawGyro = GetData_Gyro();
 	//Convert to float, subtract offset, and put into structure
-	Gyro.x = 1.2*0.02625*rawGyro.x-Offset.x;
-	Gyro.y = 1.2*0.02625*rawGyro.y-Offset.y;
-	Gyro.z = 1.2*0.02625*rawGyro.z-Offset.z;
+	IMUdata.gyr[0] = 1.2*0.02625*rawGyro.x-Gyro_Offset[0];
+	IMUdata.gyr[1] = 1.2*0.02625*rawGyro.y-Gyro_Offset[1];
+	IMUdata.gyr[2] = 1.2*0.02625*rawGyro.z-Gyro_Offset[2];
 
 	//Convert from deg/s to rad/s
-	Gyro.x = Gyro.x*PI/180.0;
-	Gyro.y = Gyro.y*PI/180.0;
-	Gyro.z = Gyro.z*PI/180.0;
+	IMUdata.gyr[0] = IMUdata.gyr[0]*PI/180.0;
+	IMUdata.gyr[1] = IMUdata.gyr[1]*PI/180.0;
+	IMUdata.gyr[2] = IMUdata.gyr[2]*PI/180.0;
 
-	return Gyro; //Return the structure
 }
 
 //*************************************************************************
@@ -241,8 +238,7 @@ RawIMUdata_t GetData_Magn(void){
 // Takes 100 samples, averages, then returns the float values to
 // be used as an offset later for the magnetometer
 //*************************************************************************
-IMUdata_t Calib_Magn(void){
-	IMUdata_t Magn_Offset;
+void Calib_Magn(void){
 	RawIMUdata_t rawMagn;
 	unsigned short i;
 	float tot_x=0, tot_y=0, tot_z=0;
@@ -252,21 +248,20 @@ IMUdata_t Calib_Magn(void){
 		SysCtlDelay(100000); //delay some to get new samples
 		rawMagn = GetData_Magn(); //read accel
 		//Convert to float, subtract offset, and put into structure
-		Magn_Offset.x = 0.00092*rawMagn.x;
-		Magn_Offset.y = 0.00092*rawMagn.y;
-		Magn_Offset.z = 0.00092*rawMagn.z;
+		Magn_Offset[0] = 0.00092*rawMagn.x;
+		Magn_Offset[1] = 0.00092*rawMagn.y;
+		Magn_Offset[2] = 0.00092*rawMagn.z;
 
 		//Keep running total for each axis
-		tot_x += Magn_Offset.x;
-		tot_y += Magn_Offset.y;
-		tot_z += Magn_Offset.z;
+		tot_x += Magn_Offset[0];
+		tot_y += Magn_Offset[1];
+		tot_z += Magn_Offset[2];
 	}
 
 	//take average of all the samples as an offset
-	Magn_Offset.x = 0.0;// tot_x/200.0;
-	Magn_Offset.y = 0.0;//tot_y/200.0;
-	Magn_Offset.z = 0.0;//tot_z/200.0;
-	return Magn_Offset; //Return the structure
+	Magn_Offset[0] = 0.0;// tot_x/200.0;
+	Magn_Offset[1] = 0.0;//tot_y/200.0;
+	Magn_Offset[2] = 0.0;//tot_z/200.0;
 }
 
 //*************************************************************************
@@ -274,18 +269,15 @@ IMUdata_t Calib_Magn(void){
 // OUTPUT: Processed Magnetometer data
 // Reads the magnetometer, procceses the data, and outputs
 //*************************************************************************
-IMUdata_t Read_Magn(IMUdata_t Offset){
-	IMUdata_t Magn;
+void Read_Magn(void){
 	RawIMUdata_t rawMagn;
 
 	//Read the sensor
 	rawMagn = GetData_Magn();
 	//Convert to float, subtract offset, and put into structure
-	Magn.x = 0.00092*rawMagn.x;//-Offset.x;
-	Magn.y = 0.00092*rawMagn.y;//-Offset.y;
-	Magn.z = 0.00092*rawMagn.z;//-Offset.z;
-
-	return Magn; //Return the structure
+	IMUdata.mag[0] = 0.00092*rawMagn.x;//-Offset.x;
+	IMUdata.mag[1] = 0.00092*rawMagn.y;//-Offset.y;
+	IMUdata.mag[2] = 0.00092*rawMagn.z;//-Offset.z;
 }
 
 //*************************************************************************
@@ -294,40 +286,24 @@ IMUdata_t Read_Magn(IMUdata_t Offset){
 // OUTPUT: Filtered data
 // Uses a running average filter to filter each axis of data
 //*************************************************************************
-IMUdata_t Filter_Data(IMUdata_t Data,float Memory[15]){
+void Filter_GyroData(void){
 	unsigned short i;
 	//Running average filter
-	Memory[0]=(Data.x+Memory[1]+Memory[2]+Memory[3]+Memory[4])/5;
-	Memory[5]=(Data.y+Memory[6]+Memory[7]+Memory[8]+Memory[9])/5;
-	Memory[10]=(Data.z+Memory[11]+Memory[12]+Memory[13]+Memory[14])/5;
+	Gyro_Memory[0]=(IMUdata.gyr[0]+Gyro_Memory[1]+Gyro_Memory[2]+Gyro_Memory[3]+Gyro_Memory[4])/5;
+	Gyro_Memory[5]=(IMUdata.gyr[1]+Gyro_Memory[6]+Gyro_Memory[7]+Gyro_Memory[8]+Gyro_Memory[9])/5;
+	Gyro_Memory[10]=(IMUdata.gyr[2]+Gyro_Memory[11]+Gyro_Memory[12]+Gyro_Memory[13]+Gyro_Memory[14])/5;
 
 	//Move back memory elements for next measurement
 	for(i=0;i<4;i++){
-		Memory[i+1]=Memory[i];
-		Memory[i+6]=Memory[i+5];
-		Memory[i+11]=Memory[i+10];
+		Gyro_Memory[i+1]=Gyro_Memory[i];
+		Gyro_Memory[i+6]=Gyro_Memory[i+5];
+		Gyro_Memory[i+11]=Gyro_Memory[i+10];
 	}
-	Data.x = Memory[0];
-	Data.y = Memory[5];
-	Data.z = Memory[10];
-
-	return Data;
+	IMUdata.gyr[0] = Gyro_Memory[0];
+	IMUdata.gyr[1] = Gyro_Memory[5];
+	IMUdata.gyr[2] = Gyro_Memory[10];
 }
 
-//*************************************************************************
-// Clear_Array function
-// INPUT: Initialized array with random values
-// OUTPUT: Zero-d array
-// Cycles through all array elements and clears them
-//*************************************************************************
-void Clear_Array(float *Array, unsigned int size){
-	unsigned short index;
-	//Reset all array elements to zero
-	for(index=0;index<size;index++){
-		*Array = 0;
-		Array++;
-	}
-}
 
 //*************************************************************************
 // I2C0_RxData function

@@ -60,6 +60,31 @@
 
 //Global Definitions
 #define PI  3.14159265
-#define SAMPLETIME 0.01
+#define dT 0.01
+#define PWM_FREQUENCY 51
+
+//Custom enumaration
+typedef enum QUAD_STATES{
+	QUAD_DISABLED = 0,
+	QUAD_INIT 	  = 1,
+	QUAD_ENABLED  = 2,
+	QUAD_SAFETY   = 3
+} _QuadState;
+
+//Custom data structures
+typedef struct ControlData{
+	float angle_desired[3];
+	float angle_current[3];
+	float angle_last[3];
+	float IntegralSum[3];
+	_QuadState QuadState;
+} _controlData;
+
+//Processed IMU Data Structure
+typedef struct IMUdata{
+	float acc[3];
+	float gyr[3];
+	float mag[3];
+} _IMUdata;
 
 #endif /* SYSTEM_H_ */

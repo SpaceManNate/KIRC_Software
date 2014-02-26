@@ -7,58 +7,51 @@
  ************************************************************/
 #include "system.h"
 
-#define PWM_FREQUENCY 51
 volatile uint32_t ui32Load;
 volatile uint32_t ui32PWMClock;
-volatile uint32_t input[4];
-int i = 0;
+volatile uint32_t input[4] = {533,533,533,533};
 float total;
 int total2;
-uint32_t t[3];
 uint32_t rising,falling;
 uint8_t flag=0;
-Quaternion_t State;
-float pitch=0.0;
-float roll=0.0;
+
+
+_IMUdata IMUdata = {.acc = {0,0,0}, .gyr = {0,0,0}, .mag = {0,0,0}};
+_controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0},
+							.angle_last = {0,0,0}, .IntegralSum = {0,0,0}, .QuadState = QUAD_ENABLED};
+
 
 // ======== ReadSensorsFxn ========
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
-	IMUdata_t Accel;
-	IMUdata_t Gyro, Gyro_Offset;
-	//IMUdata_t Magn, Magn_Offset;
-	State.q1 = 1.0;
-	State.q2 = 0.0;
-	State.q3 = 0.0;
-	State.q4 = 0.0;
-	float Gyro_memory[15];
-	Clear_Array(Gyro_memory, sizeof(Gyro_memory) / 4); //Clear gyro memory array
+	System_printf("Initializing Sensors...\n");
+	System_flush();
 
 	//Init Sensors
 	Accel_Init();
-	//Task_sleep(500);
 	Gyro_Init();
-	Task_sleep(100000);
 	//Magn_Init();
+
+	//Delay long enough for user to place the quad on a level surface for calibration
+	Task_sleep(100000);
 
 	//Calibrate sensors
 	Calib_Accel();
 	Task_sleep(500);
-	Gyro_Offset = Calib_Gyro();
+	Calib_Gyro();
 	Task_sleep(500);
 
 	while (1) {
-		//System_printf("Task 1\n");
-		//System_flush();
 		GPIO_toggle(Board_LED1);
-		Accel = Read_Accel(); //Read the accelerometer
-		Gyro = Read_Gyro(Gyro_Offset); //Read the Gyroscope
-		//Magn = Read_Magn(Magn_Offset); //Read Magnetometer
-		Gyro = Filter_Data(Gyro, Gyro_memory); //Filter the gyro data
-		State = Update_State(Gyro, Accel, State, SAMPLETIME);
 
-		roll = -2.0*180.0*State.q2/PI;
-		pitch = 2.0*180.0*State.q3/PI;
-		printf("%2.3f,%2.3f\r\n",roll,pitch);
+		//Read Sensors
+		Read_Accel();
+		Read_Gyro();
+		//Read_Magn(); //Read Magnetometer
+		Filter_GyroData(); //Filter the gyro data
+		Update_State();
+
+		//printf("%2.3f, %2.3f, %2.3f\r\n",IMUdata.gyr[0],IMUdata.gyr[1],IMUdata.gyr[2]);
+		printf("%2.3f, %2.3f, %2.3f\r\n",controlData.angle_current[0],controlData.angle_current[1],controlData.angle_current[2]);
 		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
 		fflush(stdout);
 		Task_sleep(2500); //Delay (100 Hz)
@@ -68,11 +61,10 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 
 // ======== ReadInputFxn ========
 Void ReadInputFxn(UArg arg0, UArg arg1) {
-	//Init inputs to "safe" values
-	input[0] = 533;
-	input[1] = 533;
-	input[2] = 533;
-	input[3] = 533;
+	//Init Turnigy Receiver listening
+	System_printf("Initializing RC Input...\n");
+	System_flush();
+
 	while (1) {
 		//GPIO_toggle(Board_LED2);
 		GPIO_enableInt(Board_PA2,GPIO_INT_RISING);
@@ -92,47 +84,41 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 	} //END OF WHILE(1)
 }
 
-
 // ======== ControlFxn ========
 Void ControlFxn(UArg arg0, UArg arg1) {
 	//init vars
+	float Kp=2.0,Ki=0,Kd=0;
 	uint32_t output[4];
 	float error[3];
-	float previous_error[3];
-	float integral0=0,integral1=0,integral2=0;
-	float derivative0,derivative1,derivative2;
+	float previous_error[3] = {0,0,0};
+
+	float deriv0,deriv1;
 	float cntl_input[3];
-	float feedback[3];
-	float Kp=2,Ki=1,Kd=0;
 	int Compensation[3];
-	previous_error[0]=0.0;
-	previous_error[1]=0.0;
-	previous_error[2]=0.0;
+
+	System_printf("Initializing Feedback Controller...\n");
+	System_flush();
 
 	while (1) {
 		//Convert input (pitch roll) into degrees
-		cntl_input[0] =(float) 30.0*(input[1]-532)/430.0 - 15.0;
-		cntl_input[1] =(float) 30.0*(input[3]-532)/430.0 - 15.0;
-
-		//Convert IMU feedback into euler angles
-		feedback[0] = pitch;
-		feedback[1] = roll;
+		cntl_input[0] =(float) (-1.0)*(30.0*(input[1]-532)/430.0 - 15.0);
+		cntl_input[1] =(float) (-1.0)*(30.0*(input[3]-532)/430.0 - 15.0);
 
 		//Error Calculation, and throw out bad inputs
 		if(cntl_input[0]<15.0 && cntl_input[0]>-15.0 )
-			error[0] = cntl_input[0]-feedback[0]; //PITCH CALCULATION
+			error[0] = cntl_input[0]-controlData.angle_current[0]; //PITCH CALCULATION
 		if(cntl_input[1]<15.0 && cntl_input[1]>-15.0 )
-			error[1] = cntl_input[1]-feedback[1]; //ROLL CALCULATION
+			error[1] = cntl_input[1]-controlData.angle_current[1]; //ROLL CALCULATION
 
 		//PID calculations
-		integral0 = integral0 + error[0]*SAMPLETIME;
-		integral1 = integral1 + error[1]*SAMPLETIME;
-		derivative0 = (error[0] - previous_error[0])/SAMPLETIME;
-		derivative1 = (error[1] - previous_error[1])/SAMPLETIME;
+		controlData.IntegralSum[0] += error[0]*dT;
+		controlData.IntegralSum[1] += error[0]*dT;
+		deriv0 = (error[0] - previous_error[0])/dT;
+		deriv1 = (error[1] - previous_error[1])/dT;
 
 		//PID compensations
-		Compensation[0] = (int) (Kp*error[0]+Ki*integral0+Kd*derivative0);
-		Compensation[1] = (int) (Kp*error[1]+Ki*integral1+Kd*derivative1);
+		Compensation[0] = (int) (Kp*error[0]+Ki*controlData.IntegralSum[0]+Kd*deriv0);
+		Compensation[1] = (int) (Kp*error[1]+Ki*controlData.IntegralSum[1]+Kd*deriv1);
 
 		//previous_error = error
 		previous_error[0] = error[0];
@@ -154,7 +140,6 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	} //END OF WHILE(1)
 }
 
-//
 Void PWMinputFxn0(Void)
 {
 	if(flag == 0){
@@ -175,7 +160,6 @@ Void PWMinputFxn0(Void)
 	}
 }
 
-//
 Void PWMinputFxn1(Void)
 {
 	if(flag == 0){
@@ -237,7 +221,6 @@ Void PWMinputFxn3(Void)
 	    GPIO_clearInt(Board_PA5);
 	}
 }
-
 
 //======== main ========
 Int main(Void) {
@@ -303,6 +286,9 @@ Int main(Void) {
 	PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, 500 * ui32Load / 10000);
 	PWMOutputState(PWM0_BASE, PWM_OUT_6_BIT, true);
 	PWMGenEnable(PWM0_BASE, PWM_GEN_3);
+
+	System_printf("\fStarting BIOS...\n");
+	System_flush();
 
 	BIOS_start();	// Start BIOS
 	return (0);

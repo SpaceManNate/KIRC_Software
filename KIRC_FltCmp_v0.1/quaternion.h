@@ -7,7 +7,9 @@
 #ifndef QUATERNION_H_
 #define QUATERNION_H_
 
-#define BETA 0.1  //IMU data algorithm gain parameter
+#include "system.h"
+
+#define BETA 0.1  //Quaternion gain parameter
 
 //Quaternion data structure
 typedef struct Quaternion{
@@ -17,7 +19,8 @@ typedef struct Quaternion{
 	float q4;
 } Quaternion_t;
 
+
 //Function Prototypes
-Quaternion_t Update_State(IMUdata_t Gyro, IMUdata_t Accel, Quaternion_t Data, float SamplePeriod);
+void Update_State(void);
 
 #endif /* QUATERNION_H_ */
