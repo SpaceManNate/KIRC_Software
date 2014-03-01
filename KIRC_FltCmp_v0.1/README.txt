@@ -75,6 +75,11 @@ LOG:
 			start/resume button doesn't appear as an option, but if you reset the device (using the reset button),
 			it still works. Not sure why. 
 
+*3/1/2014: Added safety functions (Timeout, and Killswitch). Restructured code again, made the read input function more efficient.
+		   Started doing stability testing for the quadcopter, some success, still needs work.
+		   Output to motors drifts slowly over time.
+		   
+
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated
  * All rights reserved.
@@ -176,6 +181,46 @@ LOG:
     //int key;
 	//key = Swi_disable();
 	//key = Hwi_disable();
+	
+	/*
+Void PWMinputFxn0(Void)
+{
+	if(flag == 0){
+		rising = Clock_getTicks();
+		GPIO_enableInt(Board_PA2,GPIO_INT_FALLING);
+		flag = 1;
+	}
+	else if(flag == 1){
+		falling = Clock_getTicks();
+		GPIO_disableInt(Board_PA2);
+		flag = 0;
+		total = (float) (falling - rising)*51.18;
+		total2 = (int) (total/10) + 5;
+		if(total2 < 1100)
+			input[0] = total2;
+
+	    GPIO_clearInt(Board_PA2);
+	}
+}
+
+		//GPIO_toggle(Board_LED2);
+		GPIO_enableInt(Board_PA2,GPIO_INT_RISING);
+		Task_sleep(700);
+		GPIO_disableInt(Board_PA2); //might be redundant
+		GPIO_enableInt(Board_PA3,GPIO_INT_RISING);
+		Task_sleep(700);
+		GPIO_disableInt(Board_PA3); //might be redundant
+		GPIO_enableInt(Board_PA4,GPIO_INT_RISING);
+		Task_sleep(700);
+		GPIO_disableInt(Board_PA4); //might be redundant
+		GPIO_enableInt(Board_PA5,GPIO_INT_RISING);
+		Task_sleep(700);
+		GPIO_disableInt(Board_PA5); //might be redundant
+		GPIO_enableInt(Board_PF0,GPIO_INT_RISING);
+		Task_sleep(700);
+		GPIO_disableInt(Board_PF0); //might be redundant
+		//System_printf("input 1: %d,	input 2: %d, input 3: %d, input 4: %d, input 5: %d\n", input[0],input[1],input[2],input[3],input[4]);
+    	//System_flush();
  
 	 
  
