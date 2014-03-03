@@ -68,6 +68,7 @@ float Get_TempC(ALTM_CalData_t Cal);
 long Get_Pressure(ALTM_CalData_t Cal, long B5);
 float Get_Altitude(ALTM_CalData_t Cal);
 
+UART_Handle GPS_Init(void);
 
 IMUdata_t Filter_Data(IMUdata_t Data,float Memory[15]);
 void Clear_Array(float *Array, unsigned int size);

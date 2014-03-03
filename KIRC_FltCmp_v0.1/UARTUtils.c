@@ -55,7 +55,7 @@
 #include <file.h>
 #include <string.h>
 
-#define NUM_PORTS 1
+#define NUM_PORTS 2
 
 /* Typedefs */
 typedef struct {
@@ -70,7 +70,7 @@ static UART_Handle systemHandle = NULL;
 static UART_Handle loggerHandle = NULL;
 
 /* This example only uses UART0 */
-static UARTPorts ports[NUM_PORTS] = {{NULL, Board_UART0, 0, FALSE}};
+static UARTPorts ports[NUM_PORTS] = {{NULL, Board_UART0, 0, FALSE}, {NULL, Board_UART1, 0, FALSE}};
 
 /*
  *  ======== openHandle ========
@@ -221,9 +221,9 @@ int UARTUtils_deviceread(int fd, char *buffer, unsigned size)
     Int ret;
 
     /* Return if a UART other than UART 0 was specified. */
-    if (fd != 0) {
-        return (-1);
-    }
+   // if (fd != 0) {
+   //     return (-1);
+   // }
 
     /* Read character from the UART and block until a newline is received. */
     ret = UART_read(ports[fd].handle, buffer, size);
@@ -239,9 +239,9 @@ int UARTUtils_devicewrite(int fd, const char *buffer, unsigned size)
     Int ret;
 
     /* Return if a UART other than UART 0 was specified. */
-    if (fd != 0) {
-        return (-1);
-    }
+    //if (fd != 0) {
+   //     return (-1);
+   // }
 
     /* Write to the UART and block until the transfer is finished. */
     ret = UART_write(ports[fd].handle, buffer, size);

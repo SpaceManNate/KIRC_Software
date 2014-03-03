@@ -7,16 +7,31 @@
  ************************************************************/
 #include "system.h"
 
+Void echoFxn(UArg arg0, UArg arg1) {
+
+	System_printf("in echo!\n");
+	System_flush();
+
+	Char input;
+	//UART_Handle uart = GPS_Init();
+/*
+	while (TRUE) {
+
+		//UART_write(uart, &input, 1);
+		UART_read(uart, &input, 1);
+
+		printf("%c", input);
+		fflush();
+
+		//1Hz refresh rate
+		Task_sleep(10000);
+
+	}
+	*/
+}
+
 // ======== consoleFxn ========
 Void consoleFxn(UArg arg0, UArg arg1) {
-
-	//Read write example
-	/*
-	 printf("Enter a duration (ms): ");
-	 fflush(stdout);
-	 scanf("%d", &sleepDur);
-	 fflush(stdin);
-	 */
 
 	I2C_Handle i2c;
 	I2C_Params i2cParams;
@@ -32,7 +47,6 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	}
 	System_flush();
 
-
 	IMUdata_t Accel;
 	IMUdata_t Gyro, Gyro_Offset;
 	IMUdata_t Magn, Magn_Offset;
@@ -40,7 +54,7 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	float altitude;
 	long temp, pressure;
 	float tempC;
-	float groundLevel=0;
+	float groundLevel = 0;
 	int i;
 
 	Quaternion_t State;
@@ -67,11 +81,10 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	Gyro_Offset = Calib_Gyro();
 	Task_sleep(50);
 
-	for(i=0; i<15; i++){
+	for (i = 0; i < 15; i++) {
 		groundLevel += Get_Altitude(Altim_caldata);
 	}
-	groundLevel = groundLevel/15.0;
-
+	groundLevel = groundLevel / 15.0;
 
 	while (1) {
 		GPIO_toggle(Board_LED1);
@@ -81,21 +94,20 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 		Gyro = Filter_Data(Gyro, Gyro_memory); //Filter the gyro data
 		State = Update_State(Gyro, Accel, State, SAMPLETIME);
 
-		altitude = Get_Altitude(Altim_caldata)-groundLevel;
-		//altitude = Get_Altitude(Altim_caldata);
-		temp =  Get_Temp(Altim_caldata);
-		tempC = Get_TempC(Altim_caldata);
-		pressure = Get_Pressure(Altim_caldata, temp);
+		altitude = Get_Altitude(Altim_caldata) - groundLevel; //Altitude from starting point
+		temp = Get_Temp(Altim_caldata); //Raw temperature
+		tempC = Get_TempC(Altim_caldata); //Temperature in degrees C
+		pressure = Get_Pressure(Altim_caldata, temp); //Pressure in Pa
 
-		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
 
-		printf("Pressure %d Pa, TempC %0.1f C, Altitude %0.1f feet\n", pressure, tempC, altitude);
+		//printf("Pressure %d Pa, TempC %0.1f C, Altitude %0.1f feet\n", pressure,
+		//		tempC, altitude);
 		fflush(stdout);
 
 		Task_sleep(25);
 	} //END OF WHILE(1)
 }
-
 
 //======== main ========
 Int main(Void) {
@@ -109,14 +121,13 @@ Int main(Void) {
 	// Turn on user LED
 	GPIO_write(Board_LED0, Board_LED_ON);
 
-	System_printf("Starting KIRC flight computer software...\n");
-
 	/*
 	 *  Add the UART device to the system.
 	 *  All UART peripherals must be setup and the module must be initialized
 	 *  before opening.  This is done by Board_initUART().  The functions used
 	 *  are implemented in UARTUtils.c.
 	 */
+
 	add_device("UART", _MSA, UARTUtils_deviceopen, UARTUtils_deviceclose,
 			UARTUtils_deviceread, UARTUtils_devicewrite, UARTUtils_devicelseek,
 			UARTUtils_deviceunlink, UARTUtils_devicerename);
@@ -129,16 +140,16 @@ Int main(Void) {
 	freopen("UART:0", "r", stdin);
 	setvbuf(stdin, NULL, _IOLBF, 128);
 
-	/*
-	 *  Initialize UART port 0 used by SysCallback.  This and other SysCallback
-	 *  UART functions are implemented in UARTUtils.c. Calls to System_printf
-	 *  will go to UART0, the same as printf.
-	 */
+	//Initialize UART port 0 used by SysCallback.  This and other SysCallback
+	//UART functions are implemented in UARTUtils.c. Calls to System_printf
+	//will go to UART0, the same as printf.
 	UARTUtils_systemInit(0);
 
 	// Initialize the USB CDC device for logging transport
 	USBCDCD_init();
 
+	System_printf("Starting KIRC flight computer software...\n");
+	System_flush();
 
 	// Start BIOS
 	BIOS_start();
