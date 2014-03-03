@@ -7,17 +7,10 @@
  ************************************************************/
 #include "system.h"
 
-volatile int input[6] = {533,533,533,533,533,533};
-
-unsigned char RXChannelLock = true;
-unsigned int PWMticks[8] = {0,0,0,0,0,0,0,0};
-unsigned char dataRdy = false;
-volatile unsigned char currentRXChannel=0;
-
-
+_RxInput RxData = {.input = {533,533,533,533,533,533}, .PWMticks = {0,0,0,0,0,0,0,0}, .dataRdy = false};
 _IMUdata IMUdata = {.acc = {0,0,0}, .gyr = {0,0,0}, .mag = {0,0,0}};
-_controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0},
-							.angle_last = {0,0,0}, .IntegralSum = {0,0,0}, .QuadState = QUAD_DISABLED};
+_controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0}, .Quaternion = {1,0,0,0},
+					        .Offset = {0,0}, .IntegralSum = {0,0,0}, .QuadState = QUAD_DISABLED};
 
 
 // ======== ReadSensorsFxn ========
@@ -33,24 +26,28 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	//Delay long enough for user to place the quad on a level surface for calibration
 	Task_sleep(100000);
 
-	//Calibrate sensors
+	//Calibrate sensors and state estimator
 	Calib_Accel();
 	Task_sleep(500);
 	Calib_Gyro();
 	Task_sleep(500);
+	StateEst_Calib();
 
 	while (1) {
-		GPIO_toggle(Board_LED1);
 		//Read Sensors
+		GPIO_toggle(Board_LED1);
 		Read_Accel();
 		Read_Gyro();
 		//Read_Magn(); //Read Magnetometer
 		Filter_GyroData(); //Filter the gyro data
 		Update_State();
 
+		//controlData.angle_current[0] = controlData.angle_current[0] - Offset_pitch;
+		//controlData.angle_current[1] = controlData.angle_current[1] - Offset_roll;
+
 		//printf("%2.3f, %2.3f, %2.3f\r\n",IMUdata.gyr[0],IMUdata.gyr[1],IMUdata.gyr[2]);
 		//printf("%2.3f, %2.3f, %2.3f\r\n",controlData.angle_current[0],controlData.angle_current[1],controlData.angle_current[2]);
-		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",controlData.Quaternion[0],controlData.Quaternion[1],controlData.Quaternion[2],controlData.Quaternion[3]);
 		//fflush(stdout);
 		Task_sleep(2500); //Delay (100 Hz)
 	} //END OF WHILE(1)
@@ -75,15 +72,17 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 
 	while (1) {
 		if(controlData.QuadState == QUAD_ENABLED){
+			GPIO_write(Board_LED2, Board_LED_ON);
+			GPIO_write(Board_LED0, Board_LED_OFF);
 			//Get gains from AUX Pit. trim
-			Ki = (float) 0.5*((input[5]-520)/430.0);
+			Ki = (float) 0.5*((RxData.input[5]-520)/430.0);
 			//printf("%2.3f\r\n", Ki);
 			//fflush(stdout);
 
 			//Convert input (pitch roll yaw) into degrees
-			cntl_input[0] =(float) (-1.0)*(40.0*(input[1]-532)/430.0 - 20.0);
-			cntl_input[1] =(float) (40.0*(input[3]-532)/430.0 - 20.0);
-			yaw_input = (float) 5.0*(input[0] - 537)/430.0 - 2.5;
+			cntl_input[0] =(float) (-1.0)*(40.0*(RxData.input[1]-525)/430.0 - 20.0);
+			cntl_input[1] =(float) (40.0*(RxData.input[3]-525)/430.0 - 20.0);
+			yaw_input = (float) 5.0*(RxData.input[0] - 537)/430.0 - 2.5;
 			//limit the sensitivity of the yaw control (to avoid drift)
 			if(yaw_input > 0.1 || yaw_input < -0.1)
 				cntl_input[2] += yaw_input;
@@ -119,17 +118,21 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			previous_error[2] = error[2];
 
 			//Calculate control actions
-			output[0] = input[2]+Compensation[0]-Compensation[1];//+Compensation[2];
-			output[1] = input[2]-Compensation[0]-Compensation[1];//+Compensation[2];
-			output[2] = input[2]+Compensation[0]+Compensation[1];//-Compensation[2];
-			output[3] = input[2]-Compensation[0]+Compensation[1];//-Compensation[2];
+			output[0] = RxData.input[2]+Compensation[0]-Compensation[1];//+Compensation[2];
+			output[1] = RxData.input[2]-Compensation[0]-Compensation[1];//+Compensation[2];
+			output[2] = RxData.input[2]+Compensation[0]+Compensation[1];//-Compensation[2];
+			output[3] = RxData.input[2]-Compensation[0]+Compensation[1];//-Compensation[2];
 
 			System_printf("OUTPUT 1: %d,  OUTPUT2: %d,  OUTPUT3: %d,  OUTPUT4: %d\r\n",output[0],output[1],output[2],output[3]);
 			System_flush();
 			motors_out(output);
 		}
-		else
+		else{
 			motorsDisable();
+			GPIO_write(Board_LED2, Board_LED_OFF);
+			GPIO_write(Board_LED0, Board_LED_ON);
+		}
+
 
 		Task_sleep(2500); //Delay (100Hz)
 	} //END OF WHILE(1)
@@ -142,107 +145,38 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 	System_printf("Initializing RC Input...\n");
 	System_flush();
 	float total[6] = {0.0,0.0,0.0,0.0,0.0,0.0};
-	//unsigned int timer = 0;
+	volatile unsigned short i;
 	uint32_t timeout = 0;
-	GPIO_enableInt(Board_PA2,GPIO_INT_BOTH_EDGES);
-	GPIO_enableInt(Board_PA3,GPIO_INT_FALLING);
-	GPIO_enableInt(Board_PA4,GPIO_INT_FALLING);
-	GPIO_enableInt(Board_PA5,GPIO_INT_FALLING);
-	GPIO_enableInt(Board_PF0,GPIO_INT_FALLING);
-	GPIO_enableInt(Board_PF4,GPIO_INT_BOTH_EDGES);
+	EnableRxInterrupts();
 
 	while (1) {
-		//System_printf("FUCK ME\r\n");
-		//System_flush();
-		//printf("SHIIITT\n");
-		//fflush(stdout);
-		if(dataRdy){
+		if(RxData.dataRdy){
 			timeout = Clock_getTicks();
-			GPIO_disableInt(Board_PA2);
-			GPIO_disableInt(Board_PA3);
-			GPIO_disableInt(Board_PA4);
-			GPIO_disableInt(Board_PA5);
-			GPIO_disableInt(Board_PF0);
-			GPIO_disableInt(Board_PF4);
-			total[0] = ((float) (PWMticks[1] - PWMticks[0]))/20.0;
-			total[1] = ((float) (PWMticks[2] - PWMticks[1]))/20.0;
-			total[2] = ((float) (PWMticks[3] - PWMticks[2]))/20.0;
-			total[3] = ((float) (PWMticks[4] - PWMticks[3]))/20.0;
-			total[4] = ((float) (PWMticks[5] - PWMticks[4]))/20.0;
-			total[5] = ((float) (PWMticks[7] - PWMticks[6]))/20.0;
-			input[0] = 100*total[0];
-			input[1] = 100*total[1];
-			input[2] = 100*total[2];
-			input[3] = 100*total[3];
-			input[4] = 100*total[4];
-			input[5] = 100*total[5];
-			//System_printf("INPUT 1: %d, INPUT 2: %d, INPUT 3: %d, INPUT 4: %d, INPUT 5: %d, INPUT 6: %d\r\n",input[0],input[1],input[2],input[3],input[4],input[5]);
+			DisableRxInterrupts();
+			for(i=0;i<5;i++){
+				total[i] = ((float) (RxData.PWMticks[i+1] - RxData.PWMticks[i])/20.0);
+				RxData.input[i] = 100*total[i];
+			}
+			total[5] = ((float) (RxData.PWMticks[7] - RxData.PWMticks[6]))/20.0;
+			RxData.input[5] = 100*total[5];
+			//System_printf("INPUT 1: %d, INPUT 2: %d, INPUT 3: %d, INPUT 4: %d, INPUT 5: %d, INPUT 6: %d\r\n",
+			//    		  RxData.input[0],RxData.input[1],RxData.input[2],RxData.input[3],RxData.input[4],RxData.input[5]);
 			//System_flush();
-			GPIO_enableInt(Board_PA2,GPIO_INT_BOTH_EDGES);
-			GPIO_enableInt(Board_PA3,GPIO_INT_FALLING);
-			GPIO_enableInt(Board_PA4,GPIO_INT_FALLING);
-			GPIO_enableInt(Board_PA5,GPIO_INT_FALLING);
-			GPIO_enableInt(Board_PF0,GPIO_INT_FALLING);
-			GPIO_enableInt(Board_PF4,GPIO_INT_BOTH_EDGES);
-			dataRdy = false;
+			EnableRxInterrupts();
+			RxData.dataRdy = false;
 		}
 
 		if(Clock_getTicks() > (timeout + 10000)){
 			controlData.QuadState = QUAD_DISABLED;
 		}
-		else if(input[4] < 600){
+		else if(RxData.input[4] < 600){
     		controlData.QuadState = QUAD_DISABLED;
-    		//System_printf("Disabled\n");
-    		//System_flush();
     	}
-    	else if(input[4] > 900){
+    	else if(RxData.input[4] > 900 && RxData.input[4] < 1000){
     		controlData.QuadState = QUAD_ENABLED;
-    		//System_printf("Enabled\n");
-    		//System_flush();
     	}
-
 	} //END OF WHILE(1)
 }
-
-/*
- * RC Input Interrupt handler
- */
-Void RCinputIntHandler(Void){
-	GPIO_clearInt(Board_PA2);
-	GPIO_clearInt(Board_PA3);
-	GPIO_clearInt(Board_PA4);
-	GPIO_clearInt(Board_PA5);
-	GPIO_clearInt(Board_PF0);
-	GPIO_clearInt(Board_PF4);
-	unsigned int currentTicks =  Clock_getTicks();
-	unsigned char pinStatus = GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_2);
-
-	//Check if channel is locked (OFF)
-	if(RXChannelLock){
-		//Check for false start
-		if(pinStatus != 0x04)
-			return;
-
-		RXChannelLock = false;
-		currentRXChannel = 0;
-	}
-
-	PWMticks[currentRXChannel] = currentTicks; //store current time
-
-	//Check for false start
-	if(currentRXChannel == 0 && pinStatus != 0x04)
-		RXChannelLock = true;
-
-	//Check if on the last channel, flag to process time
-	if(currentRXChannel == 7){
-		dataRdy = true;
-		currentRXChannel = 0;
-		return;
-	}
-
-	currentRXChannel++; //increment to next channel
-}
-
 
 //======== main ========
 Int main(Void) {
@@ -255,9 +189,6 @@ Int main(Void) {
 
 	// Turn on user LED
 	GPIO_write(Board_LED0, Board_LED_ON);
-
-	//System_printf("Starting up KIRC flight computer software...\n");
-	//System_flush();
 
 	// Add the UART device to the system.
 	add_device("UART", _MSA, UARTUtils_deviceopen, UARTUtils_deviceclose,
@@ -289,3 +220,4 @@ Int main(Void) {
 	BIOS_start();	// Start BIOS
 	return (0);
 }
+

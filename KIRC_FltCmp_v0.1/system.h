@@ -57,6 +57,7 @@
 #include "sensors.h"
 #include "quaternion.h"
 #include "motors.h"
+#include "RxFunctions.h"
 
 //Global Definitions
 #define PI  3.14159265
@@ -75,7 +76,8 @@ typedef enum QUAD_STATES{
 typedef struct ControlData{
 	float angle_desired[3];
 	float angle_current[3];
-	float angle_last[3];
+	float Quaternion[4];
+	float Offset[2];
 	float IntegralSum[3];
 	_QuadState QuadState;
 } _controlData;
@@ -86,5 +88,11 @@ typedef struct IMUdata{
 	float gyr[3];
 	float mag[3];
 } _IMUdata;
+
+typedef struct RxInput{
+	volatile int input[6];
+	unsigned int PWMticks[8];
+	unsigned char dataRdy;
+}_RxInput;
 
 #endif /* SYSTEM_H_ */

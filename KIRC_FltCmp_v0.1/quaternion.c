@@ -78,9 +78,37 @@ void Update_State(void){
     State.q3 = q3 * norm;
     State.q4 = q4 * norm;
 
+    controlData.Quaternion[0] = State.q1;
+    controlData.Quaternion[1] = State.q2;
+    controlData.Quaternion[2] = State.q3;
+    controlData.Quaternion[3] = State.q4;
+
     //Change quaternion state estimate to euler angles
-	controlData.angle_current[0] = asin(2*(State.q1*State.q3-State.q4*State.q2))*180.0/PI;
-	controlData.angle_current[1] = -1.0*atan2f(2*(State.q1*State.q2+State.q3*State.q4), 1-2*(State.q2*State.q2 + State.q3*State.q3)) * (180.0/PI);
-	controlData.angle_current[2] = atan2f(2*(State.q1*State.q4+State.q2*State.q3), 1-2*(State.q3*State.q3+State.q4*State.q4)) * (180.0/PI);
+	controlData.angle_current[0] = (asin(2*(State.q1*State.q3-State.q4*State.q2))*180.0/PI) - controlData.Offset[0];
+	controlData.angle_current[1] = (-1.0*atan2f(2*(State.q1*State.q2+State.q3*State.q4), 1-2*(State.q2*State.q2 + State.q3*State.q3))*(180.0/PI)) - controlData.Offset[1];
+	controlData.angle_current[2] = atan2f(2*(State.q1*State.q4+State.q2*State.q3), 1-2*(State.q3*State.q3+State.q4*State.q4))*(180.0/PI);
+}
+
+void StateEst_Calib(void){
+	volatile unsigned short count;
+	float Offset_pitch = 0;
+	float Offset_roll = 0;
+	//Take 1000 samples and average last 500 of them
+	for(count=0;count<300;count++){
+		//Read Sensors
+		Read_Accel();
+		Read_Gyro();
+		//Read_Magn(); //Read Magnetometer
+		Filter_GyroData(); //Filter the gyro data
+		Update_State();
+		if(count > 150){
+			Offset_pitch += controlData.angle_current[0];
+			Offset_roll += controlData.angle_current[1];
+			}
+		Task_sleep(2500); //Delay (100 Hz)
+	}
+
+	controlData.Offset[0] = Offset_pitch / 150.0;
+	controlData.Offset[1] = Offset_roll / 150.0;
 }
 

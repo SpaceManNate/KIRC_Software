@@ -12,6 +12,7 @@ $(GEN_CMDS__FLAG) \
 "./quaternion.obj" \
 "./motors.obj" \
 "./UARTUtils.obj" \
+"./RxFunctions.obj" \
 "./Main.obj" \
 "./EK_TM4C123GXL.obj" \
 "../EK_TM4C123GXL.cmd" \
@@ -130,8 +131,8 @@ KIRC_FltCmp_v0.1.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 clean:
 	-$(RM) $(TMS470_EXECUTABLE_OUTPUTS__QUOTED)$(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(GEN_OPTS__QUOTED)$(GEN_CMDS__QUOTED) "KIRC_FltCmp_v0.1.out"
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
-	-$(RM) "EK_TM4C123GXL.pp" "Main.pp" "UARTUtils.pp" "motors.pp" "quaternion.pp" "sensors.pp" 
-	-$(RM) "EK_TM4C123GXL.obj" "Main.obj" "UARTUtils.obj" "motors.obj" "quaternion.obj" "sensors.obj" 
+	-$(RM) "EK_TM4C123GXL.pp" "Main.pp" "RxFunctions.pp" "UARTUtils.pp" "motors.pp" "quaternion.pp" "sensors.pp" 
+	-$(RM) "EK_TM4C123GXL.obj" "Main.obj" "RxFunctions.obj" "UARTUtils.obj" "motors.obj" "quaternion.obj" "sensors.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

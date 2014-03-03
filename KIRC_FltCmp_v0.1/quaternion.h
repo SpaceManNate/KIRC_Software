@@ -22,5 +22,6 @@ typedef struct Quaternion{
 
 //Function Prototypes
 void Update_State(void);
+void StateEst_Calib(void);
 
 #endif /* QUATERNION_H_ */

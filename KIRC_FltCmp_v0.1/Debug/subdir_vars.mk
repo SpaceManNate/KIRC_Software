@@ -12,6 +12,7 @@ CFG_SRCS += \
 C_SRCS += \
 ../EK_TM4C123GXL.c \
 ../Main.c \
+../RxFunctions.c \
 ../UARTUtils.c \
 ../motors.c \
 ../quaternion.c \
@@ -20,6 +21,7 @@ C_SRCS += \
 OBJS += \
 ./EK_TM4C123GXL.obj \
 ./Main.obj \
+./RxFunctions.obj \
 ./UARTUtils.obj \
 ./motors.obj \
 ./quaternion.obj \
@@ -28,6 +30,7 @@ OBJS += \
 C_DEPS += \
 ./EK_TM4C123GXL.pp \
 ./Main.pp \
+./RxFunctions.pp \
 ./UARTUtils.pp \
 ./motors.pp \
 ./quaternion.pp \
@@ -56,6 +59,7 @@ GEN_MISC_DIRS__QUOTED += \
 C_DEPS__QUOTED += \
 "EK_TM4C123GXL.pp" \
 "Main.pp" \
+"RxFunctions.pp" \
 "UARTUtils.pp" \
 "motors.pp" \
 "quaternion.pp" \
@@ -64,6 +68,7 @@ C_DEPS__QUOTED += \
 OBJS__QUOTED += \
 "EK_TM4C123GXL.obj" \
 "Main.obj" \
+"RxFunctions.obj" \
 "UARTUtils.obj" \
 "motors.obj" \
 "quaternion.obj" \
@@ -72,6 +77,7 @@ OBJS__QUOTED += \
 C_SRCS__QUOTED += \
 "../EK_TM4C123GXL.c" \
 "../Main.c" \
+"../RxFunctions.c" \
 "../UARTUtils.c" \
 "../motors.c" \
 "../quaternion.c" \
