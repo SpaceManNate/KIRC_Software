@@ -1,4 +1,5 @@
 ***************FLIGHT COMPUTER SOFTWARE***************
+
 *TITLE: README.txt
 
 *DESCR: This is the flight computer software for the
@@ -39,6 +40,14 @@ NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
 		
 		This software is available on GitHub from user NatCain, under KIRC_Software
 		
+		PID information:
+		http://en.wikipedia.org/wiki/Ziegler%E2%80%93Nichols_method
+		http://en.wikipedia.org/wiki/PID_controller
+		http://brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-introduction/
+		
+		Quaternion State Estimator information:
+		Magdewick AHRS Quaternion State Estimator (can't find website)
+				
 				
 *AUTHORS: Nathaniel Cain	
 		  Wade Henderson
@@ -79,6 +88,22 @@ LOG:
 		   Started doing stability testing for the quadcopter, some success, still needs work.
 		   Output to motors drifts slowly over time.
 		   
+*3/3/2014: Restructured code, fixed motor output drift (from integral windup and sensor error). PID testing went well, still needs work.
+
+*3/5/2014: Optimized PID code		   
+
+--------------------------------------------------------------------------
+--KK-------KK-----IIIIIIIIIIIIIII-----RRRRRRR-------------CCCCCCCCC-------
+--KK-----KK-------------II------------RR-----RR---------CC---------------- 
+--KK---KK---------------II------------RR-----RR--------CC-----------------
+--KK-KK-----------------II------------RR-----RR-------CC------------------
+--KK--------------------II------------RRRRRRR---------CC------------------
+--KK--------------------II------------RR-----RR-------CC------------------
+--KK-KK-----------------II------------RR------RR------CC------------------
+--KK---KK---------------II------------RR-------RR------CC-----------------
+--KK-----KK-------------II------------RR--------RR------CC----------------
+--KK-------KK-----IIIIIIIIIIIIIII-----RR---------RR-------CCCCCCCCC-------
+--------------------------------------------------------------------------  
 
 /*
  * Copyright (c) 2013, Texas Instruments Incorporated
@@ -111,22 +136,6 @@ LOG:
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
- 
---------------------------------------------------------------------------
---KK-------KK-----IIIIIIIIIIIIIII-----RRRRRRR-------------CCCCCCCCC-------
---KK-----KK-------------II------------RR-----RR---------CC---------------- 
---KK---KK---------------II------------RR-----RR--------CC-----------------
---KK-KK-----------------II------------RR-----RR-------CC------------------
---KK--------------------II------------RRRRRRR---------CC------------------
---KK--------------------II------------RR-----RR-------CC------------------
---KK-KK-----------------II------------RR------RR------CC------------------
---KK---KK---------------II------------RR-------RR------CC-----------------
---KK-----KK-------------II------------RR--------RR------CC----------------
---KK-------KK-----IIIIIIIIIIIIIII-----RR---------RR-------CCCCCCCCC-------
---------------------------------------------------------------------------  
- 
- 
  
 	//Read write example
 	/*
@@ -182,45 +191,6 @@ LOG:
 	//key = Swi_disable();
 	//key = Hwi_disable();
 	
-	/*
-Void PWMinputFxn0(Void)
-{
-	if(flag == 0){
-		rising = Clock_getTicks();
-		GPIO_enableInt(Board_PA2,GPIO_INT_FALLING);
-		flag = 1;
-	}
-	else if(flag == 1){
-		falling = Clock_getTicks();
-		GPIO_disableInt(Board_PA2);
-		flag = 0;
-		total = (float) (falling - rising)*51.18;
-		total2 = (int) (total/10) + 5;
-		if(total2 < 1100)
-			input[0] = total2;
 
-	    GPIO_clearInt(Board_PA2);
-	}
-}
-
-		//GPIO_toggle(Board_LED2);
-		GPIO_enableInt(Board_PA2,GPIO_INT_RISING);
-		Task_sleep(700);
-		GPIO_disableInt(Board_PA2); //might be redundant
-		GPIO_enableInt(Board_PA3,GPIO_INT_RISING);
-		Task_sleep(700);
-		GPIO_disableInt(Board_PA3); //might be redundant
-		GPIO_enableInt(Board_PA4,GPIO_INT_RISING);
-		Task_sleep(700);
-		GPIO_disableInt(Board_PA4); //might be redundant
-		GPIO_enableInt(Board_PA5,GPIO_INT_RISING);
-		Task_sleep(700);
-		GPIO_disableInt(Board_PA5); //might be redundant
-		GPIO_enableInt(Board_PF0,GPIO_INT_RISING);
-		Task_sleep(700);
-		GPIO_disableInt(Board_PF0); //might be redundant
-		//System_printf("input 1: %d,	input 2: %d, input 3: %d, input 4: %d, input 5: %d\n", input[0],input[1],input[2],input[3],input[4]);
-    	//System_flush();
- 
 	 
  

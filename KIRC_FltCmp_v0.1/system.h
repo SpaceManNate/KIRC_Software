@@ -78,7 +78,6 @@ typedef struct ControlData{
 	float angle_current[3];
 	float Quaternion[4];
 	float Offset[2];
-	float IntegralSum[3];
 	_QuadState QuadState;
 } _controlData;
 

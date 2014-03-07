@@ -117,19 +117,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: KIRC_FltCmp_v0.1.out
+all: KIRC_FltCmp_Software.out
 
 # Tool invocations
-KIRC_FltCmp_v0.1.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+KIRC_FltCmp_Software.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv5/tools/compiler/arm_5.1.1/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=PART_TM4C123GH6PM --define=ccs --define=TIVAWARE --diag_warning=225 --display_error_number --diag_wrap=off --gen_func_subsections=on -z -m"KIRC_FltCmp_v0.1.map" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.1/lib" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.1/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="KIRC_FltCmp_v0.1_linkInfo.xml" --rom_model -o "KIRC_FltCmp_v0.1.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv5/tools/compiler/arm_5.1.1/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=PART_TM4C123GH6PM --define=ccs --define=TIVAWARE --diag_warning=225 --display_error_number --diag_wrap=off --gen_func_subsections=on -z -m"KIRC_FltCmp_Software.map" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.1/lib" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.1/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="KIRC_FltCmp_Software_linkInfo.xml" --rom_model -o "KIRC_FltCmp_Software.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(TMS470_EXECUTABLE_OUTPUTS__QUOTED)$(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(GEN_OPTS__QUOTED)$(GEN_CMDS__QUOTED) "KIRC_FltCmp_v0.1.out"
+	-$(RM) $(TMS470_EXECUTABLE_OUTPUTS__QUOTED)$(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(GEN_OPTS__QUOTED)$(GEN_CMDS__QUOTED) "KIRC_FltCmp_Software.out"
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-$(RM) "EK_TM4C123GXL.pp" "Main.pp" "RxFunctions.pp" "UARTUtils.pp" "motors.pp" "quaternion.pp" "sensors.pp" 
 	-$(RM) "EK_TM4C123GXL.obj" "Main.obj" "RxFunctions.obj" "UARTUtils.obj" "motors.obj" "quaternion.obj" "sensors.obj" 
