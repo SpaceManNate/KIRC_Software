@@ -7,7 +7,7 @@
         <srcFile name="package/cfg/KIRC_FltCmp_RTOS_pem4f.c"/>
     </sources>
     <configscripts>
-        <srcFile name="C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/KIRC_FltCmp_RTOS.cfg"/>
+        <srcFile name="C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/KIRC_FltCmp_RTOS.cfg"/>
     </configscripts>
     <makefiles>
         <srcFile name="package.mak" src="package.bld"/>
@@ -44,7 +44,7 @@
         isPartial="false"
         xCfgScript="package/cfg/KIRC_FltCmp_RTOS_pem4f.cfg"
         xCfgPrefix="package/cfg/KIRC_FltCmp_RTOS_pem4f"
-        cfgScript="C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/KIRC_FltCmp_RTOS.cfg"
+        cfgScript="C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/KIRC_FltCmp_RTOS.cfg"
         cfgArgs="null"
         />
     </configurations>
@@ -56,7 +56,7 @@
         profile="release"
         xCfgScript="package/cfg/KIRC_FltCmp_RTOS_pem4f.cfg"
         xCfgPrefix="package/cfg/KIRC_FltCmp_RTOS_pem4f"
-        cfgScript="C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/KIRC_FltCmp_RTOS.cfg"
+        cfgScript="C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/KIRC_FltCmp_RTOS.cfg"
         cfgArgs="null"
         />
     </executables>

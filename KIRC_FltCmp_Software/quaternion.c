@@ -8,6 +8,7 @@
 
 extern _IMUdata IMUdata;
 extern _controlData controlData;
+//Quaternion_t State = {.9239, 0.0, 0.0, -.385};
 Quaternion_t State = {1.0, 0.0, 0.0, 0.0};
 
 //*************************************************************************

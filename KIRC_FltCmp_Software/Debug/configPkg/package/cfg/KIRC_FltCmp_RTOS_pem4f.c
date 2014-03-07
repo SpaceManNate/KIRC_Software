@@ -1640,7 +1640,7 @@ __FAR__ const xdc_SizeT ti_sysbios_knl_Task_Module_State_terminatedQ__O = offset
  *  Define absolute path prefix for this executable's
  *  configuration generated files.
  */
-xdc__META(__ASM__, "@(#)__ASM__ = C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f");
+xdc__META(__ASM__, "@(#)__ASM__ = C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f");
 
 /*
  *  ======== __ISA__ ========

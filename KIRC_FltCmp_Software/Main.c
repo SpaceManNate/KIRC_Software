@@ -9,7 +9,7 @@
 
 _RxInput RxData = {.input = {533,533,533,533,533,533}, .PWMticks = {0,0,0,0,0,0,0,0}, .dataRdy = false};
 _IMUdata IMUdata = {.acc = {0,0,0}, .gyr = {0,0,0}, .mag = {0,0,0}};
-_controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0}, .Quaternion = {1,0,0,0},
+_controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0}, .Quaternion = {1.0,0,0,0},
 					        .Offset = {0,0}, .QuadState = QUAD_DISABLED};
 
 // ======== ReadSensorsFxn ========
@@ -53,7 +53,7 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	System_printf("Initializing Feedback Controller...\n");
 	System_flush();
 	//___INIT PID GAINS____//
-	float Kp=0.85,Ki=0.0,Kd=0.17;
+	float Kp=4.0,Ki=0.0,Kd=0.0;
 	float Kpy=0.0,Kiy=0,Kdy=0;
 
 	//init support variables
@@ -74,13 +74,13 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			GPIO_write(Board_LED2, Board_LED_ON);
 			GPIO_write(Board_LED0, Board_LED_OFF);
 			//Get gains from AUX Pit. trim
-			Ki = (float) 2.0*((RxData.input[5]-520)/430.0);
-			printf("%2.2f\r\n", Ki);
-			fflush(stdout);
+			//Ki = (float) 2.0*((RxData.input[5]-520)/430.0);
+			//printf("%2.2f\r\n", Ki);
+			//fflush(stdout);
 
 			//Convert input (pitch roll yaw) into degrees
-			controlData.angle_desired[0] =(float) (-1.0)*(40.0*(RxData.input[1]-525)/430.0 - 20.0);
-			controlData.angle_desired[1] =(float) (40.0*(RxData.input[3]-525)/430.0 - 20.0);
+			controlData.angle_desired[0] =(float) (60.0*(RxData.input[3]-525)/430.0 - 30.0);
+			controlData.angle_desired[1] =(float) (60.0*(RxData.input[1]-525)/430.0 - 30.0);
 			yaw_input = (float) 5.0*(RxData.input[0] - 537)/430.0 - 2.5;
 
 			//limit the sensitivity of the yaw control (to avoid drift)
@@ -92,9 +92,9 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 
 			//Error Calculation, and throw out bad inputs
 			if(controlData.angle_desired[0]<30.0 && controlData.angle_desired[0]>-30.0 )
-				error[0] = controlData.angle_desired[0]-controlData.angle_current[0]; //PITCH CALCULATION
+				error[0] = controlData.angle_desired[0]-controlData.angle_current[0]; //ROLL CALCULATION
 			if(controlData.angle_desired[1]<30.0 && controlData.angle_desired[1]>-30.0 )
-				error[1] = controlData.angle_desired[1]-controlData.angle_current[1]; //ROLL CALCULATION
+				error[1] = controlData.angle_desired[1]-controlData.angle_current[1]; //PITCH CALCULATION
 
 			//PID calculation (ROLL and PITCH)
 			for(i=0;i<2;i++){
@@ -114,10 +114,14 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			//PID calculation (YAW)
 
 			//Calculate control actions
-			output[0] = RxData.input[2]+Compensation[0]-Compensation[1];//+Compensation[2];
-			output[1] = RxData.input[2]-Compensation[0]-Compensation[1];//+Compensation[2];
-			output[2] = RxData.input[2]+Compensation[0]+Compensation[1];//-Compensation[2];
-			output[3] = RxData.input[2]-Compensation[0]+Compensation[1];//-Compensation[2];
+			output[0] = RxData.input[2]-Compensation[1];//+Compensation[2];
+			output[1] = RxData.input[2]-Compensation[0];//+Compensation[2];
+			output[2] = RxData.input[2]+Compensation[0];//-Compensation[2];
+			output[3] = RxData.input[2]+Compensation[1];//-Compensation[2];
+			//output[0] = RxData.input[2]+Compensation[0]-Compensation[1];//+Compensation[2];
+			//output[1] = RxData.input[2]-Compensation[0]-Compensation[1];//+Compensation[2];
+			//output[2] = RxData.input[2]+Compensation[0]+Compensation[1];//-Compensation[2];
+			//output[3] = RxData.input[2]-Compensation[0]+Compensation[1];//-Compensation[2];
 			motors_out(output); //Output control to motors
 
 			//System_printf("OUTPUT 1: %d,  OUTPUT2: %d,  OUTPUT3: %d,  OUTPUT4: %d\r\n",output[0],output[1],output[2],output[3]);

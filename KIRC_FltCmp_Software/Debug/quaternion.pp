@@ -32,7 +32,7 @@ quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/std.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/M4F.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/std.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/cfg/global.h
-quaternion.obj: C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f.h
+quaternion.obj: C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f.h
 quaternion.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/xdc.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h
@@ -279,7 +279,7 @@ C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/std.h:
 C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/M4F.h: 
 C:/ti/xdctools_3_25_04_88/packages/ti/targets/std.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/cfg/global.h: 
-C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_v0.1/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f.h: 
+C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f.h: 
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/xdc.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h: 
