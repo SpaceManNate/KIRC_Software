@@ -23,7 +23,7 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	//Magn_Init();
 
 	//Delay long enough for user to place the quad on a level surface for calibration
-	Task_sleep(100000);
+	Task_sleep(50000);
 
 	//Calibrate sensors and state estimator
 	Calib_Accel();
@@ -53,7 +53,7 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	System_printf("Initializing Feedback Controller...\n");
 	System_flush();
 	//___INIT PID GAINS____//
-	float Kp=4.0,Ki=0.0,Kd=0.0;
+	float Kp=1.60,Ki=1.05,Kd=0.155;
 	float Kpy=0.0,Kiy=0,Kdy=0;
 
 	//init support variables
@@ -62,9 +62,11 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	float deriv[3] = {0,0,0};
 	float ErrorSum[3] = {0,0,0};
 	float angle_last[3] = {0,0,0};
+	float x,y;
 	float yaw_input;
 	short Compensation[3];
-	static float IntLimit = 100.0;
+	static float IntLimit = 400.0;
+	int PIDLimit;
 	volatile unsigned short i;
 
 	motors_init();
@@ -73,14 +75,21 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 		if(controlData.QuadState == QUAD_ENABLED){
 			GPIO_write(Board_LED2, Board_LED_ON);
 			GPIO_write(Board_LED0, Board_LED_OFF);
+			PIDLimit = 0.45*(RxData.input[2]-525);
+
 			//Get gains from AUX Pit. trim
-			//Ki = (float) 2.0*((RxData.input[5]-520)/430.0);
-			//printf("%2.2f\r\n", Ki);
+			//Kd = (float) 0.2*((RxData.input[5]-520)/430.0);
+			//printf("%2.3f\r\n", Kd);
 			//fflush(stdout);
 
-			//Convert input (pitch roll yaw) into degrees
-			controlData.angle_desired[0] =(float) (60.0*(RxData.input[3]-525)/430.0 - 30.0);
-			controlData.angle_desired[1] =(float) (60.0*(RxData.input[1]-525)/430.0 - 30.0);
+			//Convert input (pitch roll) into degrees
+			y =(float) (40.0*(RxData.input[3]-525)/430.0 - 20.0);
+			x =(float) (40.0*(RxData.input[1]-525)/430.0 - 20.0);
+
+			//Apply rotation matrix (-45deg) for control input (for "x" pattern flight)
+			controlData.angle_desired[0] = 0.707*y - 0.707*x;
+			controlData.angle_desired[1] = 0.707*y + 0.707*x;
+
 			yaw_input = (float) 5.0*(RxData.input[0] - 537)/430.0 - 2.5;
 
 			//limit the sensitivity of the yaw control (to avoid drift)
@@ -107,6 +116,10 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 				deriv[i] = (controlData.angle_current[i] - angle_last[i])/dT;
 
 				Compensation[i] = (int) (Kp*error[i] + ErrorSum[i] - Kd*deriv[i]);
+				if(Compensation[i] > PIDLimit)
+					Compensation[i] = PIDLimit;
+				if(Compensation[i] < -PIDLimit)
+					Compensation[i] = -PIDLimit;
 				angle_last[i] =  controlData.angle_current[i];
 
 			}
