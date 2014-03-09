@@ -124,6 +124,8 @@
 
 /* Content from ti.sysbios.syncs (null): */
 
+/* Content from ti.uia.sysbios (null): */
+
 /* Content from ti.sysbios.gates (null): */
 
 /* Content from ti.sysbios.xdcruntime (null): */
@@ -131,8 +133,6 @@
 /* Content from ti.sysbios.heaps (null): */
 
 /* Content from ti.sysbios.utils (null): */
-
-/* Content from ti.uia.sysbios (null): */
 
 /* Content from configPkg (null): */
 

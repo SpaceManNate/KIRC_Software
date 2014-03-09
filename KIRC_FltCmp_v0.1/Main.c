@@ -7,31 +7,18 @@
  ************************************************************/
 #include "system.h"
 
-Void echoFxn(UArg arg0, UArg arg1) {
 
-	System_printf("in echo!\n");
-	System_flush();
-
-	Char input;
-	//UART_Handle uart = GPS_Init();
-/*
-	while (TRUE) {
-
-		//UART_write(uart, &input, 1);
-		UART_read(uart, &input, 1);
-
-		printf("%c", input);
-		fflush();
-
-		//1Hz refresh rate
-		Task_sleep(10000);
-
-	}
-	*/
-}
 
 // ======== consoleFxn ========
 Void consoleFxn(UArg arg0, UArg arg1) {
+
+	Char input;
+	UART_Handle uart = GPS_Init();
+	while(1){
+		UART_read(uart, &input, 1);
+		printf("%c", input);
+		fflush(stdout);
+	}//while(1);
 
 	I2C_Handle i2c;
 	I2C_Params i2cParams;
@@ -75,6 +62,9 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	Magn_Init();
 	Altim_caldata = Altm_Init();
 
+
+
+
 	//Calibrate sensors
 	Calib_Accel();
 	Task_sleep(50);
@@ -99,10 +89,20 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 		tempC = Get_TempC(Altim_caldata); //Temperature in degrees C
 		pressure = Get_Pressure(Altim_caldata, temp); //Pressure in Pa
 
-		printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
+		//printf("Pressure %d Pa, TempC %0.1f C, Altitude %0.1f feet\n", pressure, tempC, altitude);
 
-		//printf("Pressure %d Pa, TempC %0.1f C, Altitude %0.1f feet\n", pressure,
-		//		tempC, altitude);
+		UART_read(uart, &input, 1);
+		if(input == '$'){
+			while(1){
+				UART_read(uart, &input, 1);
+				printf("%c", input);
+				fflush(stdout);
+			}//while(1);
+			printf("\n");
+		}
+
+
 		fflush(stdout);
 
 		Task_sleep(25);

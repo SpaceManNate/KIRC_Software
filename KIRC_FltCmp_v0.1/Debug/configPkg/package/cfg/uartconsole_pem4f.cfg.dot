@@ -115,9 +115,6 @@ digraph configuration {
         xdc_runtime_Timestamp [style=filled,fillcolor=lightgray, label="Timestamp"];
         xdc_runtime__top -> xdc_runtime_Timestamp[style=invis];
         xdc_runtime_Timestamp -> xdc_runtime__bot[style=invis];
-        xdc_runtime_TimestampNull [style=filled,fillcolor=lightgray, label="TimestampNull"];
-        xdc_runtime__top -> xdc_runtime_TimestampNull[style=invis];
-        xdc_runtime_TimestampNull -> xdc_runtime__bot[style=invis];
         xdc_runtime_Main_Module_GateProxy [style=filled,fillcolor=lightgray, label="Main_Module_GateProxy"];
         xdc_runtime__top -> xdc_runtime_Main_Module_GateProxy[style=invis];
         xdc_runtime_Main_Module_GateProxy -> xdc_runtime__bot[style=invis];
@@ -185,24 +182,6 @@ digraph configuration {
         ti_uia_events_DvtTypes [style=filled,fillcolor=lightgray, label="DvtTypes"];
         ti_uia_events__top -> ti_uia_events_DvtTypes[style=invis];
         ti_uia_events_DvtTypes -> ti_uia_events__bot[style=invis];
-        ti_uia_events_UIABenchmark [style=filled,fillcolor=lightgray, label="UIABenchmark"];
-        ti_uia_events__top -> ti_uia_events_UIABenchmark[style=invis];
-        ti_uia_events_UIABenchmark -> ti_uia_events__bot[style=invis];
-        ti_uia_events_UIAErr [style=filled,fillcolor=lightgray, label="UIAErr"];
-        ti_uia_events__top -> ti_uia_events_UIAErr[style=invis];
-        ti_uia_events_UIAErr -> ti_uia_events__bot[style=invis];
-        ti_uia_events_UIAEvt [style=filled,fillcolor=lightgray, label="UIAEvt"];
-        ti_uia_events__top -> ti_uia_events_UIAEvt[style=invis];
-        ti_uia_events_UIAEvt -> ti_uia_events__bot[style=invis];
-        ti_uia_events_UIARoundtrip [style=filled,fillcolor=lightgray, label="UIARoundtrip"];
-        ti_uia_events__top -> ti_uia_events_UIARoundtrip[style=invis];
-        ti_uia_events_UIARoundtrip -> ti_uia_events__bot[style=invis];
-        ti_uia_events_UIAStatistic [style=filled,fillcolor=lightgray, label="UIAStatistic"];
-        ti_uia_events__top -> ti_uia_events_UIAStatistic[style=invis];
-        ti_uia_events_UIAStatistic -> ti_uia_events__bot[style=invis];
-        ti_uia_events_UIASync [style=filled,fillcolor=lightgray, label="UIASync"];
-        ti_uia_events__top -> ti_uia_events_UIASync[style=invis];
-        ti_uia_events_UIASync -> ti_uia_events__bot[style=invis];
     }
     subgraph cluster22 {
         label="";
@@ -211,21 +190,9 @@ digraph configuration {
         ti_uia_runtime_EventHdr [style=filled,fillcolor=lightgray, label="EventHdr"];
         ti_uia_runtime__top -> ti_uia_runtime_EventHdr[style=invis];
         ti_uia_runtime_EventHdr -> ti_uia_runtime__bot[style=invis];
-        ti_uia_runtime_LogSync [style=filled,fillcolor=lightgray, label="LogSync"];
-        ti_uia_runtime__top -> ti_uia_runtime_LogSync[style=invis];
-        ti_uia_runtime_LogSync -> ti_uia_runtime__bot[style=invis];
-        ti_uia_runtime_QueueDescriptor [style=filled,fillcolor=lightgray, label="QueueDescriptor"];
-        ti_uia_runtime__top -> ti_uia_runtime_QueueDescriptor[style=invis];
-        ti_uia_runtime_QueueDescriptor -> ti_uia_runtime__bot[style=invis];
         ti_uia_runtime_UIAMetaData [style=filled,fillcolor=lightgray, label="UIAMetaData"];
         ti_uia_runtime__top -> ti_uia_runtime_UIAMetaData[style=invis];
         ti_uia_runtime_UIAMetaData -> ti_uia_runtime__bot[style=invis];
-        ti_uia_runtime_LogSync_CpuTimestampProxy [style=filled,fillcolor=lightgray, label="LogSync_CpuTimestampProxy"];
-        ti_uia_runtime__top -> ti_uia_runtime_LogSync_CpuTimestampProxy[style=invis];
-        ti_uia_runtime_LogSync_CpuTimestampProxy -> ti_uia_runtime__bot[style=invis];
-        ti_uia_runtime_LogSync_GlobalTimestampProxy [style=filled,fillcolor=lightgray, label="LogSync_GlobalTimestampProxy"];
-        ti_uia_runtime__top -> ti_uia_runtime_LogSync_GlobalTimestampProxy[style=invis];
-        ti_uia_runtime_LogSync_GlobalTimestampProxy -> ti_uia_runtime__bot[style=invis];
     }
     subgraph cluster23 {
         label="";
@@ -351,9 +318,6 @@ digraph configuration {
         ti_sysbios_knl_Intrinsics [style=filled,fillcolor=lightgray, label="Intrinsics"];
         ti_sysbios_knl__top -> ti_sysbios_knl_Intrinsics[style=invis];
         ti_sysbios_knl_Intrinsics -> ti_sysbios_knl__bot[style=invis];
-        ti_sysbios_knl_Event [style=filled,fillcolor=lightgray, label="Event"];
-        ti_sysbios_knl__top -> ti_sysbios_knl_Event[style=invis];
-        ti_sysbios_knl_Event -> ti_sysbios_knl__bot[style=invis];
         ti_sysbios_knl_Queue [style=filled,fillcolor=lightgray, label="Queue"];
         ti_sysbios_knl__top -> ti_sysbios_knl_Queue[style=invis];
         ti_sysbios_knl_Queue -> ti_sysbios_knl__bot[style=invis];
@@ -419,6 +383,14 @@ digraph configuration {
     }
     subgraph cluster42 {
         label="";
+        ti_uia_sysbios__top [shape=box,label="ti.uia.sysbios\n1, 0, 0, 0", color=white];
+        ti_uia_sysbios__bot [shape=point,label="", style=invis];
+        ti_uia_sysbios_LoggerIdle [style=filled,fillcolor=lightgray, label="LoggerIdle"];
+        ti_uia_sysbios__top -> ti_uia_sysbios_LoggerIdle[style=invis];
+        ti_uia_sysbios_LoggerIdle -> ti_uia_sysbios__bot[style=invis];
+    }
+    subgraph cluster43 {
+        label="";
         ti_sysbios_gates__top [shape=box,label="ti.sysbios.gates\n2, 0, 0, 0", color=white];
         ti_sysbios_gates__bot [shape=point,label="", style=invis];
         ti_sysbios_gates_GateHwi [style=filled,fillcolor=lightgray, label="GateHwi"];
@@ -428,7 +400,7 @@ digraph configuration {
         ti_sysbios_gates__top -> ti_sysbios_gates_GateMutex[style=invis];
         ti_sysbios_gates_GateMutex -> ti_sysbios_gates__bot[style=invis];
     }
-    subgraph cluster43 {
+    subgraph cluster44 {
         label="";
         ti_sysbios_xdcruntime__top [shape=box,label="ti.sysbios.xdcruntime\n1, 0, 0", color=white];
         ti_sysbios_xdcruntime__bot [shape=point,label="", style=invis];
@@ -436,7 +408,7 @@ digraph configuration {
         ti_sysbios_xdcruntime__top -> ti_sysbios_xdcruntime_Settings[style=invis];
         ti_sysbios_xdcruntime_Settings -> ti_sysbios_xdcruntime__bot[style=invis];
     }
-    subgraph cluster44 {
+    subgraph cluster45 {
         label="";
         ti_sysbios_heaps__top [shape=box,label="ti.sysbios.heaps\n2, 0, 0, 0", color=white];
         ti_sysbios_heaps__bot [shape=point,label="", style=invis];
@@ -447,24 +419,10 @@ digraph configuration {
         ti_sysbios_heaps__top -> ti_sysbios_heaps_HeapMem_Module_GateProxy[style=invis];
         ti_sysbios_heaps_HeapMem_Module_GateProxy -> ti_sysbios_heaps__bot[style=invis];
     }
-    subgraph cluster45 {
+    subgraph cluster46 {
         label="";
         ti_sysbios_utils__top [shape=box,label="ti.sysbios.utils\n2, 0, 0, 0", color=white];
         ti_sysbios_utils__bot [shape=point,label="", style=invis];
-        ti_sysbios_utils_Load [style=filled,fillcolor=lightgray, label="Load"];
-        ti_sysbios_utils__top -> ti_sysbios_utils_Load[style=invis];
-        ti_sysbios_utils_Load -> ti_sysbios_utils__bot[style=invis];
-    }
-    subgraph cluster46 {
-        label="";
-        ti_uia_sysbios__top [shape=box,label="ti.uia.sysbios\n1, 0, 0, 0", color=white];
-        ti_uia_sysbios__bot [shape=point,label="", style=invis];
-        ti_uia_sysbios_LoggingSetup [style=filled,fillcolor=lightgray, label="LoggingSetup"];
-        ti_uia_sysbios__top -> ti_uia_sysbios_LoggingSetup[style=invis];
-        ti_uia_sysbios_LoggingSetup -> ti_uia_sysbios__bot[style=invis];
-        ti_uia_sysbios_LoggerIdle [style=filled,fillcolor=lightgray, label="LoggerIdle"];
-        ti_uia_sysbios__top -> ti_uia_sysbios_LoggerIdle[style=invis];
-        ti_uia_sysbios_LoggerIdle -> ti_uia_sysbios__bot[style=invis];
     }
     subgraph cluster47 {
         label="";
@@ -507,15 +465,15 @@ digraph configuration {
     ti_targets_arm_elf_M4F__1_0_5__1_1 [shape=record,label="ti.targets.arm.elf.M4F|1,0,5.1,1",style=filled, fillcolor=lightgrey];
     ti_sysbios_syncs__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster41];
     ti_targets_arm_elf_M4F__1_0_5__1_1 [shape=record,label="ti.targets.arm.elf.M4F|1,0,5.1,1",style=filled, fillcolor=lightgrey];
-    ti_sysbios_gates__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster42];
+    ti_uia_sysbios__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster42];
     ti_targets_arm_elf_M4F__1_0_5__1_1 [shape=record,label="ti.targets.arm.elf.M4F|1,0,5.1,1",style=filled, fillcolor=lightgrey];
-    ti_sysbios_xdcruntime__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster43];
+    ti_sysbios_gates__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster43];
     ti_targets_arm_elf_M4F__1_0_5__1_1 [shape=record,label="ti.targets.arm.elf.M4F|1,0,5.1,1",style=filled, fillcolor=lightgrey];
-    ti_sysbios_heaps__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster44];
+    ti_sysbios_xdcruntime__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster44];
     ti_targets_arm_elf_M4F__1_0_5__1_1 [shape=record,label="ti.targets.arm.elf.M4F|1,0,5.1,1",style=filled, fillcolor=lightgrey];
-    ti_sysbios_utils__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster45];
+    ti_sysbios_heaps__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster45];
     ti_targets_arm_elf_M4F__1_0_5__1_1 [shape=record,label="ti.targets.arm.elf.M4F|1,0,5.1,1",style=filled, fillcolor=lightgrey];
-    ti_uia_sysbios__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster46];
+    ti_sysbios_utils__bot -> ti_targets_arm_elf_M4F__1_0_5__1_1 [ltail=cluster46];
     ti_targets_arm_elf_M4F__1_0_5__1_3 [shape=record,label="ti.targets.arm.elf.M4F|1,0,5.1,3",style=filled, fillcolor=lightgrey];
     configPkg__top -> ti_targets_arm_elf_M4F__1_0_5__1_3 [ltail=cluster47];
     ti_targets_arm_elf_M4F__1_0_5__1_1 [shape=record,label="ti.targets.arm.elf.M4F|1,0,5.1,1",style=filled, fillcolor=lightgrey];
