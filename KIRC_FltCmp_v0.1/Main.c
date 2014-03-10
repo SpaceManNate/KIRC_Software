@@ -7,18 +7,27 @@
  ************************************************************/
 #include "system.h"
 
+Void GPSFxn(UArg arg0, UArg arg1) {
 
+	UInt8 req_buf[100];
+	UART_Handle uart = GPS_Init();
+	int i, rx_size;
+
+	while (1) {
+
+		//Get NMEA GPGLL GPS sentence
+		rx_size = UART_read(uart, (Char*) req_buf, sizeof(req_buf));
+		//Forward
+		for (i = 0; i < rx_size; i++) {
+			printf("%c", req_buf[i]);
+		}
+		fflush(stdout);
+	}
+
+}
 
 // ======== consoleFxn ========
 Void consoleFxn(UArg arg0, UArg arg1) {
-
-	Char input;
-	UART_Handle uart = GPS_Init();
-	while(1){
-		UART_read(uart, &input, 1);
-		printf("%c", input);
-		fflush(stdout);
-	}//while(1);
 
 	I2C_Handle i2c;
 	I2C_Params i2cParams;
@@ -62,9 +71,6 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 	Magn_Init();
 	Altim_caldata = Altm_Init();
 
-
-
-
 	//Calibrate sensors
 	Calib_Accel();
 	Task_sleep(50);
@@ -89,25 +95,15 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 		tempC = Get_TempC(Altim_caldata); //Temperature in degrees C
 		pressure = Get_Pressure(Altim_caldata, temp); //Pressure in Pa
 
-		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",State.q1,State.q2,State.q3,State.q4);
-		//printf("Pressure %d Pa, TempC %0.1f C, Altitude %0.1f feet\n", pressure, tempC, altitude);
-
-		UART_read(uart, &input, 1);
-		if(input == '$'){
-			while(1){
-				UART_read(uart, &input, 1);
-				printf("%c", input);
-				fflush(stdout);
-			}//while(1);
-			printf("\n");
-		}
-
-
+		printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n", State.q1, State.q2, State.q3,
+				State.q4);
+		printf("Pressure %d Pa, TempC %0.1f C, Altitude %0.1f feet\n", pressure,
+				tempC, altitude);
 		fflush(stdout);
 
-		Task_sleep(25);
-	} //END OF WHILE(1)
-}
+		//Task_sleep(25);
+			} //END OF WHILE(1)
+		}
 
 //======== main ========
 Int main(Void) {

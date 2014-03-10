@@ -333,9 +333,9 @@ void Clear_Array(float *Array, unsigned int size) {
 
 //*************************************************************************
 // Altm_Init function
-// I/O: Void
-// Initializes the altimeter (BMP085)
-// by getting all of the calibration data
+// INPUT: Void
+// OUTPUT: Calibration data that comes with the altimeter
+// Initializes the altimeter (BMP085) by getting all of the calibration data
 //*************************************************************************
 ALTM_CalData_t Altm_Init(void) {
 	ALTM_CalData_t Altim;
@@ -363,10 +363,10 @@ ALTM_CalData_t Altm_Init(void) {
 }
 
 //*************************************************************************
-// Get_Temp
-// I/O: Void
-// Gets raw temp and pressure, calculates both
-// converts to altitude
+// Get_Temp function
+// INPUT: Calibration data
+// OUTPUT: Raw temperature
+// Retrieves and calculates raw temperature
 //*************************************************************************
 long Get_Temp(ALTM_CalData_t Cal) {
 	unsigned char read[2];
@@ -386,9 +386,15 @@ long Get_Temp(ALTM_CalData_t Cal) {
 	B5 = X1 + X2;
 
 	return B5;
-
 }
 
+//*************************************************************************
+// Get_TempC function
+// INPUT: Calibration data
+// OUTPUT: Temperature in degrees celsius
+// Retrieves raw temperature from Get_Temp and converts to C.
+// Used for testing, not needed for altitude calculation.
+//*************************************************************************
 float Get_TempC(ALTM_CalData_t Cal) {
 	long B5;
 	B5 = Get_Temp(Cal);
@@ -397,10 +403,10 @@ float Get_TempC(ALTM_CalData_t Cal) {
 }
 
 //*************************************************************************
-// Get_Pressure
-// I/O: Void
-// Gets raw temp and pressure, calculates both
-// converts to altitude
+// Get_Pressure function
+// INPUT: Calibration data and B5 for raw temp.
+// OUTPUT: Pressure in Pa
+// Retrieves raw pressure and converts to Pa
 //*************************************************************************
 long Get_Pressure(ALTM_CalData_t Cal, long B5) {
 	unsigned char read[3];
@@ -445,6 +451,12 @@ long Get_Pressure(ALTM_CalData_t Cal, long B5) {
 	return p; //in Pa
 }
 
+//*************************************************************************
+// Get_Altitude function
+// INPUT: Calibration data
+// OUTPUT: Altiude in feet
+// Gets both raw temp and pressure and calculates the altitude
+//*************************************************************************
 float Get_Altitude(ALTM_CalData_t Cal) {
 	long temp;
 	float pressure, altitude, A, B;
@@ -460,11 +472,17 @@ float Get_Altitude(ALTM_CalData_t Cal) {
 	return altitude;
 }
 
+//*************************************************************************
+// GPS_Init function
+// INPUT: Void
+// OUTPUT: Uart handle
+// Sets speed and configures GPS for UART1
+//*************************************************************************
 UART_Handle GPS_Init(void) {
 	UART_Handle uart;
 	UART_Params uartParams;
 
-	/* Create a UART with data processing off. */
+	//Create a UART with data processing off.
 	UART_Params_init(&uartParams);
 	uartParams.writeDataMode = UART_DATA_BINARY;
 	uartParams.readDataMode = UART_DATA_BINARY;
@@ -477,6 +495,31 @@ UART_Handle GPS_Init(void) {
 		System_abort("Error opening the UART");
 	}
 
+	//Disable sentences that are not needed to save time
+	const Char disableGGA[] = { 0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x24 };
+	UART_write(uart, disableGGA, sizeof(disableGGA));
+	const Char disableGSA[] = { 0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x02,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x32 };
+	UART_write(uart, disableGSA, sizeof(disableGSA));
+	const Char disableGSV[] = { 0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x03,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x39 };
+	UART_write(uart, disableGSV, sizeof(disableGSV));
+	const Char disableRMC[] = { 0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x04,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x04, 0x40 };
+	UART_write(uart, disableRMC, sizeof(disableRMC));
+	const Char disableVTG[] = { 0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x05,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x05, 0x47 };
+	UART_write(uart, disableVTG, sizeof(disableVTG));
+	const Char disableZDA[] = { 0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x08,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x07, 0x5B };
+	UART_write(uart, disableZDA, sizeof(disableZDA));
+
+	//Change update rate to 5 Hz
+	const Char FiveHz[] = { 0xB5, 0x62, 0x06, 0x08, 0x06, 0x00, 0xC8, 0x00,
+			0x01, 0x00, 0x01, 0x00, 0xDE, 0x6A };
+	UART_write(uart, FiveHz, sizeof(FiveHz));
+
 	//115200 baud command
 	const Char baudRate[] = { 0xB5, 0x62, 0x06, 0x00, 0x14, 0x00, 0x01, 0x00,
 			0x00, 0x00, 0xD0, 0x08, 0x00, 0x00, 0x00, 0xC2, 0x01, 0x00, 0x07,
@@ -485,10 +528,11 @@ UART_Handle GPS_Init(void) {
 	UART_write(uart, baudRate, sizeof(baudRate));
 	UART_close(uart);
 
+	//Open new UART parameters for new baud rate
 	UART_Params_init(&uartParams);
 	uartParams.writeDataMode = UART_DATA_BINARY;
 	uartParams.readDataMode = UART_DATA_BINARY;
-	uartParams.readReturnMode = UART_RETURN_FULL;
+	uartParams.readReturnMode = UART_RETURN_NEWLINE;
 	uartParams.readEcho = UART_ECHO_OFF;
 	uartParams.baudRate = 115200;
 	uart = UART_open(Board_UART1, &uartParams);

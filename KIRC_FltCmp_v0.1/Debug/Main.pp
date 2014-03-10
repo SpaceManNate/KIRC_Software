@@ -152,6 +152,7 @@ Main.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/interfaces/ITaskSupport.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task__epilogue.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/package/Task_SupportProxy.h
+Main.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Error.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/System.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h
@@ -366,6 +367,7 @@ C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h:
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/interfaces/ITaskSupport.h: 
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task__epilogue.h: 
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/package/Task_SupportProxy.h: 
+C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Error.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/System.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h: 

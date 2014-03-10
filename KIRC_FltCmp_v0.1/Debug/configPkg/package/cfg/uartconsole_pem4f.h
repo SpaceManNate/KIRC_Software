@@ -10,6 +10,9 @@
 #include <ti/sysbios/knl/Task.h>
 extern const ti_sysbios_knl_Task_Handle console;
 
+#include <ti/sysbios/knl/Task.h>
+extern const ti_sysbios_knl_Task_Handle gps;
+
 #define TI_DRIVERS_EMAC_INCLUDED 0
 
 #define TI_DRIVERS_GPIO_INCLUDED 1
