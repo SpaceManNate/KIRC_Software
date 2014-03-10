@@ -53,8 +53,8 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	System_printf("Initializing Feedback Controller...\n");
 	System_flush();
 	//___INIT PID GAINS____//
-	float Kp=1.60,Ki=1.05,Kd=0.155;
-	float Kpy=0.0,Kiy=0,Kdy=0;
+	float Kp=1.65,Ki=0.95,Kd=0.170;
+	float Kpy=0.0,Kiy=0.0,Kdy=0.0;
 
 	//init support variables
 	uint32_t output[4];
@@ -65,7 +65,7 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	float x,y;
 	float yaw_input;
 	short Compensation[3];
-	static float IntLimit = 400.0;
+	static float IntLimit = 60.0;
 	int PIDLimit;
 	volatile unsigned short i;
 
@@ -75,7 +75,8 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 		if(controlData.QuadState == QUAD_ENABLED){
 			GPIO_write(Board_LED2, Board_LED_ON);
 			GPIO_write(Board_LED0, Board_LED_OFF);
-			PIDLimit = 0.45*(RxData.input[2]-525);
+
+			PIDLimit = 0.45*(RxData.input[2]-525); //Limit PID compensation to 45% of the throttle
 
 			//Get gains from AUX Pit. trim
 			//Kd = (float) 0.2*((RxData.input[5]-520)/430.0);
@@ -85,12 +86,12 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			//Convert input (pitch roll) into degrees
 			y =(float) (40.0*(RxData.input[3]-525)/430.0 - 20.0);
 			x =(float) (40.0*(RxData.input[1]-525)/430.0 - 20.0);
+			yaw_input = (float) 5.0*(RxData.input[0] - 537)/430.0 - 2.5;
 
-			//Apply rotation matrix (-45deg) for control input (for "x" pattern flight)
+			//Apply rotation matrix (-45deg) to control input (for "x" pattern flight)
 			controlData.angle_desired[0] = 0.707*y - 0.707*x;
 			controlData.angle_desired[1] = 0.707*y + 0.707*x;
 
-			yaw_input = (float) 5.0*(RxData.input[0] - 537)/430.0 - 2.5;
 
 			//limit the sensitivity of the yaw control (to avoid drift)
 			if(yaw_input > 0.1 || yaw_input < -0.1)
@@ -108,6 +109,7 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			//PID calculation (ROLL and PITCH)
 			for(i=0;i<2;i++){
 				ErrorSum[i] += Ki*error[i]*dT;
+				//Integration Limiter
 				if(ErrorSum[i] > IntLimit)
 					ErrorSum[i] = IntLimit;
 				else if(ErrorSum[i] < -IntLimit)
@@ -115,7 +117,10 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 
 				deriv[i] = (controlData.angle_current[i] - angle_last[i])/dT;
 
+				//Calculate PID
 				Compensation[i] = (int) (Kp*error[i] + ErrorSum[i] - Kd*deriv[i]);
+
+				//PID limiter
 				if(Compensation[i] > PIDLimit)
 					Compensation[i] = PIDLimit;
 				if(Compensation[i] < -PIDLimit)
@@ -124,17 +129,45 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 
 			}
 
-			//PID calculation (YAW)
+			//Calculate control actions (ROLL PITCH)
+			output[0] = RxData.input[2]-Compensation[1];
+			output[1] = RxData.input[2]-Compensation[0];
+			output[2] = RxData.input[2]+Compensation[0];
+			output[3] = RxData.input[2]+Compensation[1];
 
-			//Calculate control actions
-			output[0] = RxData.input[2]-Compensation[1];//+Compensation[2];
-			output[1] = RxData.input[2]-Compensation[0];//+Compensation[2];
-			output[2] = RxData.input[2]+Compensation[0];//-Compensation[2];
-			output[3] = RxData.input[2]+Compensation[1];//-Compensation[2];
-			//output[0] = RxData.input[2]+Compensation[0]-Compensation[1];//+Compensation[2];
-			//output[1] = RxData.input[2]-Compensation[0]-Compensation[1];//+Compensation[2];
-			//output[2] = RxData.input[2]+Compensation[0]+Compensation[1];//-Compensation[2];
-			//output[3] = RxData.input[2]-Compensation[0]+Compensation[1];//-Compensation[2];
+
+			//PID calculation (YAW)
+			error[2] = controlData.angle_desired[2] -  controlData.angle_current[2];
+			//Yaw Loop Condition
+			if(error[2] > 180)
+				error[2] -= 360.0;
+			else if(error[2] < -180)
+				error[2] += 360.0;
+
+			//Integral
+			ErrorSum[2] += Kiy*error[2]*dT;
+			if(ErrorSum[i] > IntLimit)
+				ErrorSum[i] = IntLimit;
+			else if(ErrorSum[i] < -IntLimit)
+				ErrorSum[i] = -IntLimit;
+
+			//Derivative
+			deriv[2] =  (controlData.angle_current[2] - angle_last[2])/dT;
+			if(deriv[2] > 180)
+				deriv[2] -= 360.0;
+			else if(deriv[2] < -180)
+				deriv[2] += 360.0;
+
+			//PID Calculation
+			Compensation[2] = (int) (Kpy*error[2] + ErrorSum[2] - Kdy*deriv[2]);
+
+			//Calculate control actions (ROLL PITCH)
+			output[0] += Compensation[2];
+			output[1] += Compensation[2];
+			output[2] -= Compensation[2];
+			output[3] -= Compensation[2];
+
+
 			motors_out(output); //Output control to motors
 
 			//System_printf("OUTPUT 1: %d,  OUTPUT2: %d,  OUTPUT3: %d,  OUTPUT4: %d\r\n",output[0],output[1],output[2],output[3]);
