@@ -14,6 +14,11 @@
 		This software is meant to run on our flight computer in 
 		order to dynamically stablize our quadcopter in flight.
 		This is part of a UCF Senior Design project, Spring 2014
+				
+*AUTHORS: Nathaniel Cain	
+		  Wade Henderson
+		  
+*DATE:	  1/31/2014
 
 PINS:   This software needs access to the following peripherals:
 		-I2C0:  SCL-PB2, SDA-PB3 		(for IMU)
@@ -21,7 +26,7 @@ PINS:   This software needs access to the following peripherals:
 		-LEDs:  (Red = PF1, Blue = RF2, Green = PF3) (for indicator lights)
 		-PWMs:	M0G0-PB6, M0G1-PB4, M0G2-PE4, M0G3-PC4 (for motor control)
 		-UART1:	(for GPS input)
-		-Interrupt Pins: PA2, PA3, PA4, PA5  (for PWM input)
+		-Interrupt Pins: PA2, PA3, PA4, PA5, PA6, PF0  (for PWM input)
 
 		PB6 - Output[0] - Motor1
 		PB4 - Output[1] - Motor2
@@ -32,6 +37,8 @@ PINS:   This software needs access to the following peripherals:
 		PA3 - Input[1] - Pitch    (Channel 3)
 		PA4 - Input[2] - Yaw      (Channel 1)
 		PA5 - Input[3] - Roll     (Channel 4)
+		PA6 - Input[5] - Aux pit Trim (Channel 7)
+		PF0 - Input[4] - Toggle Switch (Channel 5)
 		
 	
 NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
@@ -47,50 +54,18 @@ NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
 		
 		Quaternion State Estimator information:
 		Magdewick AHRS Quaternion State Estimator (can't find website)
+		
+		IMU Sensors:
+		-ADXL345   Accelerometer
+		-L3G4200D  Gyroscope
+		-HMC8552L  Magnetometer
+		-BMP085    Altimeter
 				
-				
-*AUTHORS: Nathaniel Cain	
-		  Wade Henderson
-		  
-*DATE:	  1/31/2014
-
 *TO-DO:  -CODE CLEANUP
 		 -Add A/D support
 		 -Add Altimeter support
 		 -Read GPS functions
-
-LOG:
-*2/1/2014: Last night, the first composite instance of this software was integrated.
-		   The goal over the next several days is to clean up the software and add
-		   more modules to it.	
-
-*2/3/2014: Attempting more cleanup, removing unnessecary code
-
-*2/5/2014: Added support for 4 PWM outputs
-		   Attempted to add support for channel reading, but CLOCK input reading flooded interrupt channel	
-
-*2/7/2014: Added support for 4 channel PWM input reading, fixed the CLOCK issue.
 		   
-*2/12/2014: Added Roll, Pitch motor control. Still need PID support.
-
-*2/14/2014: Cleaned up code, got rid of the logging functions, as they are not necessary for the final project
-
-*2/21/2014: Added PWM support, and got controller feedback working. Still needs work, yaw doesn't translate for each axis.
-			PID needs to be tuned, and code needs to be finalized
-
-*2/26/2014: Changed around the sensor reading framework, now done with global variables (don't complain Wade)
-			The code now uses full coordinate transformation to euler rather than the approximation
-			that didn't take yaw into account. When compiling the code and flashing it onto the device, the 
-			start/resume button doesn't appear as an option, but if you reset the device (using the reset button),
-			it still works. Not sure why. 
-
-*3/1/2014: Added safety functions (Timeout, and Killswitch). Restructured code again, made the read input function more efficient.
-		   Started doing stability testing for the quadcopter, some success, still needs work.
-		   Output to motors drifts slowly over time.
-		   
-*3/3/2014: Restructured code, fixed motor output drift (from integral windup and sensor error). PID testing went well, still needs work.
-
-*3/5/2014: Optimized PID code		   
 
 --------------------------------------------------------------------------
 --KK-------KK-----IIIIIIIIIIIIIII-----RRRRRRR-------------CCCCCCCCC-------
@@ -138,5 +113,14 @@ LOG:
  */
  
 
+	//System_printf("OUTPUT 1: %d,  OUTPUT2: %d,  OUTPUT3: %d,  OUTPUT4: %d\r\n",output[0],output[1],output[2],output[3]);
+	//System_flush();
+	
+	//System_printf("INPUT 1: %d, INPUT 2: %d, INPUT 3: %d, INPUT 4: %d, INPUT 5: %d, INPUT 6: %d\r\n",
+	//    		  RxData.input[0],RxData.input[1],RxData.input[2],RxData.input[3],RxData.input[4],RxData.input[5]);
+	//System_flush();
 	 
- 
+ 	
+	//printf("%2.3f, %2.3f, %2.3f\r\n",controlData.angle_current[0],controlData.angle_current[1],controlData.angle_current[2]);
+	//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",controlData.Quaternion[0],controlData.Quaternion[1],controlData.Quaternion[2],controlData.Quaternion[3]);
+	//fflush(stdout);

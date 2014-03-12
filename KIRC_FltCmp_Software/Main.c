@@ -1,5 +1,5 @@
 /*************************************************************
- * TITLE: Main.c
+ * TITLE: Main.c, KIRC project
  * DESCR: Contains entry point into program, and task routines
  *		  See README.txt for description of project
  * AUTHR: Nathaniel Cain
@@ -13,14 +13,13 @@ _controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0}, 
 					        .Offset = {0,0}, .QuadState = QUAD_DISABLED};
 
 // ======== ReadSensorsFxn ========
+// Priority 3 (Highest)
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	System_printf("Initializing Sensors...\n");
 	System_flush();
 
-	//Init Sensors
 	Accel_Init();
 	Gyro_Init();
-	//Magn_Init();
 
 	//Delay long enough for user to place the quad on a level surface for calibration
 	Task_sleep(50000);
@@ -32,28 +31,24 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	Task_sleep(500);
 	StateEst_Calib();
 
-	while (1) {
-		//Read Sensors
-		GPIO_toggle(Board_LED1);
-		Read_Accel();
-		Read_Gyro();
-		//Read_Magn(); //Read Magnetometer
-		Filter_GyroData(); //Filter the gyro data
-		Update_State();
 
-		//printf("%2.3f, %2.3f, %2.3f\r\n",controlData.angle_current[0],controlData.angle_current[1],controlData.angle_current[2]);
-		//printf("%2.3f,%2.3f,%2.3f,%2.3f\r\n",controlData.Quaternion[0],controlData.Quaternion[1],controlData.Quaternion[2],controlData.Quaternion[3]);
-		//fflush(stdout);
+	while (1) {
+		//Toggle (blink) light to show that sensors are reading
+		GPIO_toggle(Board_LED1);
+		Read_Accel();	//Read ADXL345 Accel
+		Read_Gyro();	//Read L3G4200D Gyro
+		Filter_GyroData(); //Filter the gyro data
+
+		Update_State(); //Update the State Estimator
 		Task_sleep(2500); //Delay (100 Hz)
 	} //END OF WHILE(1)
 }
 
 // ======== ControlFxn ========
+// Priority 2 (Middle)
 Void ControlFxn(UArg arg0, UArg arg1) {
-	System_printf("Initializing Feedback Controller...\n");
-	System_flush();
 	//___INIT PID GAINS____//
-	float Kp=1.65,Ki=0.95,Kd=0.170;
+	float Kp=2.16,Ki=0.95,Kd=0.149;
 	float Kpy=0.0,Kiy=0.0,Kdy=0.0;
 
 	//init support variables
@@ -62,48 +57,34 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	float deriv[3] = {0,0,0};
 	float ErrorSum[3] = {0,0,0};
 	float angle_last[3] = {0,0,0};
-	float x,y;
-	float yaw_input;
+
 	short Compensation[3];
 	static float IntLimit = 60.0;
 	int PIDLimit;
 	volatile unsigned short i;
 
 	motors_init();
+	System_printf("Initializing Feedback Controller...\n");
+	System_flush();
 
 	while (1) {
 		if(controlData.QuadState == QUAD_ENABLED){
+			//Change blue light to red to signify motors are armed
 			GPIO_write(Board_LED2, Board_LED_ON);
 			GPIO_write(Board_LED0, Board_LED_OFF);
 
-			PIDLimit = 0.45*(RxData.input[2]-525); //Limit PID compensation to 45% of the throttle
+			PIDLimit = 0.50*(RxData.input[2]-525); //Limit PID compensation to 50% of the throttle
+			ProcessRxData(); //Process the latest Rx data
 
 			//Get gains from AUX Pit. trim
-			//Kd = (float) 0.2*((RxData.input[5]-520)/430.0);
-			//printf("%2.3f\r\n", Kd);
-			//fflush(stdout);
-
-			//Convert input (pitch roll) into degrees
-			y =(float) (40.0*(RxData.input[3]-525)/430.0 - 20.0);
-			x =(float) (40.0*(RxData.input[1]-525)/430.0 - 20.0);
-			yaw_input = (float) 5.0*(RxData.input[0] - 537)/430.0 - 2.5;
-
-			//Apply rotation matrix (-45deg) to control input (for "x" pattern flight)
-			controlData.angle_desired[0] = 0.707*y - 0.707*x;
-			controlData.angle_desired[1] = 0.707*y + 0.707*x;
-
-
-			//limit the sensitivity of the yaw control (to avoid drift)
-			if(yaw_input > 0.1 || yaw_input < -0.1)
-				controlData.angle_desired[2] += yaw_input;
-			//Yaw loop condition
-			if(controlData.angle_desired[2] > 180.0 || controlData.angle_desired[2] <-180.0)
-				controlData.angle_desired[2] *= -1.0;
+			Kd = (float) 0.3*((RxData.input[5]-520)/430.0);
+			printf("%2.3f\r\n", Kd);
+			fflush(stdout);
 
 			//Error Calculation, and throw out bad inputs
-			if(controlData.angle_desired[0]<30.0 && controlData.angle_desired[0]>-30.0 )
+			if(controlData.angle_desired[0]<15.0 && controlData.angle_desired[0]>-15.0 )
 				error[0] = controlData.angle_desired[0]-controlData.angle_current[0]; //ROLL CALCULATION
-			if(controlData.angle_desired[1]<30.0 && controlData.angle_desired[1]>-30.0 )
+			if(controlData.angle_desired[1]<15.0 && controlData.angle_desired[1]>-15.0 )
 				error[1] = controlData.angle_desired[1]-controlData.angle_current[1]; //PITCH CALCULATION
 
 			//PID calculation (ROLL and PITCH)
@@ -167,13 +148,11 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			output[2] -= Compensation[2];
 			output[3] -= Compensation[2];
 
-
 			motors_out(output); //Output control to motors
-
-			//System_printf("OUTPUT 1: %d,  OUTPUT2: %d,  OUTPUT3: %d,  OUTPUT4: %d\r\n",output[0],output[1],output[2],output[3]);
-			//System_flush();
 		}
-		else{
+
+		else {
+			//If quad is not enabled, safe the motors, and turn off red light
 			motorsDisable();
 			GPIO_write(Board_LED2, Board_LED_OFF);
 			GPIO_write(Board_LED0, Board_LED_ON);
@@ -183,8 +162,8 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	} //END OF WHILE(1)
 }
 
-
 // ======== ReadInputFxn ========
+// Priority 1 (Lowest)
 Void ReadInputFxn(UArg arg0, UArg arg1) {
 	//Init Turnigy Receiver listening
 	System_printf("Initializing RC Input...\n");
@@ -196,7 +175,7 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 
 	while (1) {
 		if(RxData.dataRdy){
-			timeout = Clock_getTicks();
+			timeout = Clock_getTicks(); //update new timeout
 			DisableRxInterrupts();
 			for(i=0;i<5;i++){
 				total[i] = ((float) (RxData.PWMticks[i+1] - RxData.PWMticks[i])/20.0);
@@ -204,25 +183,25 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 			}
 			total[5] = ((float) (RxData.PWMticks[7] - RxData.PWMticks[6]))/20.0;
 			RxData.input[5] = 100*total[5];
-			//System_printf("INPUT 1: %d, INPUT 2: %d, INPUT 3: %d, INPUT 4: %d, INPUT 5: %d, INPUT 6: %d\r\n",
-			//    		  RxData.input[0],RxData.input[1],RxData.input[2],RxData.input[3],RxData.input[4],RxData.input[5]);
-			//System_flush();
 			EnableRxInterrupts();
 			RxData.dataRdy = false;
 		}
 
-		if(Clock_getTicks() > (timeout + 15000)){
+		//Timeout set to 1sec (might change later)
+		if(Clock_getTicks() > (timeout + 100000)){
 			controlData.QuadState = QUAD_DISABLED;
+			System_printf("Comm Lost: System Abort\n");
+			System_flush();
 		}
-		else if(RxData.input[4] < 600){
-    		controlData.QuadState = QUAD_DISABLED;
-    	}
-    	else if(RxData.input[4] > 900 && RxData.input[4] < 1000){
+		//Check if safety switch is on
+		else if(RxData.input[4] > 900 && RxData.input[4] < 1000){
     		controlData.QuadState = QUAD_ENABLED;
+    	}
+		else {
+    		controlData.QuadState = QUAD_DISABLED;
     	}
 	} //END OF WHILE(1)
 }
-
 
 //======== main ========
 //This is the main entry point into the program
@@ -234,7 +213,7 @@ Int main(Void) {
 	Board_initI2C();
 	Board_initPWM();
 
-	// Turn on Blue LED
+	// Turn on Blue LED (signify RTOS is running)
 	GPIO_write(Board_LED0, Board_LED_ON);
 
 	// Add the UART device to system.
@@ -242,11 +221,9 @@ Int main(Void) {
 			UARTUtils_deviceread, UARTUtils_devicewrite, UARTUtils_devicelseek,
 			UARTUtils_deviceunlink, UARTUtils_devicerename);
 
-	// Open UART0 for writing to stdout and set buffer
+	// Open UART0 for writing to stdin/out and set buffer
 	freopen("UART:0", "w", stdout);
 	setvbuf(stdout, NULL, _IOLBF, 128);
-
-	// Open UART0 for reading from stdin and set buffer
 	freopen("UART:0", "r", stdin);
 	setvbuf(stdin, NULL, _IOLBF, 128);
 
@@ -260,7 +237,6 @@ Int main(Void) {
 
 	System_printf("\fStarting BIOS...\n");
 	System_flush();
-
 	BIOS_start();	// Start BIOS
 	return (0);
 }

@@ -7,9 +7,35 @@
 #include "system.h"
 
 extern _RxInput RxData;
+extern _controlData controlData;
 
 unsigned char RXChannelLock = true;
 volatile unsigned char currentRXChannel=0;
+
+/*
+ * Process the Rx duty cycle data into euler angles for the control system
+ */
+void ProcessRxData(void){
+	float x,y;
+	float yaw_input;
+	//Convert input (pitch roll) into degrees (+/-15 deg)
+	y =(float) (30.0*(RxData.input[3]-525)/430.0 - 15.0);
+	x =(float) (30.0*(RxData.input[1]-525)/430.0 - 15.0);
+	yaw_input = (float) 5.0*(RxData.input[0] - 525)/430.0 - 2.5;
+
+	//Apply rotation matrix (-45deg) to control input (for "x" pattern flight)
+	controlData.angle_desired[0] = 0.707*y - 0.707*x;
+	controlData.angle_desired[1] = 0.707*y + 0.707*x;
+
+
+	//limit the sensitivity of the yaw control (to avoid drift)
+	if(yaw_input > 0.1 || yaw_input < -0.1)
+		controlData.angle_desired[2] += yaw_input;
+	//Yaw loop condition
+	if(controlData.angle_desired[2] > 180.0 || controlData.angle_desired[2] <-180.0)
+		controlData.angle_desired[2] *= -1.0;
+
+}
 
 /*
  * RC Input Interrupt handler

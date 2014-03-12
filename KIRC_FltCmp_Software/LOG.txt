@@ -1,0 +1,43 @@
+/*
+ * LOG.txt
+ * Contains project log file
+ *
+ */
+
+LOG:
+*2/1/2014: Last night, the first composite instance of this software was integrated.
+		   The goal over the next several days is to clean up the software and add
+		   more modules to it.	
+
+*2/3/2014: Attempting more cleanup, removing unnessecary code
+
+*2/5/2014: Added support for 4 PWM outputs
+		   Attempted to add support for channel reading, but CLOCK input reading flooded interrupt channel	
+
+*2/7/2014: Added support for 4 channel PWM input reading, fixed the CLOCK issue.
+		   
+*2/12/2014: Added Roll, Pitch motor control. Still need PID support.
+
+*2/14/2014: Cleaned up code, got rid of the logging functions, as they are not necessary for the final project
+
+*2/21/2014: Added PWM support, and got controller feedback working. Still needs work, yaw doesn't translate for each axis.
+			PID needs to be tuned, and code needs to be finalized
+
+*2/26/2014: Changed around the sensor reading framework, now done with global variables (don't complain Wade)
+			The code now uses full coordinate transformation to euler rather than the approximation
+			that didn't take yaw into account. When compiling the code and flashing it onto the device, the 
+			start/resume button doesn't appear as an option, but if you reset the device (using the reset button),
+			it still works. Not sure why. 
+
+*3/1/2014: Added safety functions (Timeout, and Killswitch). Restructured code again, made the read input function more efficient.
+		   Started doing stability testing for the quadcopter, some success, still needs work.
+		   Output to motors drifts slowly over time.
+		   
+*3/3/2014: Restructured code, fixed motor output drift (from integral windup and sensor error). PID testing went well, still needs work.
+
+*3/5/2014: Optimized PID code
+
+*3/10-12/2014: PID testing, and optimization
+
+
+
