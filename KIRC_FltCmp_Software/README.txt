@@ -14,6 +14,8 @@
 		This software is meant to run on our flight computer in 
 		order to dynamically stablize our quadcopter in flight.
 		This is part of a UCF Senior Design project, Spring 2014
+		
+		This software is available on GitHub from user NatCain, under KIRC_Software
 				
 *AUTHORS: Nathaniel Cain	
 		  Wade Henderson
@@ -33,24 +35,24 @@ PINS:   This software needs access to the following peripherals:
 		PE4 - Output[2] - Motor3
 		PC4 - Output[3] - Motor4
 		
-		PA2 - Input[0] - Throttle (Channel 2)
-		PA3 - Input[1] - Pitch    (Channel 3)
-		PA4 - Input[2] - Yaw      (Channel 1)
+		PA2 - Input[0] - Yaw	  (Channel 1)
+		PA3 - Input[1] - Pitch    (Channel 2)
+		PA4 - Input[2] - Throttle (Channel 3)
 		PA5 - Input[3] - Roll     (Channel 4)
-		PA6 - Input[5] - Aux pit Trim (Channel 7)
-		PF0 - Input[4] - Toggle Switch (Channel 5)
+		PF0 - Input[5] - Toggle Switch (Channel 5)
+		PF4 - Input[4] - Aux pit Trim (Channel 7)
 		
 	
 NOTE:   For portability, when compiling on a new computer, a 'make clean' needs
 		to be called before compiling in order to shift the config files to the
 		new computer. Under Project>>Clean...  and enter specific project.
 		
-		This software is available on GitHub from user NatCain, under KIRC_Software
-		
+				
 		PID information:
-		http://en.wikipedia.org/wiki/Ziegler%E2%80%93Nichols_method
 		http://en.wikipedia.org/wiki/PID_controller
+		http://en.wikipedia.org/wiki/Ziegler%E2%80%93Nichols_method
 		http://brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-introduction/
+		http://www.youtube.com/watch?v=aq1jXHMiJgg
 		
 		Quaternion State Estimator information:
 		Magdewick AHRS Quaternion State Estimator (can't find website)

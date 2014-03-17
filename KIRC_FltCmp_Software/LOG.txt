@@ -1,7 +1,7 @@
 /*
  * LOG.txt
  * Contains project log file
- *
+ * Nathaniel Cain
  */
 
 LOG:
@@ -35,9 +35,12 @@ LOG:
 		   
 *3/3/2014: Restructured code, fixed motor output drift (from integral windup and sensor error). PID testing went well, still needs work.
 
-*3/5/2014: Optimized PID code
+*3/5/2014: Optimized PID code, and cleanup
 
-*3/10-12/2014: PID testing, and optimization
+*3/10-15/2014: PID testing, and optimization, finally got semi stable flight.
+
+*3/17/2014: Fixed certain yaw derivative issue (hopefully this fixes the out of control yaw issue). Added better state machine design,
+			now when the quad is initializing, the motors cannot be armed.
 
 
 

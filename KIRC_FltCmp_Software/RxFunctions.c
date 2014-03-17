@@ -19,9 +19,9 @@ void ProcessRxData(void){
 	float x,y;
 	float yaw_input;
 	//Convert input (pitch roll) into degrees (+/-15 deg)
-	y =(float) (30.0*(RxData.input[3]-525)/430.0 - 15.0);
-	x =(float) (30.0*(RxData.input[1]-525)/430.0 - 15.0);
-	yaw_input = (float) 5.0*(RxData.input[0] - 525)/430.0 - 2.5;
+	y =(float) (60.0*(RxData.input[3]-525)/430.0 - 30.0);
+	x =(float) (60.0*(RxData.input[1]-525)/430.0 - 30.0);
+	yaw_input = (float) -6.0*(RxData.input[0] - 525)/430.0 + 3;
 
 	//Apply rotation matrix (-45deg) to control input (for "x" pattern flight)
 	controlData.angle_desired[0] = 0.707*y - 0.707*x;
@@ -29,12 +29,42 @@ void ProcessRxData(void){
 
 
 	//limit the sensitivity of the yaw control (to avoid drift)
-	if(yaw_input > 0.1 || yaw_input < -0.1)
+	if(yaw_input > 0.5 || yaw_input < -0.5)
 		controlData.angle_desired[2] += yaw_input;
 	//Yaw loop condition
 	if(controlData.angle_desired[2] > 180.0 || controlData.angle_desired[2] <-180.0)
 		controlData.angle_desired[2] *= -1.0;
+}
 
+
+/*
+ * Process the state machine for quadcopter
+ */
+void ProcessStateMachine(uint32_t timeout){
+	//Check to see if quad is in init stage
+	if(controlData.QuadState != QUAD_INIT){
+		//Timeout set to 500mS (might change later)
+		if(Clock_getTicks() > (timeout + 50000)){
+			controlData.QuadState = QUAD_DISABLED;
+			System_printf("Comm Lost: System Abort\n");
+			System_flush();
+		}
+
+		//Check if safety switch is ON
+		else if(RxData.input[4] > 900 && RxData.input[4] < 1000){
+    		controlData.QuadState = QUAD_ENABLED;
+    	}
+
+		//Check if safety switch is OFF
+		else if(RxData.input[4] > 500 && RxData.input[4] < 6000){
+			controlData.QuadState = QUAD_SAFETY;
+		}
+
+		//DEFAULT STATE, QUAD DISABLED
+		else {
+			controlData.QuadState = QUAD_DISABLED;
+		}
+	}
 }
 
 /*

@@ -10,13 +10,14 @@
 _RxInput RxData = {.input = {533,533,533,533,533,533}, .PWMticks = {0,0,0,0,0,0,0,0}, .dataRdy = false};
 _IMUdata IMUdata = {.acc = {0,0,0}, .gyr = {0,0,0}, .mag = {0,0,0}};
 _controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0}, .Quaternion = {1.0,0,0,0},
-					        .Offset = {0,0}, .QuadState = QUAD_DISABLED};
+					        .Offset = {0,0}, .QuadState = QUAD_INIT};
 
 // ======== ReadSensorsFxn ========
 // Priority 3 (Highest)
 Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	System_printf("Initializing Sensors...\n");
 	System_flush();
+	controlData.QuadState = QUAD_INIT;
 
 	Accel_Init();
 	Gyro_Init();
@@ -30,7 +31,7 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	Calib_Gyro();
 	Task_sleep(500);
 	StateEst_Calib();
-
+	controlData.QuadState = QUAD_DISABLED;
 
 	while (1) {
 		//Toggle (blink) light to show that sensors are reading
@@ -48,8 +49,8 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 // Priority 2 (Middle)
 Void ControlFxn(UArg arg0, UArg arg1) {
 	//___INIT PID GAINS____//
-	float Kp=2.16,Ki=0.95,Kd=0.149;
-	float Kpy=0.0,Kiy=0.0,Kdy=0.0;
+	float Kp=0.545,Ki=0.3,Kd=0.084;
+	float Kpy=0.69,Kiy=0.0,Kdy=0.003;
 
 	//init support variables
 	uint32_t output[4];
@@ -73,19 +74,22 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			GPIO_write(Board_LED2, Board_LED_ON);
 			GPIO_write(Board_LED0, Board_LED_OFF);
 
-			PIDLimit = 0.50*(RxData.input[2]-525); //Limit PID compensation to 50% of the throttle
+			PIDLimit = 0.5*(RxData.input[2]-525); //Limit PID compensation to 50% of the throttle
 			ProcessRxData(); //Process the latest Rx data
 
 			//Get gains from AUX Pit. trim
-			Kd = (float) 0.3*((RxData.input[5]-520)/430.0);
-			printf("%2.3f\r\n", Kd);
-			fflush(stdout);
+			//Kiy = (float) 1.0*((RxData.input[5]-520)/430.0);
+			//printf("%2.3f\r\n", Kiy);
+			//fflush(stdout);
 
 			//Error Calculation, and throw out bad inputs
-			if(controlData.angle_desired[0]<15.0 && controlData.angle_desired[0]>-15.0 )
+			if(controlData.angle_desired[0]<30.0 && controlData.angle_desired[0]>-30.0 )
 				error[0] = controlData.angle_desired[0]-controlData.angle_current[0]; //ROLL CALCULATION
-			if(controlData.angle_desired[1]<15.0 && controlData.angle_desired[1]>-15.0 )
+			if(controlData.angle_desired[1]<30.0 && controlData.angle_desired[1]>-30.0 )
 				error[1] = controlData.angle_desired[1]-controlData.angle_current[1]; //PITCH CALCULATION
+
+			//printf("%2.3f	%2.3f\r\n",controlData.angle_current[2], controlData.angle_desired[2]);
+			//fflush(stdout);
 
 			//PID calculation (ROLL and PITCH)
 			for(i=0;i<2;i++){
@@ -139,21 +143,29 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			else if(deriv[2] < -180)
 				deriv[2] += 360.0;
 
+			angle_last[2] =  controlData.angle_current[2];
+
 			//PID Calculation
 			Compensation[2] = (int) (Kpy*error[2] + ErrorSum[2] - Kdy*deriv[2]);
+			//PID limiter
+			if(Compensation[2] > PIDLimit)
+				Compensation[2] = PIDLimit;
+			else if(Compensation[2] < -PIDLimit)
+				Compensation[2] = -PIDLimit;
 
 			//Calculate control actions (ROLL PITCH)
-			output[0] += Compensation[2];
+			output[0] -= Compensation[2];
 			output[1] += Compensation[2];
-			output[2] -= Compensation[2];
+			output[2] += Compensation[2];
 			output[3] -= Compensation[2];
 
 			motors_out(output); //Output control to motors
 		}
 
-		else {
+		else{
 			//If quad is not enabled, safe the motors, and turn off red light
 			motorsDisable();
+			controlData.angle_desired[2] =  controlData.angle_current[2];
 			GPIO_write(Board_LED2, Board_LED_OFF);
 			GPIO_write(Board_LED0, Board_LED_ON);
 		}
@@ -183,23 +195,14 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 			}
 			total[5] = ((float) (RxData.PWMticks[7] - RxData.PWMticks[6]))/20.0;
 			RxData.input[5] = 100*total[5];
+			//System_printf("INPUT 1: %d, INPUT 2: %d, INPUT 3: %d, INPUT 4: %d, INPUT 5: %d, INPUT 6: %d\r\n",
+			//    		  RxData.input[0],RxData.input[1],RxData.input[2],RxData.input[3],RxData.input[4],RxData.input[5]);
+			//System_flush();
 			EnableRxInterrupts();
 			RxData.dataRdy = false;
 		}
 
-		//Timeout set to 1sec (might change later)
-		if(Clock_getTicks() > (timeout + 100000)){
-			controlData.QuadState = QUAD_DISABLED;
-			System_printf("Comm Lost: System Abort\n");
-			System_flush();
-		}
-		//Check if safety switch is on
-		else if(RxData.input[4] > 900 && RxData.input[4] < 1000){
-    		controlData.QuadState = QUAD_ENABLED;
-    	}
-		else {
-    		controlData.QuadState = QUAD_DISABLED;
-    	}
+		ProcessStateMachine(timeout);
 	} //END OF WHILE(1)
 }
 
