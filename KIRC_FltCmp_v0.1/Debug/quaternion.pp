@@ -23,6 +23,7 @@ quaternion.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverli
 quaternion.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/pin_map.h
 quaternion.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/sysctl.h
 quaternion.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/uart.h
+quaternion.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/adc.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/std.h
 quaternion.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h
 quaternion.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stddef.h
@@ -153,6 +154,7 @@ quaternion.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sys
 quaternion.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task__epilogue.h
 quaternion.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/package/Task_SupportProxy.h
 quaternion.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h
+quaternion.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Error.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/System.h
 quaternion.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h
@@ -238,6 +240,7 @@ C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/i2c.h:
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/pin_map.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/sysctl.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/uart.h: 
+C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/adc.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/std.h: 
 C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h: 
 C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stddef.h: 
@@ -367,6 +370,7 @@ C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h:
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/interfaces/ITaskSupport.h: 
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task__epilogue.h: 
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/package/Task_SupportProxy.h: 
+C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h: 
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Error.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/System.h: 

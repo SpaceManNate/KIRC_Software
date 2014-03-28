@@ -26,6 +26,41 @@ Void GPSFxn(UArg arg0, UArg arg1) {
 
 }
 
+Void BatteryMonitorFxn(UArg arg0, UArg arg1) {
+	// This array is used for storing the data read from the ADC FIFO. It
+	// must be as large as the FIFO for the sequencer in use.  This example
+	// uses sequence 3 which has a FIFO depth of 1.  If another sequence
+	// was used with a deeper FIFO, then the array size must be changed.
+	//
+	uint32_t pui32ADC0Value[1];
+
+	BatteryMonitorInit();
+	// Sample AIN0 forever.  Display the value on the console.
+
+	while (1) {
+		// Trigger the ADC conversion.
+		ADCProcessorTrigger(ADC0_BASE, 3);
+
+		// Wait for conversion to be completed.
+		while (!ADCIntStatus(ADC0_BASE, 3, false)) {
+		}
+
+		// Clear the ADC interrupt flag.
+		ADCIntClear(ADC0_BASE, 3);
+
+		// Read ADC Value.
+		ADCSequenceDataGet(ADC0_BASE, 3, pui32ADC0Value);
+
+		// Display the AIN0 (PE7) digital value on the console.
+		printf("AIN0 = %4d\n", pui32ADC0Value[0]);
+		fflush(stdout);
+
+		//Delay 250ms arbitrarily.
+		Task_sleep(25000);
+	}
+
+}
+
 // ======== consoleFxn ========
 Void consoleFxn(UArg arg0, UArg arg1) {
 
@@ -101,9 +136,9 @@ Void consoleFxn(UArg arg0, UArg arg1) {
 				tempC, altitude);
 		fflush(stdout);
 
-		//Task_sleep(25);
-			} //END OF WHILE(1)
-		}
+
+	}
+}
 
 //======== main ========
 Int main(Void) {

@@ -73,4 +73,6 @@ UART_Handle GPS_Init(void);
 IMUdata_t Filter_Data(IMUdata_t Data,float Memory[15]);
 void Clear_Array(float *Array, unsigned int size);
 
+void BatteryMonitorInit(void);
+
 #endif /* SENSORS_H_ */

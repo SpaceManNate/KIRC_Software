@@ -28,6 +28,7 @@
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
+#include "driverlib/adc.h"
 
 // XDCtools Header files
 #include <xdc/std.h>
