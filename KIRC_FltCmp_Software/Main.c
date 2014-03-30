@@ -49,8 +49,11 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 // Priority 2 (Middle)
 Void ControlFxn(UArg arg0, UArg arg1) {
 	//___INIT PID GAINS____//
-	float Kp=0.545,Ki=0.3,Kd=0.084;
-	float Kpy=0.69,Kiy=0.0,Kdy=0.003;
+	//float Kp=0.545,Ki=0.25,Kd=0.084;
+	float Kp=0.315,Ki=0.140,Kd=0.0665;
+	//float Kpy=0.350,Kiy=0.0,Kdy=0.065;
+	float Kpy=0.47,Kiy=0.041,Kdy=0.093;
+	//float Kpy=0.0,Kiy=0.0,Kdy=0.1;
 
 	//init support variables
 	uint32_t output[4];
@@ -74,13 +77,13 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			GPIO_write(Board_LED2, Board_LED_ON);
 			GPIO_write(Board_LED0, Board_LED_OFF);
 
-			PIDLimit = 0.5*(RxData.input[2]-525); //Limit PID compensation to 50% of the throttle
+			PIDLimit = 0.45*(RxData.input[2]-525); //Limit PID compensation to 50% of the throttle
 			ProcessRxData(); //Process the latest Rx data
 
 			//Get gains from AUX Pit. trim
-			//Kiy = (float) 1.0*((RxData.input[5]-520)/430.0);
-			//printf("%2.3f\r\n", Kiy);
-			//fflush(stdout);
+			Ki = (float) 0.2*((RxData.input[5]-520)/430.0);
+			printf("%2.3f\r\n", Ki);
+			fflush(stdout);
 
 			//Error Calculation, and throw out bad inputs
 			if(controlData.angle_desired[0]<30.0 && controlData.angle_desired[0]>-30.0 )
@@ -88,8 +91,8 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			if(controlData.angle_desired[1]<30.0 && controlData.angle_desired[1]>-30.0 )
 				error[1] = controlData.angle_desired[1]-controlData.angle_current[1]; //PITCH CALCULATION
 
-			//printf("%2.3f	%2.3f\r\n",controlData.angle_current[2], controlData.angle_desired[2]);
-			//fflush(stdout);
+			printf("%2.3f	%2.3f\r\n",controlData.angle_current[2], controlData.angle_desired[2]);
+			fflush(stdout);
 
 			//PID calculation (ROLL and PITCH)
 			for(i=0;i<2;i++){
@@ -137,7 +140,7 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 				ErrorSum[i] = -IntLimit;
 
 			//Derivative
-			deriv[2] =  (controlData.angle_current[2] - angle_last[2])/dT;
+			deriv[2] =  (controlData.angle_current[2] - angle_last[2]);
 			if(deriv[2] > 180)
 				deriv[2] -= 360.0;
 			else if(deriv[2] < -180)
@@ -146,7 +149,7 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			angle_last[2] =  controlData.angle_current[2];
 
 			//PID Calculation
-			Compensation[2] = (int) (Kpy*error[2] + ErrorSum[2] - Kdy*deriv[2]);
+			Compensation[2] = (int) (Kpy*error[2] + ErrorSum[2] - Kdy*deriv[2]/dT);
 			//PID limiter
 			if(Compensation[2] > PIDLimit)
 				Compensation[2] = PIDLimit;
@@ -158,6 +161,10 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			output[1] += Compensation[2];
 			output[2] += Compensation[2];
 			output[3] -= Compensation[2];
+
+			//System_printf("OUTPUT 1: %d,  OUTPUT2: %d,  OUTPUT3: %d,  OUTPUT4: %d\r\n",output[0],output[1],output[2],output[3]);
+			//
+			System_flush();
 
 			motors_out(output); //Output control to motors
 		}

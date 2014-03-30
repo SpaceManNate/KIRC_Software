@@ -21,7 +21,7 @@ void ProcessRxData(void){
 	//Convert input (pitch roll) into degrees (+/-15 deg)
 	y =(float) (60.0*(RxData.input[3]-525)/430.0 - 30.0);
 	x =(float) (60.0*(RxData.input[1]-525)/430.0 - 30.0);
-	yaw_input = (float) -6.0*(RxData.input[0] - 525)/430.0 + 3;
+	yaw_input = (float) -2.5*(RxData.input[0] - 525)/430.0 + 1.25;
 
 	//Apply rotation matrix (-45deg) to control input (for "x" pattern flight)
 	controlData.angle_desired[0] = 0.707*y - 0.707*x;
@@ -29,7 +29,7 @@ void ProcessRxData(void){
 
 
 	//limit the sensitivity of the yaw control (to avoid drift)
-	if(yaw_input > 0.5 || yaw_input < -0.5)
+	if(yaw_input > 0.3 || yaw_input < -0.3)
 		controlData.angle_desired[2] += yaw_input;
 	//Yaw loop condition
 	if(controlData.angle_desired[2] > 180.0 || controlData.angle_desired[2] <-180.0)
