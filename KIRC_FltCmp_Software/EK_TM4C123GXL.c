@@ -504,14 +504,24 @@ UARTTiva_Object uartTivaObjects[EK_TM4C123GXL_UARTCOUNT];
 
 /* UART configuration structure */
 const UARTTiva_HWAttrs uartTivaHWAttrs[EK_TM4C123GXL_UARTCOUNT] = {
-    {UART0_BASE, INT_UART0}, /* EK_TM4C123GXL_UART0 */
+    {UART0_BASE, INT_UART0}, {UART1_BASE, INT_UART1}, {UART3_BASE, INT_UART3}/* EK_TM4C123GXL_UART0 */
 };
 
 const UART_Config UART_config[] = {
     {
         &UARTTiva_fxnTable,
         &uartTivaObjects[0],
-        &uartTivaHWAttrs[0]
+        &uartTivaHWAttrs[0],
+    },
+    {
+        &UARTTiva_fxnTable,
+        &uartTivaObjects[1],
+        &uartTivaHWAttrs[1],
+    },
+    {
+        &UARTTiva_fxnTable,
+        &uartTivaObjects[2],
+        &uartTivaHWAttrs[2],
     },
     {NULL, NULL, NULL}
 };
@@ -526,6 +536,16 @@ Void EK_TM4C123GXL_initUART()
     GPIOPinConfigure(GPIO_PA0_U0RX);
     GPIOPinConfigure(GPIO_PA1_U0TX);
     GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART1);
+    GPIOPinConfigure(GPIO_PB0_U1RX);
+    GPIOPinConfigure(GPIO_PB1_U1TX);
+    GPIOPinTypeUART(GPIO_PORTB_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART3);
+    GPIOPinConfigure(GPIO_PC6_U3RX);
+    GPIOPinConfigure(GPIO_PC7_U3TX);
+    GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_6 | GPIO_PIN_7);
 
     /* Initialize the UART driver */
     UART_init();

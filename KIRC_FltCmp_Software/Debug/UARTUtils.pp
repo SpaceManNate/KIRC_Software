@@ -2,12 +2,12 @@
 
 UARTUtils.obj: ../UARTUtils.c
 UARTUtils.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/std.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stddef.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stddef.h
 UARTUtils.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/std.h
 UARTUtils.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/M4F.h
 UARTUtils.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/std.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdint.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdint.h
 UARTUtils.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Assert.h
 UARTUtils.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/xdc.h
 UARTUtils.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h
@@ -110,11 +110,11 @@ UARTUtils.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysb
 UARTUtils.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/package/BIOS_RtsGateProxy.h
 UARTUtils.obj: C:/ti/tirtos_1_20_00_28/packages/ti/drivers/UART.h
 UARTUtils.obj: C:/ti/tirtos_1_20_00_28/packages/ti/drivers/ENV.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdbool.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/yvals.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/linkage.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/_lock.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdbool.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/yvals.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/linkage.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/_lock.h
 UARTUtils.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/inc/hw_types.h
 UARTUtils.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/gpio.h
 UARTUtils.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/i2c.h
@@ -125,20 +125,20 @@ UARTUtils.obj: ../Board.h
 UARTUtils.obj: ../EK_TM4C123GXL.h
 UARTUtils.obj: C:/ti/tirtos_1_20_00_28/packages/ti/drivers/GPIO.h
 UARTUtils.obj: ../UARTUtils.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdio.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/file.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdio.h
-UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/string.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/file.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h
+UARTUtils.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/string.h
 
 ../UARTUtils.c: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/std.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stddef.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stddef.h: 
 C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/std.h: 
 C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/M4F.h: 
 C:/ti/xdctools_3_25_04_88/packages/ti/targets/std.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdint.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdint.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Assert.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/xdc.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h: 
@@ -241,11 +241,11 @@ C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/BIOS__epilo
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/package/BIOS_RtsGateProxy.h: 
 C:/ti/tirtos_1_20_00_28/packages/ti/drivers/UART.h: 
 C:/ti/tirtos_1_20_00_28/packages/ti/drivers/ENV.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdbool.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/yvals.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/linkage.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/_lock.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdbool.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/yvals.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/linkage.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/_lock.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/inc/hw_types.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/gpio.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/i2c.h: 
@@ -256,8 +256,8 @@ C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/watchdog.h:
 ../EK_TM4C123GXL.h: 
 C:/ti/tirtos_1_20_00_28/packages/ti/drivers/GPIO.h: 
 ../UARTUtils.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdio.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/file.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdio.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/string.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/file.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/string.h: 

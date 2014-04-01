@@ -11,6 +11,7 @@ _RxInput RxData = {.input = {533,533,533,533,533,533}, .PWMticks = {0,0,0,0,0,0,
 _IMUdata IMUdata = {.acc = {0,0,0}, .gyr = {0,0,0}, .mag = {0,0,0}};
 _controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0}, .Quaternion = {1.0,0,0,0},
 					        .Offset = {0,0}, .QuadState = QUAD_INIT};
+_TelemData TelemData = {"$GPGLL",0.0,0};
 
 // ======== ReadSensorsFxn ========
 // Priority 3 (Highest)
@@ -44,6 +45,7 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 		Task_sleep(2500); //Delay (100 Hz)
 	} //END OF WHILE(1)
 }
+
 
 // ======== ControlFxn ========
 // Priority 2 (Middle)
@@ -210,7 +212,116 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 		}
 
 		ProcessStateMachine(timeout);
+		Task_sleep(2500); //Delay (100Hz)
 	} //END OF WHILE(1)
+}
+
+// ======== GPSFxn ========
+// Priority 1 (Lowest)
+Void GPSFxn(UArg arg0, UArg arg1) {
+	System_printf("Initializing GPS...\n");
+	System_flush();
+	//UInt8 req_buf[100];
+	UART_Handle uart = GPS_Init();
+	int rx_size;
+	Char U6TxBuf[150];
+
+	UART_Handle uart2;
+	UART_Params uartParams;
+	//Create a UART with data processing off.
+	UART_Params_init(&uartParams);
+	uartParams.writeDataMode = UART_DATA_BINARY;
+	uartParams.readDataMode = UART_DATA_BINARY;
+	uartParams.readReturnMode = UART_RETURN_FULL;
+	uartParams.readEcho = UART_ECHO_OFF;
+	uartParams.baudRate = 115200;
+	uart2 = UART_open(Board_UART3, &uartParams);
+
+	while (1) {
+		//Get NMEA GPGLL GPS sentence
+		//UART_write(uart2, hello, sizeof(hello));
+
+		rx_size = UART_read(uart, (Char*) TelemData.GPS, sizeof(TelemData.GPS));
+		TelemData.GPS[rx_size-2] = '\0';
+		//Forward
+		//for (i = 0; i < rx_size; i++) {
+		//	System_printf("%c", req_buf[i]);
+		//}
+
+		sprintf(U6TxBuf,"%s,%d,%d,%d,\n", TelemData.GPS,(int)TelemData.Alt,TelemData.Batt,controlData.QuadState);
+		UART_write(uart2, U6TxBuf, sizeof(U6TxBuf)-2);
+		U6TxBuf[0] = 0x0A;
+		UART_write(uart2, U6TxBuf, 1);
+
+	}
+
+}
+
+// ======== AltimeterFxn ========
+// Priority 1 (Lowest)
+Void AltimeterFxn(UArg arg0, UArg arg1) {
+	System_printf("Initializing Altimeter...\n");
+	System_flush();
+	ALTM_CalData_t Altim_caldata;
+	//float altitude;
+	float groundLevel = 0;
+	int i;
+
+	Altim_caldata = Altm_Init();
+
+	for (i = 0; i < 15; i++) {
+		groundLevel += Get_Altitude(Altim_caldata);
+	}
+	groundLevel = groundLevel / 15.0;
+
+	while(1){
+
+		TelemData.Alt = Get_Altitude(Altim_caldata) - groundLevel; //Altitude from starting point
+
+		//printf("!Alt,%0.1f\n", altitude);
+		//fflush(stdout);
+		Task_sleep(1000);
+
+	}
+}
+
+// ======== BatteryMonitorFxn ========
+// Priority 1 (Lowest)
+Void BatteryMonitorFxn(UArg arg0, UArg arg1) {
+	System_printf("Initializing BatteryMonitor...\n");
+	System_flush();
+	// This array is used for storing the data read from the ADC FIFO. It
+	// must be as large as the FIFO for the sequencer in use.  This example
+	// uses sequence 3 which has a FIFO depth of 1.  If another sequence
+	// was used with a deeper FIFO, then the array size must be changed.
+	uint32_t pui32ADC0Value[1];
+
+	BatteryMonitorInit();
+	// Sample AIN0 forever.  Display the value on the console.
+
+	while (1) {
+		// Trigger the ADC conversion.
+		ADCProcessorTrigger(ADC0_BASE, 3);
+
+		// Wait for conversion to be completed.
+		while (!ADCIntStatus(ADC0_BASE, 3, false)) {
+		}
+
+		// Clear the ADC interrupt flag.
+		ADCIntClear(ADC0_BASE, 3);
+
+		// Read ADC Value.
+		ADCSequenceDataGet(ADC0_BASE, 3, pui32ADC0Value);
+
+		TelemData.Batt = pui32ADC0Value[0];
+		// Display the AIN0 (PE7) digital value on the console.
+		//printf("Batt = %4d\n", pui32ADC0Value[0]);
+		//fflush(stdout);
+
+		//Delay 250ms arbitrarily.
+		Task_sleep(25000);
+	}
+
 }
 
 //======== main ========

@@ -2,19 +2,19 @@
 
 Main.obj: ../Main.c
 Main.obj: ../system.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdbool.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/yvals.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/linkage.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/_lock.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdint.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdlib.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdio.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/math.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/ymath.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/string.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/file.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdbool.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/yvals.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/linkage.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/_lock.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdint.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdlib.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/math.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/ymath.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/string.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/file.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/inc/hw_i2c.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/inc/hw_memmap.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/inc/hw_types.h
@@ -24,14 +24,15 @@ Main.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/pwm.
 Main.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/pin_map.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/sysctl.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/uart.h
+Main.obj: C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/adc.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/std.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stddef.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stddef.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/std.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/M4F.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/ti/targets/std.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/cfg/global.h
-Main.obj: C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f.h
+Main.obj: C:/Users/asusHD/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f.h
 Main.obj: C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/xdc.h
 Main.obj: C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h
@@ -239,7 +240,7 @@ Main.obj: C:/ti/tirtos_1_20_00_28/packages/ti/drivers/I2C.h
 Main.obj: ../Board.h
 Main.obj: ../EK_TM4C123GXL.h
 Main.obj: ../UARTUtils.h
-Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdio.h
+Main.obj: C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h
 Main.obj: ../sensors.h
 Main.obj: ../system.h
 Main.obj: ../quaternion.h
@@ -248,19 +249,19 @@ Main.obj: ../RxFunctions.h
 
 ../Main.c: 
 ../system.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdbool.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/yvals.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/linkage.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/_lock.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdint.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdlib.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdio.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/math.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/ymath.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/string.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/file.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdbool.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/yvals.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/linkage.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/_lock.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdint.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdlib.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/math.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/ymath.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/string.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/file.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/inc/hw_i2c.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/inc/hw_memmap.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/inc/hw_types.h: 
@@ -270,14 +271,15 @@ C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/pwm.h:
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/pin_map.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/sysctl.h: 
 C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/uart.h: 
+C:/ti/tirtos_1_20_00_28/products/TivaWare_C_Series-2.0b/driverlib/adc.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/std.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdarg.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stddef.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdarg.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stddef.h: 
 C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/std.h: 
 C:/ti/xdctools_3_25_04_88/packages/ti/targets/arm/elf/M4F.h: 
 C:/ti/xdctools_3_25_04_88/packages/ti/targets/std.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/cfg/global.h: 
-C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f.h: 
+C:/Users/asusHD/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg/package/cfg/KIRC_FltCmp_RTOS_pem4f.h: 
 C:/ti/tirtos_1_20_00_28/products/bios_6_37_00_20/packages/ti/sysbios/knl/Task.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/xdc.h: 
 C:/ti/xdctools_3_25_04_88/packages/xdc/runtime/Types.h: 
@@ -485,7 +487,7 @@ C:/ti/tirtos_1_20_00_28/packages/ti/drivers/I2C.h:
 ../Board.h: 
 ../EK_TM4C123GXL.h: 
 ../UARTUtils.h: 
-C:/ti/ccsv5/tools/compiler/arm_5.1.1/include/stdio.h: 
+C:/ti/ccsv5/tools/compiler/arm_5.1.3/include/stdio.h: 
 ../sensors.h: 
 ../system.h: 
 ../quaternion.h: 

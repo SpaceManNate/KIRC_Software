@@ -29,6 +29,7 @@
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
+#include "driverlib/adc.h"
 
 // XDCtools Header files
 #include <xdc/std.h>
@@ -92,6 +93,12 @@ typedef struct RxInput{
 	volatile int input[6];
 	unsigned int PWMticks[8];
 	unsigned char dataRdy;
-}_RxInput;
+} _RxInput;
+
+typedef struct TelemData{
+	UInt8 GPS[100];
+	float Alt;
+	int Batt;
+} _TelemData;
 
 #endif /* SYSTEM_H_ */

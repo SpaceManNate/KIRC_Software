@@ -117,10 +117,11 @@ typedef enum EK_TM4C123GXL_SPIName {
  */
 typedef enum EK_TM4C123GXL_UARTName {
     EK_TM4C123GXL_UART0 = 0,
+    EK_TM4C123GXL_UART1,
+    EK_TM4C123GXL_UART3,
 
     EK_TM4C123GXL_UARTCOUNT
 } EK_TM4C123GXL_UARTName;
-
 /*!
  *  @def    EK_TM4C123GXL_USBMode
  *  @brief  Enum of USB setup function on the EK_TM4C123GXL dev board

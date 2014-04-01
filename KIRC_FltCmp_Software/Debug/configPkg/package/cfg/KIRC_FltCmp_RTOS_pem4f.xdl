@@ -9,11 +9,11 @@
  */
 
 
--l"C:\Users\Nathaniel\workspace_v5_5\KIRC_Software\KIRC_FltCmp_Software\Debug\configPkg\package\cfg\KIRC_FltCmp_RTOS_pem4f.oem4f"
+-l"C:\Users\asusHD\workspace_v5_5\KIRC_Software\KIRC_FltCmp_Software\Debug\configPkg\package\cfg\KIRC_FltCmp_RTOS_pem4f.oem4f"
 -l"C:\ti\tirtos_1_20_00_28\packages\ti\drivers\lib\nonInstrumented\gpio_tivaware.aem4f"
 -l"C:\ti\tirtos_1_20_00_28\packages\ti\drivers\lib\nonInstrumented\i2c_tivaware.aem4f"
 -l"C:\ti\tirtos_1_20_00_28\packages\ti\drivers\lib\nonInstrumented\uart_tivaware.aem4f"
--l"C:\Users\Nathaniel\workspace_v5_5\KIRC_Software\KIRC_FltCmp_Software\src\sysbios\sysbios.aem4f"
+-l"C:\Users\asusHD\workspace_v5_5\KIRC_Software\KIRC_FltCmp_Software\src\sysbios\sysbios.aem4f"
 -l"C:\ti\xdctools_3_25_04_88\packages\ti\catalog\arm\cortexm4\tiva\ce\lib\Boot.aem4f"
 -l"C:\ti\xdctools_3_25_04_88\packages\ti\targets\arm\rtsarm\lib\ti.targets.arm.rtsarm.aem4f"
 -l"C:\ti\xdctools_3_25_04_88\packages\ti\targets\arm\rtsarm\lib\boot.aem4f"
@@ -131,7 +131,7 @@
  */
 xdc_runtime_Startup__EXECFXN__C = 1;
 xdc_runtime_Startup__RESETFXN__C = 1;
-TSK_idle = ti_sysbios_knl_Task_Object__table__V + 228;
+TSK_idle = ti_sysbios_knl_Task_Object__table__V + 456;
 
 
 SECTIONS

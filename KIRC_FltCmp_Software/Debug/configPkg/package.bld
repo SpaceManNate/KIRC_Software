@@ -11,7 +11,7 @@ var makeAssembly = false;
 var Executable = xdc.module('xdc.bld.Executable');
 
 var exeOpts = new Executable.Attrs({
-        cfgScript: 'C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/KIRC_FltCmp_RTOS.cfg',
+        cfgScript: 'C:/Users/asusHD/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/KIRC_FltCmp_RTOS.cfg',
         profile: 'release',
         cfgHome: 'configPkg',
 });
@@ -41,7 +41,7 @@ else {
 
 var thisObj = {
     cfg:        '../KIRC_FltCmp_RTOS.cfg',
-    outputPath: 'C:/Users/Nathaniel/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg',
+    outputPath: 'C:/Users/asusHD/workspace_v5_5/KIRC_Software/KIRC_FltCmp_Software/Debug/configPkg',
     exeName:    'KIRC_FltCmp_RTOS' + suffix,
     exeIntName: 'KIRC_FltCmp_RTOS' + suffix.replace('.', '_'),
     targ:       targ,

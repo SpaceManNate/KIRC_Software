@@ -16,6 +16,8 @@
 #define GYRO_READ_ADDRESS   0x28
 #define MAGN_SLAVE_ADDRESS  0x1E
 #define MAGN_READ_ADDRESS   0x03
+#define ALTM_SLAVE_ADDRESS  0x77
+#define ALTM_READ_ADDRESS   0xF6
 
 //Raw IMU Data Structure
 typedef struct RawIMUdata{
@@ -23,6 +25,27 @@ typedef struct RawIMUdata{
 	short y;
 	short z;
 } RawIMUdata_t;
+
+typedef struct ALTM_CalData{
+	short AC1;
+	short AC2;
+	short AC3;
+	unsigned short AC4;
+	unsigned short AC5;
+	unsigned short AC6;
+	short B1;
+	short B2;
+	short MB;
+	short MC;
+	short MD;
+} ALTM_CalData_t;
+
+
+ALTM_CalData_t Altm_Init(void);
+long Get_Temp(ALTM_CalData_t Cal);
+float Get_TempC(ALTM_CalData_t Cal);
+long Get_Pressure(ALTM_CalData_t Cal, long B5);
+float Get_Altitude(ALTM_CalData_t Cal);
 
 //Function Prototypes
 void Accel_Init(void);
@@ -41,6 +64,9 @@ void Calib_Magn(void);
 void Read_Magn(void);
 
 void Filter_GyroData(void);
+
+UART_Handle GPS_Init(void);
+void BatteryMonitorInit(void);
 
 //I2C APIs from customized from Tivaware
 unsigned char I2C0_RxData(unsigned char Slave_Addr,unsigned char Reg_Addr);

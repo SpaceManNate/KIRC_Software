@@ -46,8 +46,8 @@ void ProcessStateMachine(uint32_t timeout){
 		//Timeout set to 500mS (might change later)
 		if(Clock_getTicks() > (timeout + 50000)){
 			controlData.QuadState = QUAD_DISABLED;
-			System_printf("Comm Lost: System Abort\n");
-			System_flush();
+			//System_printf("Comm Lost: System Abort\n");
+			//System_flush();
 		}
 
 		//Check if safety switch is ON

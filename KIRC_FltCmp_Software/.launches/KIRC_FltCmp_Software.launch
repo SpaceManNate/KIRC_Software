@@ -5,7 +5,7 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="${build_artifact:KIRC_FltCmp_Software}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="KIRC_FltCmp_Software"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:KIRC_FltCmp_Software}"/>
-<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="C:/Users\Nathaniel\workspace_v5_5\KIRC_Software\KIRC_FltCmp_Software\Debug\KIRC_FltCmp_Software.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="C:/Users\asusHD\workspace_v5_5\KIRC_Software\KIRC_FltCmp_Software\Debug\KIRC_FltCmp_Software.out"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/KIRC_FltCmp_Software"/>
 </listAttribute>

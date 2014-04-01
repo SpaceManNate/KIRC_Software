@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccsv5/tools/compiler/arm_5.1.1
+CG_TOOL_ROOT := C:/ti/ccsv5/tools/compiler/arm_5.1.3
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
@@ -123,7 +123,7 @@ all: KIRC_FltCmp_Software.out
 KIRC_FltCmp_Software.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv5/tools/compiler/arm_5.1.1/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=PART_TM4C123GH6PM --define=ccs --define=TIVAWARE --diag_warning=225 --display_error_number --diag_wrap=off --gen_func_subsections=on -z -m"KIRC_FltCmp_Software.map" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.1/lib" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.1/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="KIRC_FltCmp_Software_linkInfo.xml" --rom_model -o "KIRC_FltCmp_Software.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv5/tools/compiler/arm_5.1.3/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=PART_TM4C123GH6PM --define=ccs --define=TIVAWARE --diag_warning=225 --display_error_number --diag_wrap=off --gen_func_subsections=on -z -m"KIRC_FltCmp_Software.map" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.3/lib" -i"C:/ti/ccsv5/tools/compiler/arm_5.1.3/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="KIRC_FltCmp_Software_linkInfo.xml" --rom_model -o "KIRC_FltCmp_Software.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
