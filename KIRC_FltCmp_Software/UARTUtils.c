@@ -55,7 +55,7 @@
 #include <file.h>
 #include <string.h>
 
-#define NUM_PORTS 3
+#define NUM_PORTS 1
 
 /* Typedefs */
 typedef struct {
@@ -70,7 +70,8 @@ static UART_Handle systemHandle = NULL;
 static UART_Handle loggerHandle = NULL;
 
 /* This example only uses UART0 */
-static UARTPorts ports[NUM_PORTS] = {{NULL, Board_UART0, 0, FALSE}, {NULL, Board_UART1, 0, FALSE}, {NULL, Board_UART3, 0, FALSE}};
+static UARTPorts ports[NUM_PORTS] = {{NULL, Board_UART0, 0, FALSE}};
+//static UARTPorts ports[NUM_PORTS] = {{NULL, Board_UART0, 0, FALSE}, {NULL, Board_UART1, 0, FALSE}, {NULL, Board_UART3, 0, FALSE}};
 
 /*
  *  ======== openHandle ========

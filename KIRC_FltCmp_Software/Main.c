@@ -7,11 +7,14 @@
  ************************************************************/
 #include "system.h"
 
-_RxInput RxData = {.input = {533,533,533,533,533,533}, .PWMticks = {0,0,0,0,0,0,0,0}, .dataRdy = false};
-_IMUdata IMUdata = {.acc = {0,0,0}, .gyr = {0,0,0}, .mag = {0,0,0}};
-_controlData controlData = {.angle_desired = {0,0,0}, .angle_current = {0,0,0}, .Quaternion = {1.0,0,0,0},
-					        .Offset = {0,0}, .QuadState = QUAD_INIT};
-_TelemData TelemData = {"$GPGLL",0.0,0};
+_RxInput RxData = { .input = { 533, 533, 533, 533, 533, 533 }, .PWMticks = { 0,
+		0, 0, 0, 0, 0, 0, 0 }, .dataRdy = false };
+_IMUdata IMUdata =
+		{ .acc = { 0, 0, 0 }, .gyr = { 0, 0, 0 }, .mag = { 0, 0, 0 } };
+_controlData controlData = { .angle_desired = { 0, 0, 0 }, .angle_current = { 0,
+		0, 0 }, .Quaternion = { 1.0, 0, 0, 0 }, .Offset = { 0, 0 }, .QuadState =
+		QUAD_INIT };
+_TelemData TelemData = { "$GPGLL", 0.0, 0 };
 
 // ======== ReadSensorsFxn ========
 // Priority 3 (Highest)
@@ -46,23 +49,22 @@ Void ReadSensorsFxn(UArg arg0, UArg arg1) {
 	} //END OF WHILE(1)
 }
 
-
 // ======== ControlFxn ========
 // Priority 2 (Middle)
 Void ControlFxn(UArg arg0, UArg arg1) {
 	//___INIT PID GAINS____//
 	//float Kp=0.545,Ki=0.25,Kd=0.084;
-	float Kp=0.315,Ki=0.140,Kd=0.0665;
+	float Kp = 0.315, Ki = 0.140, Kd = 0.0665;
 	//float Kpy=0.350,Kiy=0.0,Kdy=0.065;
-	float Kpy=0.47,Kiy=0.041,Kdy=0.093;
+	float Kpy = 0.47, Kiy = 0.041, Kdy = 0.093;
 	//float Kpy=0.0,Kiy=0.0,Kdy=0.1;
 
 	//init support variables
 	uint32_t output[4];
 	float error[3];
-	float deriv[3] = {0,0,0};
-	float ErrorSum[3] = {0,0,0};
-	float angle_last[3] = {0,0,0};
+	float deriv[3] = { 0, 0, 0 };
+	float ErrorSum[3] = { 0, 0, 0 };
+	float angle_last[3] = { 0, 0, 0 };
 
 	short Compensation[3];
 	static float IntLimit = 60.0;
@@ -74,88 +76,95 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 	System_flush();
 
 	while (1) {
-		if(controlData.QuadState == QUAD_ENABLED){
+		if (controlData.QuadState == QUAD_ENABLED) {
 			//Change blue light to red to signify motors are armed
 			GPIO_write(Board_LED2, Board_LED_ON);
 			GPIO_write(Board_LED0, Board_LED_OFF);
 
-			PIDLimit = 0.45*(RxData.input[2]-525); //Limit PID compensation to 50% of the throttle
+			PIDLimit = 0.45 * (RxData.input[2] - 525); //Limit PID compensation to 50% of the throttle
 			ProcessRxData(); //Process the latest Rx data
 
 			//Get gains from AUX Pit. trim
-			Ki = (float) 0.2*((RxData.input[5]-520)/430.0);
+			Ki = (float) 0.2 * ((RxData.input[5] - 520) / 430.0);
 			printf("%2.3f\r\n", Ki);
 			fflush(stdout);
 
 			//Error Calculation, and throw out bad inputs
-			if(controlData.angle_desired[0]<30.0 && controlData.angle_desired[0]>-30.0 )
-				error[0] = controlData.angle_desired[0]-controlData.angle_current[0]; //ROLL CALCULATION
-			if(controlData.angle_desired[1]<30.0 && controlData.angle_desired[1]>-30.0 )
-				error[1] = controlData.angle_desired[1]-controlData.angle_current[1]; //PITCH CALCULATION
+			if (controlData.angle_desired[0] < 30.0
+					&& controlData.angle_desired[0] > -30.0)
+				error[0] = controlData.angle_desired[0]
+						- controlData.angle_current[0]; //ROLL CALCULATION
+			if (controlData.angle_desired[1] < 30.0
+					&& controlData.angle_desired[1] > -30.0)
+				error[1] = controlData.angle_desired[1]
+						- controlData.angle_current[1]; //PITCH CALCULATION
 
-			printf("%2.3f	%2.3f\r\n",controlData.angle_current[2], controlData.angle_desired[2]);
+			printf("%2.3f	%2.3f\r\n", controlData.angle_current[2],
+					controlData.angle_desired[2]);
 			fflush(stdout);
 
 			//PID calculation (ROLL and PITCH)
-			for(i=0;i<2;i++){
-				ErrorSum[i] += Ki*error[i]*dT;
+			for (i = 0; i < 2; i++) {
+				ErrorSum[i] += Ki * error[i] * dT;
 				//Integration Limiter
-				if(ErrorSum[i] > IntLimit)
+				if (ErrorSum[i] > IntLimit)
 					ErrorSum[i] = IntLimit;
-				else if(ErrorSum[i] < -IntLimit)
+				else if (ErrorSum[i] < -IntLimit)
 					ErrorSum[i] = -IntLimit;
 
-				deriv[i] = (controlData.angle_current[i] - angle_last[i])/dT;
+				deriv[i] = (controlData.angle_current[i] - angle_last[i]) / dT;
 
 				//Calculate PID
-				Compensation[i] = (int) (Kp*error[i] + ErrorSum[i] - Kd*deriv[i]);
+				Compensation[i] = (int) (Kp * error[i] + ErrorSum[i]
+						- Kd * deriv[i]);
 
 				//PID limiter
-				if(Compensation[i] > PIDLimit)
+				if (Compensation[i] > PIDLimit)
 					Compensation[i] = PIDLimit;
-				if(Compensation[i] < -PIDLimit)
+				if (Compensation[i] < -PIDLimit)
 					Compensation[i] = -PIDLimit;
-				angle_last[i] =  controlData.angle_current[i];
+				angle_last[i] = controlData.angle_current[i];
 
 			}
 
 			//Calculate control actions (ROLL PITCH)
-			output[0] = RxData.input[2]-Compensation[1];
-			output[1] = RxData.input[2]-Compensation[0];
-			output[2] = RxData.input[2]+Compensation[0];
-			output[3] = RxData.input[2]+Compensation[1];
-
+			output[0] = RxData.input[2] - Compensation[1];
+			output[1] = RxData.input[2] - Compensation[0];
+			output[2] = RxData.input[2] + Compensation[0];
+			output[3] = RxData.input[2] + Compensation[1];
 
 			//PID calculation (YAW)
-			error[2] = controlData.angle_desired[2] -  controlData.angle_current[2];
+			error[2] = controlData.angle_desired[2]
+					- controlData.angle_current[2];
 			//Yaw Loop Condition
-			if(error[2] > 180)
+			if (error[2] > 180)
 				error[2] -= 360.0;
-			else if(error[2] < -180)
+			else if (error[2] < -180)
 				error[2] += 360.0;
 
 			//Integral
-			ErrorSum[2] += Kiy*error[2]*dT;
-			if(ErrorSum[i] > IntLimit)
+			ErrorSum[2] += Kiy * error[2] * dT;
+			if (ErrorSum[i] > IntLimit)
 				ErrorSum[i] = IntLimit;
-			else if(ErrorSum[i] < -IntLimit)
+			else if (ErrorSum[i] < -IntLimit)
 				ErrorSum[i] = -IntLimit;
 
 			//Derivative
-			deriv[2] =  (controlData.angle_current[2] - angle_last[2]);
-			if(deriv[2] > 180)
+			deriv[2] = (controlData.angle_current[2] - angle_last[2]);
+			if (deriv[2] > 180)
 				deriv[2] -= 360.0;
-			else if(deriv[2] < -180)
+			else if (deriv[2] < -180)
 				deriv[2] += 360.0;
 
-			angle_last[2] =  controlData.angle_current[2];
+			angle_last[2] = controlData.angle_current[2];
 
 			//PID Calculation
-			Compensation[2] = (int) (Kpy*error[2] + ErrorSum[2] - Kdy*deriv[2]/dT);
+			Compensation[2] = (int) (Kpy * error[2] + ErrorSum[2]
+					- Kdy * deriv[2] / dT);
 			//PID limiter
-			if(Compensation[2] > PIDLimit)
+			if (Compensation[2] > PIDLimit)
 				Compensation[2] = PIDLimit;
-			else if(Compensation[2] < -PIDLimit)
+			else if (Compensation[2] < -PIDLimit)
 				Compensation[2] = -PIDLimit;
 
 			//Calculate control actions (ROLL PITCH)
@@ -164,17 +173,17 @@ Void ControlFxn(UArg arg0, UArg arg1) {
 			output[2] += Compensation[2];
 			output[3] -= Compensation[2];
 
-			//System_printf("OUTPUT 1: %d,  OUTPUT2: %d,  OUTPUT3: %d,  OUTPUT4: %d\r\n",output[0],output[1],output[2],output[3]);
-			//
+			System_printf("OUTPUT 1: %d,  OUTPUT2: %d,  OUTPUT3: %d,  OUTPUT4: %d\r\n",output[0],output[1],output[2],output[3]);
+
 			System_flush();
 
 			motors_out(output); //Output control to motors
 		}
 
-		else{
+		else {
 			//If quad is not enabled, safe the motors, and turn off red light
 			motorsDisable();
-			controlData.angle_desired[2] =  controlData.angle_current[2];
+			controlData.angle_desired[2] = controlData.angle_current[2];
 			GPIO_write(Board_LED2, Board_LED_OFF);
 			GPIO_write(Board_LED0, Board_LED_ON);
 		}
@@ -189,26 +198,39 @@ Void ReadInputFxn(UArg arg0, UArg arg1) {
 	//Init Turnigy Receiver listening
 	System_printf("Initializing RC Input...\n");
 	System_flush();
-	float total[6] = {0.0,0.0,0.0,0.0,0.0,0.0};
+	float total[6] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 	volatile unsigned short i;
 	uint32_t timeout = 0;
 	EnableRxInterrupts();
 
 	while (1) {
-		if(RxData.dataRdy){
+		if (RxData.dataRdy) {
 			timeout = Clock_getTicks(); //update new timeout
-			DisableRxInterrupts();
-			for(i=0;i<5;i++){
-				total[i] = ((float) (RxData.PWMticks[i+1] - RxData.PWMticks[i])/20.0);
-				RxData.input[i] = 100*total[i];
+
+			//DisableRxInterrupts();
+
+			//System_printf("PWM 1: %d, PMW 2: %d, PWM 3: %d, PWM 4: %d, PWN 5: %d, PWM 6: %d, PWM 7: %d, PWM 8: %d\r\n",
+			//			    		  RxData.PWMticks[0],RxData.PWMticks[1],RxData.PWMticks[2],RxData.PWMticks[3],RxData.PWMticks[4],RxData.PWMticks[5],RxData.PWMticks[6],RxData.PWMticks[7]);
+
+
+			for (i = 0; i < 5; i++) {
+				total[i] = ((float) (RxData.PWMticks[i + 1] - RxData.PWMticks[i]) / 20.0);
+				if(total[i] < 0.0)
+					continue;
+				RxData.input[i] = 100 * total[i];
 			}
-			total[5] = ((float) (RxData.PWMticks[7] - RxData.PWMticks[6]))/20.0;
-			RxData.input[5] = 100*total[5];
+
+			total[5] = ((float) (RxData.PWMticks[7] - RxData.PWMticks[6])) / 20.0;
+			RxData.input[5] = 100 * total[5];
+
+
+
 			//System_printf("INPUT 1: %d, INPUT 2: %d, INPUT 3: %d, INPUT 4: %d, INPUT 5: %d, INPUT 6: %d\r\n",
-			//    		  RxData.input[0],RxData.input[1],RxData.input[2],RxData.input[3],RxData.input[4],RxData.input[5]);
+			//   		  RxData.input[0],RxData.input[1],RxData.input[2],RxData.input[3],RxData.input[4],RxData.input[5]);
 			//System_flush();
 			EnableRxInterrupts();
 			RxData.dataRdy = false;
+
 		}
 
 		ProcessStateMachine(timeout);
@@ -242,14 +264,18 @@ Void GPSFxn(UArg arg0, UArg arg1) {
 		//UART_write(uart2, hello, sizeof(hello));
 
 		rx_size = UART_read(uart, (Char*) TelemData.GPS, sizeof(TelemData.GPS));
-		TelemData.GPS[rx_size-2] = '\0';
+		TelemData.GPS[rx_size - 2] = '\0';
 		//Forward
 		//for (i = 0; i < rx_size; i++) {
 		//	System_printf("%c", req_buf[i]);
 		//}
+		System_printf("%s,%d,%d,%d,\n", TelemData.GPS, (int) TelemData.Alt,
+						TelemData.Batt, controlData.QuadState);
+		System_flush();
 
-		sprintf(U6TxBuf,"%s,%d,%d,%d,\n", TelemData.GPS,(int)TelemData.Alt,TelemData.Batt,controlData.QuadState);
-		UART_write(uart2, U6TxBuf, sizeof(U6TxBuf)-2);
+		sprintf(U6TxBuf, "%s,%d,%d,%d,\n", TelemData.GPS, (int) TelemData.Alt,
+				TelemData.Batt, controlData.QuadState);
+		UART_write(uart2, U6TxBuf, sizeof(U6TxBuf) - 2);
 		U6TxBuf[0] = 0x0A;
 		UART_write(uart2, U6TxBuf, 1);
 
@@ -274,7 +300,7 @@ Void AltimeterFxn(UArg arg0, UArg arg1) {
 	}
 	groundLevel = groundLevel / 15.0;
 
-	while(1){
+	while (1) {
 
 		TelemData.Alt = Get_Altitude(Altim_caldata) - groundLevel; //Altitude from starting point
 
@@ -352,9 +378,9 @@ Int main(Void) {
 	//  will go to UART0, the same as printf.
 	UARTUtils_systemInit(0);
 
-    // Initialize interrupts for all ports that need them
+	// Initialize interrupts for all ports that need them
 	GPIO_setupCallbacks(&Board_gpioCallbacks0);
-    GPIO_setupCallbacks(&Board_gpioCallbacks1);
+	GPIO_setupCallbacks(&Board_gpioCallbacks1);
 
 	System_printf("\fStarting BIOS...\n");
 	System_flush();

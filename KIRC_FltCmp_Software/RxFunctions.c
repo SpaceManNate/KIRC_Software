@@ -95,10 +95,13 @@ Void RCinputIntHandler(Void){
 	if(currentRXChannel == 7){
 		RxData.dataRdy = true;
 		currentRXChannel = 0;
+		RXChannelLock = true;
+		DisableRxInterrupts();
 		return;
 	}
 
 	currentRXChannel++; //increment to next channel
+
 }
 
 /*

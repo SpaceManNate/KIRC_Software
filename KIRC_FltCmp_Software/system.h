@@ -90,7 +90,7 @@ typedef struct IMUdata{
 } _IMUdata;
 
 typedef struct RxInput{
-	volatile int input[6];
+	unsigned int input[6];
 	unsigned int PWMticks[8];
 	unsigned char dataRdy;
 } _RxInput;
